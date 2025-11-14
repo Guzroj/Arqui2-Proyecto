@@ -12,29 +12,29 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:28:07 on Nov 13,2025
+# Start time: 23:23:09 on Nov 13,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 22:28:07 on Nov 13,2025, Elapsed time: 0:00:00
+# End time: 23:23:09 on Nov 13,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:28:08 on Nov 13,2025
+# Start time: 23:23:10 on Nov 13,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv 
 # -- Compiling module tb_downscale_ModoSecuencial
 # 
 # Top level modules:
 # 	tb_downscale_ModoSecuencial
-# End time: 22:28:08 on Nov 13,2025, Elapsed time: 0:00:00
+# End time: 23:23:10 on Nov 13,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_ModoSecuencial
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_downscale_ModoSecuencial 
-# Start time: 22:28:08 on Nov 13,2025
+# Start time: 23:23:10 on Nov 13,2025
 # Loading sv_std.std
 # Loading work.tb_downscale_ModoSecuencial
 # Loading work.ModoSecuencial
@@ -144,9 +144,11 @@
 #   ✓ PASS (dentro de ±1 LSB)
 # 
 # === FIN DOWNscale HW vs REF ===
-# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv(228)
-#    Time: 335 ns  Iteration: 0  Instance: /tb_downscale_ModoSecuencial
+# Resumen: PASS=9, FAIL=0
+# TODOS los píxeles pasaron
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv(239)
+#    Time: 245 ns  Iteration: 0  Instance: /tb_downscale_ModoSecuencial
 # 1
-# Break in Module tb_downscale_ModoSecuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv line 228
-# End time: 23:09:11 on Nov 13,2025, Elapsed time: 0:41:03
+# Break in Module tb_downscale_ModoSecuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv line 239
+# End time: 23:24:04 on Nov 13,2025, Elapsed time: 0:00:54
 # Errors: 0, Warnings: 0

@@ -20,6 +20,9 @@ module tb_downscale_ModoSecuencial;
     logic              valid_out;
     logic [7:0]        pixel_out;
 
+    int unsigned pass_count = 0;
+    int unsigned fail_count = 0;
+
     // Instancia del DUT
     ModoSecuencial dut (
         .clk       (clk),
@@ -44,7 +47,7 @@ module tb_downscale_ModoSecuencial;
     end
 
     // ==========================
-    // Modelo de referencia (igual a tu Python pero en real)
+    // Modelo de referencia basado en el algoritmo en el avance 1.
     // ==========================
     function automatic int bilinear_ref_pixel (
         input int a, b, c, d,
@@ -96,13 +99,13 @@ module tb_downscale_ModoSecuencial;
             x_src = x_ratio * j_dst;
             y_src = y_ratio * i_dst;
 
-            // 2) floor y ceil EXACTOS como en Python
+            // 2) floor y ceil
             x_l = int'($floor(x_src));
             x_h = int'($ceil (x_src));
             y_l = int'($floor(y_src));
             y_h = int'($ceil (y_src));
 
-            // Clampear por seguridad (aunque para 4x4→3x3 no hace falta)
+            // Clamp por seguridad
             if (x_l < 0)         x_l = 0;
             if (y_l < 0)         y_l = 0;
             if (x_h < 0)         x_h = 0;
@@ -158,21 +161,22 @@ module tb_downscale_ModoSecuencial;
             @(posedge clk);
             valid_in <= 1'b0;
 
-            // Latencia: 1 ciclo
-            @(posedge clk);
-
-            if (!valid_out)
-                $display("  [WARN] valid_out no está en 1 donde se esperaba");
+            // Esperar a que el DUT declare salida válida
+            wait (valid_out == 1'b1);
+            // pixel_out estable aquí
 
             diff = pixel_out - expected;
             if (diff < 0) diff = -diff;
 
             $display("  pixel_out = %0d  (diff=%0d)", pixel_out, diff);
 
-            if (diff <= 1)
+            if (diff <= 1) begin
                 $display("  ✓ PASS (dentro de ±1 LSB)");
-            else
+                pass_count++;
+            end else begin
                 $display("  ✗ FAIL (fuera de tolerancia)");
+                fail_count++;
+            end
         end
     endtask
 
@@ -183,7 +187,7 @@ module tb_downscale_ModoSecuencial;
         int i, j;
         real x_ratio, y_ratio;
 
-        // Imagen fuente 4x4 (la misma que usaste)
+        // Imagen fuente 4x4
         image[0][0] =  10; image[0][1] =  30; image[0][2] =  50; image[0][3] =  70;
         image[1][0] =  90; image[1][1] = 110; image[1][2] = 130; image[1][3] = 150;
         image[2][0] = 170; image[2][1] = 190; image[2][2] = 210; image[2][3] = 230;
@@ -224,6 +228,13 @@ module tb_downscale_ModoSecuencial;
         end
 
         $display("\n=== FIN DOWNscale HW vs REF ===");
+        $display("Resumen: PASS=%0d, FAIL=%0d", pass_count, fail_count);
+
+        if (fail_count == 0)
+            $display("TODOS los píxeles pasaron");
+        else
+            $fatal(1, "Hubo píxeles que fallaron");
+
         #20;
         $finish;
     end
