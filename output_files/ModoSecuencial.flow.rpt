@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Thu Nov 13 21:14:15 2025
+Thu Nov 13 22:27:51 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Thu Nov 13 21:14:15 2025       ;
+; Flow Status                 ; Successful - Thu Nov 13 22:27:51 2025       ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; ModoSecuencial                              ;
 ; Top-level Entity Name       ; ModoSecuencial                              ;
@@ -63,40 +63,52 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/13/2025 21:14:09 ;
+; Start date & time ; 11/13/2025 22:27:45 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                      ;
-+--------------------------------------+----------------------------------------+---------------+-------------+-------------------------+
-; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id              ;
-+--------------------------------------+----------------------------------------+---------------+-------------+-------------------------+
-; COMPILER_SIGNATURE_ID                ; 1097428162052.176309004813256          ; --            ; --          ; --                      ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_bilinear_scalar_q8_8 ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_debug_modosecuencial ;
-; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tb_bilinear_scalar_q8_8                ; --            ; --          ; eda_simulation          ;
-; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --            ; --          ; eda_simulation          ;
-; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>        ; --          ; --                      ;
-; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --            ; --          ; eda_simulation          ;
-; EDA_TEST_BENCH_FILE                  ; tb_bilinear_scalar_q8_8.sv             ; --            ; --          ; tb_bilinear_scalar_q8_8 ;
-; EDA_TEST_BENCH_FILE                  ; tb_debug_modosecuencial.sv             ; --            ; --          ; tb_debug_modosecuencial ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_bilinear_scalar_q8_8                ; --            ; --          ; tb_bilinear_scalar_q8_8 ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_debug_modosecuencial                ; --            ; --          ; tb_debug_modosecuencial ;
-; EDA_TEST_BENCH_NAME                  ; tb_bilinear_scalar_q8_8                ; --            ; --          ; eda_simulation          ;
-; EDA_TEST_BENCH_NAME                  ; tb_debug_modosecuencial                ; --            ; --          ; eda_simulation          ;
-; EDA_TIME_SCALE                       ; 1 ps                                   ; --            ; --          ; eda_simulation          ;
-; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --            ; --          ; --                      ;
-; MIN_CORE_JUNCTION_TEMP               ; 0                                      ; --            ; --          ; --                      ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; --          ; Top                     ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; --          ; Top                     ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; --          ; Top                     ;
-; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --            ; --          ; --                      ;
-; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --                      ;
-; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --            ; --          ; --                      ;
-+--------------------------------------+----------------------------------------+---------------+-------------+-------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                          ;
++--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------+
+; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id                  ;
++--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------+
+; COMPILER_SIGNATURE_ID                ; 1097428162052.176309446520352          ; --            ; --          ; --                          ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_ModoSecuencial           ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_debug_test12             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_bilinear_scalar_q8_8     ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_debug_modosecuencial     ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; tb_downscale_ModoSecuencial ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tb_downscale_ModoSecuencial            ; --            ; --          ; eda_simulation              ;
+; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --            ; --          ; eda_simulation              ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>        ; --          ; --                          ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --            ; --          ; eda_simulation              ;
+; EDA_TEST_BENCH_FILE                  ; tb_ModoSecuencial.sv                   ; --            ; --          ; tb_ModoSecuencial           ;
+; EDA_TEST_BENCH_FILE                  ; tb_debug_test12.sv                     ; --            ; --          ; tb_debug_test12             ;
+; EDA_TEST_BENCH_FILE                  ; tb_bilinear_scalar_q8_8.sv             ; --            ; --          ; tb_bilinear_scalar_q8_8     ;
+; EDA_TEST_BENCH_FILE                  ; tb_debug_modosecuencial.sv             ; --            ; --          ; tb_debug_modosecuencial     ;
+; EDA_TEST_BENCH_FILE                  ; tb_downscale_ModoSecuencial.sv         ; --            ; --          ; tb_downscale_ModoSecuencial ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_ModoSecuencial                      ; --            ; --          ; tb_ModoSecuencial           ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_debug_test12                        ; --            ; --          ; tb_debug_test12             ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_bilinear_scalar_q8_8                ; --            ; --          ; tb_bilinear_scalar_q8_8     ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_debug_modosecuencial                ; --            ; --          ; tb_debug_modosecuencial     ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_downscale_ModoSecuencial            ; --            ; --          ; tb_downscale_ModoSecuencial ;
+; EDA_TEST_BENCH_NAME                  ; tb_bilinear_scalar_q8_8                ; --            ; --          ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_debug_modosecuencial                ; --            ; --          ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_debug_test12                        ; --            ; --          ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_ModoSecuencial                      ; --            ; --          ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_downscale_ModoSecuencial            ; --            ; --          ; eda_simulation              ;
+; EDA_TIME_SCALE                       ; 1 ps                                   ; --            ; --          ; eda_simulation              ;
+; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --            ; --          ; --                          ;
+; MIN_CORE_JUNCTION_TEMP               ; 0                                      ; --            ; --          ; --                          ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; --          ; Top                         ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; --          ; Top                         ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; --          ; Top                         ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --            ; --          ; --                          ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --                          ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --            ; --          ; --                          ;
++--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------+

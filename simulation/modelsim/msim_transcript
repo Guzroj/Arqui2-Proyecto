@@ -12,31 +12,31 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:14:27 on Nov 13,2025
+# Start time: 22:28:07 on Nov 13,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 21:14:27 on Nov 13,2025, Elapsed time: 0:00:00
+# End time: 22:28:07 on Nov 13,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv}
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:14:27 on Nov 13,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv 
-# -- Compiling module tb_bilinear_scalar_q8_8
+# Start time: 22:28:08 on Nov 13,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv 
+# -- Compiling module tb_downscale_ModoSecuencial
 # 
 # Top level modules:
-# 	tb_bilinear_scalar_q8_8
-# End time: 21:14:27 on Nov 13,2025, Elapsed time: 0:00:00
+# 	tb_downscale_ModoSecuencial
+# End time: 22:28:08 on Nov 13,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_bilinear_scalar_q8_8
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_bilinear_scalar_q8_8 
-# Start time: 21:14:27 on Nov 13,2025
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_ModoSecuencial
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_downscale_ModoSecuencial 
+# Start time: 22:28:08 on Nov 13,2025
 # Loading sv_std.std
-# Loading work.tb_bilinear_scalar_q8_8
+# Loading work.tb_downscale_ModoSecuencial
 # Loading work.ModoSecuencial
 # 
 # add wave *
@@ -45,91 +45,108 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
-# ======================================
-#   Testbench: bilinear_scalar_q8_8
-# ======================================
+# Imagen fuente 4x4:
+#   10 30 50 70 
+#   90 110 130 150 
+#   170 190 210 230 
+#   240 245 250 255 
 # 
-# [TEST 1] Centro (0.5, 0.5) - Cuadrado uniforme
-#   Inputs: I00=100, I10=100, I01=100, I11=100
-#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
-#   ✓ PASS: Output=100, Expected=100 (error=0)
+# Ratios: x_ratio=1.5000, y_ratio=1.5000
 # 
-# [TEST 2] Centro (0.5, 0.5) - Gradiente horizontal
-#   Inputs: I00=0, I10=255, I01=0, I11=255
-#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
-#   ✓ PASS: Output=128, Expected=128 (error=0)
+# --- Pixel destino (0, 0) ---
+#   x_src=0.0000, y_src=0.0000
+#   x_l=0, x_h=0, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=10, b=10, c=10, d=10
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 10
+#   pixel_out = 10  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 3] Esquina (0.0, 0.0) - Debe retornar I00
-#   Inputs: I00=50, I10=100, I01=150, I11=200
-#   Coeffs: alpha=0x00 (0.000), beta=0x00 (0.000)
-#   ✓ PASS: Output=50, Expected=50 (error=0)
+# --- Pixel destino (0, 1) ---
+#   x_src=1.5000, y_src=0.0000
+#   x_l=1, x_h=2, y_l=0, y_h=0
+#   x_w=0.5000, y_w=0.0000
+#   a=30, b=50, c=30, d=50
+#   alpha_int=129 (0.5039), beta_int=1 (0.0039)
+#   Esperado (ref) = 40
+#   pixel_out = 40  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 4] Esquina (1.0, 0.0) - Debe retornar I10
-#   Inputs: I00=50, I10=100, I01=150, I11=200
-#   Coeffs: alpha=0xff (0.996), beta=0x00 (0.000)
-#   ✓ PASS: Output=100, Expected=100 (error=0)
+# --- Pixel destino (0, 2) ---
+#   x_src=3.0000, y_src=0.0000
+#   x_l=3, x_h=3, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=70, b=70, c=70, d=70
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 70
+#   pixel_out = 70  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 5] Esquina (0.0, 1.0) - Debe retornar I01
-#   Inputs: I00=50, I10=100, I01=150, I11=200
-#   Coeffs: alpha=0x00 (0.000), beta=0xff (0.996)
-#   ✓ PASS: Output=150, Expected=150 (error=0)
+# --- Pixel destino (1, 0) ---
+#   x_src=0.0000, y_src=1.5000
+#   x_l=0, x_h=0, y_l=1, y_h=2
+#   x_w=0.0000, y_w=0.5000
+#   a=90, b=90, c=170, d=170
+#   alpha_int=1 (0.0039), beta_int=129 (0.5039)
+#   Esperado (ref) = 130
+#   pixel_out = 130  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 6] Esquina (1.0, 1.0) - Debe retornar I11
-#   Inputs: I00=50, I10=100, I01=150, I11=200
-#   Coeffs: alpha=0xff (0.996), beta=0xff (0.996)
-#   ✓ PASS: Output=199, Expected=200 (error=1)
+# --- Pixel destino (1, 1) ---
+#   x_src=1.5000, y_src=1.5000
+#   x_l=1, x_h=2, y_l=1, y_h=2
+#   x_w=0.5000, y_w=0.5000
+#   a=110, b=130, c=190, d=210
+#   alpha_int=129 (0.5039), beta_int=129 (0.5039)
+#   Esperado (ref) = 160
+#   pixel_out = 160  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 7] Imagen completamente negra
-#   Inputs: I00=0, I10=0, I01=0, I11=0
-#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
-#   ✓ PASS: Output=0, Expected=0 (error=0)
+# --- Pixel destino (1, 2) ---
+#   x_src=3.0000, y_src=1.5000
+#   x_l=3, x_h=3, y_l=1, y_h=2
+#   x_w=0.0000, y_w=0.5000
+#   a=150, b=150, c=230, d=230
+#   alpha_int=1 (0.0039), beta_int=129 (0.5039)
+#   Esperado (ref) = 190
+#   pixel_out = 190  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 8] Imagen completamente blanca
-#   Inputs: I00=255, I10=255, I01=255, I11=255
-#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
-#   ✓ PASS: Output=255, Expected=255 (error=0)
+# --- Pixel destino (2, 0) ---
+#   x_src=0.0000, y_src=3.0000
+#   x_l=0, x_h=0, y_l=3, y_h=3
+#   x_w=0.0000, y_w=0.0000
+#   a=240, b=240, c=240, d=240
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 240
+#   pixel_out = 240  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 9] Máximo contraste (tablero)
-#   Inputs: I00=0, I10=255, I01=255, I11=0
-#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
-#   ✓ PASS: Output=128, Expected=128 (error=0)
+# --- Pixel destino (2, 1) ---
+#   x_src=1.5000, y_src=3.0000
+#   x_l=1, x_h=2, y_l=3, y_h=3
+#   x_w=0.5000, y_w=0.0000
+#   a=245, b=250, c=245, d=250
+#   alpha_int=129 (0.5039), beta_int=1 (0.0039)
+#   Esperado (ref) = 248
+#   pixel_out = 248  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 10] Posición (0.25, 0.25)
-#   Inputs: I00=0, I10=100, I01=100, I11=200
-#   Coeffs: alpha=0x40 (0.250), beta=0x40 (0.250)
-#   ✗ FAIL: Output=50, Expected=34 (error=16)
+# --- Pixel destino (2, 2) ---
+#   x_src=3.0000, y_src=3.0000
+#   x_l=3, x_h=3, y_l=3, y_h=3
+#   x_w=0.0000, y_w=0.0000
+#   a=255, b=255, c=255, d=255
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 255
+#   pixel_out = 255  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# [TEST 11] Posición (0.75, 0.75)
-#   Inputs: I00=0, I10=100, I01=100, I11=200
-#   Coeffs: alpha=0xc0 (0.750), beta=0xc0 (0.750)
-#   ✗ FAIL: Output=150, Expected=6 (error=144)
-# 
-# [TEST 12] Caso realista - Cielo azul
-#   Inputs: I00=120, I10=125, I01=118, I11=123
-#   Coeffs: alpha=0x4d (0.301), beta=0x66 (0.398)
-#   ✗ FAIL: Output=69, Expected=121 (error=52)
-# 
-# [TEST 13] Caso realista - Transición sombra
-#   Inputs: I00=45, I10=67, I01=89, I11=111
-#   Coeffs: alpha=0x8c (0.547), beta=0xb4 (0.703)
-#   ✓ PASS: Output=88, Expected=88 (error=0)
-# 
-# [TEST SECUENCIAL] Procesando 3 píxeles consecutivos...
-#   ✓ Secuencia completada (verificación manual en waveform)
-# 
-# ======================================
-#   RESUMEN DE PRUEBAS
-# ======================================
-#   Tests ejecutados: 13
-#   Tests exitosos:   10
-#   Tests fallidos:   3
-# 
-#   ✗✗✗ ALGUNOS TESTS FALLARON ✗✗✗
-# ======================================
-# 
-# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv(330)
-#    Time: 525 ns  Iteration: 1  Instance: /tb_bilinear_scalar_q8_8
+# === FIN DOWNscale HW vs REF ===
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv(228)
+#    Time: 335 ns  Iteration: 0  Instance: /tb_downscale_ModoSecuencial
 # 1
-# Break in Module tb_bilinear_scalar_q8_8 at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv line 330
-# End time: 21:16:58 on Nov 13,2025, Elapsed time: 0:02:31
+# Break in Module tb_downscale_ModoSecuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv line 228
+# End time: 23:09:11 on Nov 13,2025, Elapsed time: 0:41:03
 # Errors: 0, Warnings: 0
