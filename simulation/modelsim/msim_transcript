@@ -1,0 +1,135 @@
+# Reading pref.tcl
+# do ModoSecuencial_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:14:27 on Nov 13,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
+# -- Compiling module ModoSecuencial
+# 
+# Top level modules:
+# 	ModoSecuencial
+# End time: 21:14:27 on Nov 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:14:27 on Nov 13,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv 
+# -- Compiling module tb_bilinear_scalar_q8_8
+# 
+# Top level modules:
+# 	tb_bilinear_scalar_q8_8
+# End time: 21:14:27 on Nov 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_bilinear_scalar_q8_8
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_bilinear_scalar_q8_8 
+# Start time: 21:14:27 on Nov 13,2025
+# Loading sv_std.std
+# Loading work.tb_bilinear_scalar_q8_8
+# Loading work.ModoSecuencial
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ======================================
+#   Testbench: bilinear_scalar_q8_8
+# ======================================
+# 
+# [TEST 1] Centro (0.5, 0.5) - Cuadrado uniforme
+#   Inputs: I00=100, I10=100, I01=100, I11=100
+#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
+#   ✓ PASS: Output=100, Expected=100 (error=0)
+# 
+# [TEST 2] Centro (0.5, 0.5) - Gradiente horizontal
+#   Inputs: I00=0, I10=255, I01=0, I11=255
+#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
+#   ✓ PASS: Output=128, Expected=128 (error=0)
+# 
+# [TEST 3] Esquina (0.0, 0.0) - Debe retornar I00
+#   Inputs: I00=50, I10=100, I01=150, I11=200
+#   Coeffs: alpha=0x00 (0.000), beta=0x00 (0.000)
+#   ✓ PASS: Output=50, Expected=50 (error=0)
+# 
+# [TEST 4] Esquina (1.0, 0.0) - Debe retornar I10
+#   Inputs: I00=50, I10=100, I01=150, I11=200
+#   Coeffs: alpha=0xff (0.996), beta=0x00 (0.000)
+#   ✓ PASS: Output=100, Expected=100 (error=0)
+# 
+# [TEST 5] Esquina (0.0, 1.0) - Debe retornar I01
+#   Inputs: I00=50, I10=100, I01=150, I11=200
+#   Coeffs: alpha=0x00 (0.000), beta=0xff (0.996)
+#   ✓ PASS: Output=150, Expected=150 (error=0)
+# 
+# [TEST 6] Esquina (1.0, 1.0) - Debe retornar I11
+#   Inputs: I00=50, I10=100, I01=150, I11=200
+#   Coeffs: alpha=0xff (0.996), beta=0xff (0.996)
+#   ✓ PASS: Output=199, Expected=200 (error=1)
+# 
+# [TEST 7] Imagen completamente negra
+#   Inputs: I00=0, I10=0, I01=0, I11=0
+#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
+#   ✓ PASS: Output=0, Expected=0 (error=0)
+# 
+# [TEST 8] Imagen completamente blanca
+#   Inputs: I00=255, I10=255, I01=255, I11=255
+#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
+#   ✓ PASS: Output=255, Expected=255 (error=0)
+# 
+# [TEST 9] Máximo contraste (tablero)
+#   Inputs: I00=0, I10=255, I01=255, I11=0
+#   Coeffs: alpha=0x80 (0.500), beta=0x80 (0.500)
+#   ✓ PASS: Output=128, Expected=128 (error=0)
+# 
+# [TEST 10] Posición (0.25, 0.25)
+#   Inputs: I00=0, I10=100, I01=100, I11=200
+#   Coeffs: alpha=0x40 (0.250), beta=0x40 (0.250)
+#   ✗ FAIL: Output=50, Expected=34 (error=16)
+# 
+# [TEST 11] Posición (0.75, 0.75)
+#   Inputs: I00=0, I10=100, I01=100, I11=200
+#   Coeffs: alpha=0xc0 (0.750), beta=0xc0 (0.750)
+#   ✗ FAIL: Output=150, Expected=6 (error=144)
+# 
+# [TEST 12] Caso realista - Cielo azul
+#   Inputs: I00=120, I10=125, I01=118, I11=123
+#   Coeffs: alpha=0x4d (0.301), beta=0x66 (0.398)
+#   ✗ FAIL: Output=69, Expected=121 (error=52)
+# 
+# [TEST 13] Caso realista - Transición sombra
+#   Inputs: I00=45, I10=67, I01=89, I11=111
+#   Coeffs: alpha=0x8c (0.547), beta=0xb4 (0.703)
+#   ✓ PASS: Output=88, Expected=88 (error=0)
+# 
+# [TEST SECUENCIAL] Procesando 3 píxeles consecutivos...
+#   ✓ Secuencia completada (verificación manual en waveform)
+# 
+# ======================================
+#   RESUMEN DE PRUEBAS
+# ======================================
+#   Tests ejecutados: 13
+#   Tests exitosos:   10
+#   Tests fallidos:   3
+# 
+#   ✗✗✗ ALGUNOS TESTS FALLARON ✗✗✗
+# ======================================
+# 
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv(330)
+#    Time: 525 ns  Iteration: 1  Instance: /tb_bilinear_scalar_q8_8
+# 1
+# Break in Module tb_bilinear_scalar_q8_8 at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv line 330
+# End time: 21:16:58 on Nov 13,2025, Elapsed time: 0:02:31
+# Errors: 0, Warnings: 0

@@ -1,0 +1,64 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/simulation/modelsim
+vModoSecuencial
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1763090067
+!i10b 1
+!s100 k<6TlRMKnc_^V`]H>Reb<0
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I`nAC8oSa?lc;76iOHZFzh2
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1763089328
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv
+!i122 0
+L0 1 125
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1763090067.000000
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
+!i113 1
+Z7 o-sv -work work
+Z8 !s92 -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
+Z9 tCvgOpt 0
+n@modo@secuencial
+vtb_bilinear_scalar_q8_8
+R1
+R2
+!i10b 1
+!s100 TY`^`BMTDeUdTlccKd:S70
+R3
+I6?gDfaUPL^8YX269`L4U21
+R4
+S1
+R0
+w1763088478
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv
+!i122 1
+L0 3 348
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_bilinear_scalar_q8_8.sv|
+!i113 1
+R7
+R8
+R9
