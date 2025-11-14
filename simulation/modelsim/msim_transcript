@@ -1,0 +1,154 @@
+# Reading pref.tcl
+# do ModoSecuencial_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:23:09 on Nov 13,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
+# -- Compiling module ModoSecuencial
+# 
+# Top level modules:
+# 	ModoSecuencial
+# End time: 23:23:09 on Nov 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:23:10 on Nov 13,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv 
+# -- Compiling module tb_downscale_ModoSecuencial
+# 
+# Top level modules:
+# 	tb_downscale_ModoSecuencial
+# End time: 23:23:10 on Nov 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_ModoSecuencial
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_downscale_ModoSecuencial 
+# Start time: 23:23:10 on Nov 13,2025
+# Loading sv_std.std
+# Loading work.tb_downscale_ModoSecuencial
+# Loading work.ModoSecuencial
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# Imagen fuente 4x4:
+#   10 30 50 70 
+#   90 110 130 150 
+#   170 190 210 230 
+#   240 245 250 255 
+# 
+# Ratios: x_ratio=1.5000, y_ratio=1.5000
+# 
+# --- Pixel destino (0, 0) ---
+#   x_src=0.0000, y_src=0.0000
+#   x_l=0, x_h=0, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=10, b=10, c=10, d=10
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 10
+#   pixel_out = 10  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0, 1) ---
+#   x_src=1.5000, y_src=0.0000
+#   x_l=1, x_h=2, y_l=0, y_h=0
+#   x_w=0.5000, y_w=0.0000
+#   a=30, b=50, c=30, d=50
+#   alpha_int=129 (0.5039), beta_int=1 (0.0039)
+#   Esperado (ref) = 40
+#   pixel_out = 40  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0, 2) ---
+#   x_src=3.0000, y_src=0.0000
+#   x_l=3, x_h=3, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=70, b=70, c=70, d=70
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 70
+#   pixel_out = 70  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1, 0) ---
+#   x_src=0.0000, y_src=1.5000
+#   x_l=0, x_h=0, y_l=1, y_h=2
+#   x_w=0.0000, y_w=0.5000
+#   a=90, b=90, c=170, d=170
+#   alpha_int=1 (0.0039), beta_int=129 (0.5039)
+#   Esperado (ref) = 130
+#   pixel_out = 130  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1, 1) ---
+#   x_src=1.5000, y_src=1.5000
+#   x_l=1, x_h=2, y_l=1, y_h=2
+#   x_w=0.5000, y_w=0.5000
+#   a=110, b=130, c=190, d=210
+#   alpha_int=129 (0.5039), beta_int=129 (0.5039)
+#   Esperado (ref) = 160
+#   pixel_out = 160  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1, 2) ---
+#   x_src=3.0000, y_src=1.5000
+#   x_l=3, x_h=3, y_l=1, y_h=2
+#   x_w=0.0000, y_w=0.5000
+#   a=150, b=150, c=230, d=230
+#   alpha_int=1 (0.0039), beta_int=129 (0.5039)
+#   Esperado (ref) = 190
+#   pixel_out = 190  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2, 0) ---
+#   x_src=0.0000, y_src=3.0000
+#   x_l=0, x_h=0, y_l=3, y_h=3
+#   x_w=0.0000, y_w=0.0000
+#   a=240, b=240, c=240, d=240
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 240
+#   pixel_out = 240  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2, 1) ---
+#   x_src=1.5000, y_src=3.0000
+#   x_l=1, x_h=2, y_l=3, y_h=3
+#   x_w=0.5000, y_w=0.0000
+#   a=245, b=250, c=245, d=250
+#   alpha_int=129 (0.5039), beta_int=1 (0.0039)
+#   Esperado (ref) = 248
+#   pixel_out = 248  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2, 2) ---
+#   x_src=3.0000, y_src=3.0000
+#   x_l=3, x_h=3, y_l=3, y_h=3
+#   x_w=0.0000, y_w=0.0000
+#   a=255, b=255, c=255, d=255
+#   alpha_int=1 (0.0039), beta_int=1 (0.0039)
+#   Esperado (ref) = 255
+#   pixel_out = 255  (diff=0)
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# === FIN DOWNscale HW vs REF ===
+# Resumen: PASS=9, FAIL=0
+# TODOS los píxeles pasaron
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv(239)
+#    Time: 245 ns  Iteration: 0  Instance: /tb_downscale_ModoSecuencial
+# 1
+# Break in Module tb_downscale_ModoSecuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv line 239
+# End time: 23:24:04 on Nov 13,2025, Elapsed time: 0:00:54
+# Errors: 0, Warnings: 0
