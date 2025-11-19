@@ -11,7 +11,7 @@ cModel Technology
 Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/simulation/modelsim
 vModoSecuencial
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-!s110 1763097789
+!s110 1763166665
 !i10b 1
 !s100 k<6TlRMKnc_^V`]H>Reb<0
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -28,17 +28,17 @@ Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-!s108 1763097789.000000
+Z5 !s108 1763166665.000000
 !s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
 !i113 1
-Z5 o-sv -work work
-Z6 !s92 -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
-Z7 tCvgOpt 0
+Z6 o-sv -work work
+Z7 !s92 -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
+Z8 tCvgOpt 0
 n@modo@secuencial
 vtb_downscale_ModoSecuencial
 R1
-!s110 1763097790
+!s110 1763166666
 !i10b 1
 !s100 koO0B;5H:flM<mHd58Id@3
 R2
@@ -55,11 +55,11 @@ R4
 r1
 !s85 0
 31
-!s108 1763097790.000000
+R5
 !s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv|
 !i113 1
-R5
 R6
 R7
+R8
 ntb_downscale_@modo@secuencial
