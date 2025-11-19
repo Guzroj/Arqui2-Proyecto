@@ -1,0 +1,65 @@
+`timescale 1ns/1ps
+
+module tb_FSM_SIMD;
+
+    logic clk, rst;
+    logic start;
+    logic simd_valid;
+
+    logic load_regs;
+    logic run_simd;
+    logic write_back;
+    logic done;
+
+    // Instancia
+    FSM_SIMD #(
+        .N(4),
+        .OUT_W(3),
+        .OUT_H(3)
+    ) dut (
+        .* 
+    );
+
+    // Clock
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    initial begin
+        $display("\n=== TEST FSM SIMD ===");
+
+        rst = 1;
+        start = 0;
+        simd_valid = 0;
+
+        repeat(3) @(posedge clk);
+        rst = 0;
+
+        @(posedge clk);
+        start = 1;  // inicia
+        @(posedge clk);
+        start = 0;
+
+        // BATCH #1
+        #15;  // tiempo mientras RUN
+        simd_valid = 1; @(posedge clk);
+        simd_valid = 0;
+
+        // BATCH #2
+        #15;
+        simd_valid = 1; @(posedge clk);
+        simd_valid = 0;
+
+        // BATCH #3 (el último en 3x3 con N=4)
+        #15;
+        simd_valid = 1; @(posedge clk);
+        simd_valid = 0;
+
+        repeat(3) @(posedge clk);
+
+        $display("\n=== FIN TEST FSM ===");
+        $finish;
+    end
+
+endmodule

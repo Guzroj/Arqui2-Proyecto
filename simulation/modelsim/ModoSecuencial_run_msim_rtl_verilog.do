@@ -6,10 +6,11 @@ vlib rtl_work
 vmap work rtl_work
 
 vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
+vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv}
 
-vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSecuencial.sv}
+vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_ModoSIMD.sv}
 
-vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_ModoSecuencial
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_ModoSIMD
 
 add wave *
 view structure
