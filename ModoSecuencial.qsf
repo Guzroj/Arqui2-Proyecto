@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CGXFC7C7F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY ModoSIMD
+set_global_assignment -name TOP_LEVEL_ENTITY Top_SIMD
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:25:47  NOVEMBER 13, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
@@ -54,7 +54,7 @@ set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_downscale_ModoSIMD -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_Top_SIMD -section_id eda_simulation
 set_global_assignment -name SYSTEMVERILOG_FILE tb_downscale_ModoSecuencial.sv
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_downscale_ModoSecuencial -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_downscale_ModoSecuencial
@@ -70,15 +70,20 @@ set_global_assignment -name SYSTEMVERILOG_FILE tb_SIMD_Registros.sv
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_SIMD_Registros -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_SIMD_Registros
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_SIMD_Registros -section_id tb_SIMD_Registros
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name SYSTEMVERILOG_FILE tb_downscale_ModoSIMD.sv
-set_global_assignment -name EDA_TEST_BENCH_FILE tb_downscale_ModoSecuencial.sv -section_id tb_downscale_ModoSecuencial
-set_global_assignment -name EDA_TEST_BENCH_FILE tb_FSM_SIMD.sv -section_id tb_FSM_SIMD
-set_global_assignment -name EDA_TEST_BENCH_FILE tb_SIMD_Registros.sv -section_id tb_SIMD_Registros
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_downscale_ModoSIMD -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_downscale_ModoSIMD
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_downscale_ModoSIMD -section_id tb_downscale_ModoSIMD
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_downscale_ModoSecuencial.sv -section_id tb_downscale_ModoSecuencial
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_FSM_SIMD.sv -section_id tb_FSM_SIMD
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_SIMD_Registros.sv -section_id tb_SIMD_Registros
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_downscale_ModoSIMD.sv -section_id tb_downscale_ModoSIMD
+set_global_assignment -name EDA_TEST_BENCH_NAME tb_Top_SIMD -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_Top_SIMD
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Top_SIMD -section_id tb_Top_SIMD
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_Top_SIMD.sv -section_id tb_Top_SIMD
+set_global_assignment -name SYSTEMVERILOG_FILE Top_SIMD.sv
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
