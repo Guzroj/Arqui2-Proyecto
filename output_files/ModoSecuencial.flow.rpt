@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Wed Nov 19 00:28:14 2025
+Wed Nov 19 12:13:49 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Flow Failed - Wed Nov 19 00:28:14 2025      ;
+; Flow Status                 ; Successful - Wed Nov 19 12:13:49 2025       ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; ModoSecuencial                              ;
 ; Top-level Entity Name       ; Top_SIMD                                    ;
@@ -63,7 +63,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/19/2025 00:28:07 ;
+; Start date & time ; 11/19/2025 12:13:43 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
@@ -74,7 +74,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+----------------------------------------+----------------+-------------+-----------------------------+
 ; Assignment Name                      ; Value                                  ; Default Value  ; Entity Name ; Section Id                  ;
 +--------------------------------------+----------------------------------------+----------------+-------------+-----------------------------+
-; COMPILER_SIGNATURE_ID                ; 1097428162052.176353368723832          ; --             ; --          ; --                          ;
+; COMPILER_SIGNATURE_ID                ; 1097428162052.176357602318360          ; --             ; --          ; --                          ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --          ; tb_Top_SIMD                 ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --          ; tb_downscale_ModoSIMD       ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --          ; tb_FSM_SIMD                 ;
@@ -117,8 +117,8 @@ https://fpgasoftware.intel.com/eula.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:07     ; 1.0                     ; 4771 MB             ; 00:00:16                           ;
-; Total                  ; 00:00:07     ; --                      ; --                  ; 00:00:16                           ;
+; Analysis & Elaboration ; 00:00:06     ; 1.0                     ; 4775 MB             ; 00:00:16                           ;
+; Total                  ; 00:00:06     ; --                      ; --                  ; 00:00:16                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

@@ -230,21 +230,13 @@ pixel_out_vec[0][7] <= ModoSIMD:simd_inst.pixel_out_vec[0][7]
 
 
 |Top_SIMD|FSM_SIMD:fsm_inst
-clk => batch_cnt[0].CLK
-clk => batch_cnt[1].CLK
 clk => state~1.DATAIN
-rst => batch_cnt[0].ACLR
-rst => batch_cnt[1].ACLR
 rst => state~3.DATAIN
 start => next.OUTPUTSELECT
 start => next.OUTPUTSELECT
 start => next.OUTPUTSELECT
 start => next.OUTPUTSELECT
 start => next.OUTPUTSELECT
-start => next.OUTPUTSELECT
-start => next.OUTPUTSELECT
-simd_valid => next.OUTPUTSELECT
-simd_valid => next.OUTPUTSELECT
 simd_valid => next.OUTPUTSELECT
 simd_valid => next.OUTPUTSELECT
 simd_valid => next.OUTPUTSELECT
@@ -252,7 +244,7 @@ simd_valid => next.OUTPUTSELECT
 simd_valid => next.OUTPUTSELECT
 load_regs <= load_regs.DB_MAX_OUTPUT_PORT_TYPE
 run_simd <= run_simd.DB_MAX_OUTPUT_PORT_TYPE
-write_back <= write_back.DB_MAX_OUTPUT_PORT_TYPE
+write_back <= done.DB_MAX_OUTPUT_PORT_TYPE
 done <= done.DB_MAX_OUTPUT_PORT_TYPE
 
 
