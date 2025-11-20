@@ -12,101 +12,43 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
+# Start time: 14:09:23 on Nov 20,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 12:14:16 on Nov 19,2025, Elapsed time: 0:00:00
+# End time: 14:09:23 on Nov 20,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv}
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv 
-# -- Compiling module ModoSIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(9): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(10): (vlog-13314) Defaulting port 'I10_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(11): (vlog-13314) Defaulting port 'I01_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(12): (vlog-13314) Defaulting port 'I11_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(13): (vlog-13314) Defaulting port 'alpha_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(14): (vlog-13314) Defaulting port 'beta_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# Start time: 14:09:23 on Nov 20,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv 
+# -- Compiling module Downscale_Secuencial
+# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv(14): (vlog-13314) Defaulting port 'image_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
 # Top level modules:
-# 	ModoSIMD
-# End time: 12:14:16 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 6
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv}
+# 	Downscale_Secuencial
+# End time: 14:09:23 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv 
-# -- Compiling module SIMD_Registros
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(8): (vlog-13314) Defaulting port 'I00_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(9): (vlog-13314) Defaulting port 'I10_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(10): (vlog-13314) Defaulting port 'I01_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(11): (vlog-13314) Defaulting port 'I11_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(12): (vlog-13314) Defaulting port 'alpha_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(13): (vlog-13314) Defaulting port 'beta_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# Start time: 14:09:23 on Nov 20,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Downscale_Secuencial.sv 
+# -- Compiling module tb_Downscale_Secuencial
 # 
 # Top level modules:
-# 	SIMD_Registros
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 6
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv 
-# -- Compiling module FSM_SIMD
-# 
-# Top level modules:
-# 	FSM_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
+# 	tb_Downscale_Secuencial
+# End time: 14:09:24 on Nov 20,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv 
-# -- Compiling module Top_SIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(12): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(13): (vlog-13314) Defaulting port 'I10_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(14): (vlog-13314) Defaulting port 'I01_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(15): (vlog-13314) Defaulting port 'I11_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(16): (vlog-13314) Defaulting port 'alpha_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(17): (vlog-13314) Defaulting port 'beta_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
-# Top level modules:
-# 	Top_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 6
-# 
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv 
-# -- Compiling module tb_Top_SIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(130): (vlog-2244) Variable 'total_pixels' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(131): (vlog-2244) Variable 'total_batches' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(136): (vlog-2244) Variable 'xr' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(137): (vlog-2244) Variable 'yr' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# 
-# Top level modules:
-# 	tb_Top_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 4
-# 
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_Top_SIMD
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_Top_SIMD 
-# Start time: 12:14:18 on Nov 19,2025
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_Downscale_Secuencial
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_Downscale_Secuencial 
+# Start time: 14:09:24 on Nov 20,2025
 # Loading sv_std.std
-# Loading work.tb_Top_SIMD
-# Loading work.Top_SIMD
-# Loading work.FSM_SIMD
-# Loading work.SIMD_Registros
-# Loading work.ModoSIMD
+# Loading work.tb_Downscale_Secuencial
+# Loading work.Downscale_Secuencial
 # Loading work.ModoSecuencial
 # 
 # add wave *
@@ -115,45 +57,93 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
+# Imagen fuente 4x4:
+#   10 30 50 70 
+#   90 110 130 150 
+#   170 190 210 230 
+#   240 245 250 255 
 # 
-# ======== INICIO TEST INTEGRADO (Top_SIMD) =========
+# Ratios: x_ratio=1.5000, y_ratio=1.5000
 # 
-# =======================================
-# ===  BATCH 0  ===
-# =======================================
-#   HW[0] = 10  REF=10  diff=0
-#    ✓ PASS
-#   HW[1] = 40  REF=40  diff=0
-#    ✓ PASS
-#   HW[2] = 70  REF=70  diff=0
-#    ✓ PASS
-#   HW[3] = 130  REF=130  diff=0
-#    ✓ PASS
+# Ref pixel (0,0):
+#   x_src=0.0000 y_src=0.0000
+#   x_l=0 x_h=0  y_l=0 y_h=0
+#   x_w=0.0000 y_w=0.0000
+#   a=10 b=10 c=10 d=10
+#   expected=10
 # 
-# =======================================
-# ===  BATCH 1  ===
-# =======================================
-#   HW[0] = 160  REF=160  diff=0
-#    ✓ PASS
-#   HW[1] = 190  REF=190  diff=0
-#    ✓ PASS
-#   HW[2] = 240  REF=240  diff=0
-#    ✓ PASS
-#   HW[3] = 248  REF=248  diff=0
-#    ✓ PASS
+# Ref pixel (0,1):
+#   x_src=1.5000 y_src=0.0000
+#   x_l=1 x_h=2  y_l=0 y_h=0
+#   x_w=0.5000 y_w=0.0000
+#   a=30 b=50 c=30 d=50
+#   expected=40
 # 
-# =======================================
-# ===  BATCH 2  ===
-# =======================================
-#   HW[0] = 255  REF=255  diff=0
-#    ✓ PASS
+# Ref pixel (0,2):
+#   x_src=3.0000 y_src=0.0000
+#   x_l=3 x_h=3  y_l=0 y_h=0
+#   x_w=0.0000 y_w=0.0000
+#   a=70 b=70 c=70 d=70
+#   expected=70
 # 
-# ==== FIN INTEGRACIÓN (Top_SIMD) ====
-# PASS=9  FAIL=0
-# TODO OK — INTEGRACIÓN COMPLETA FUNCIONA!
-# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(203)
-#    Time: 185 ns  Iteration: 3  Instance: /tb_Top_SIMD
+# Ref pixel (1,0):
+#   x_src=0.0000 y_src=1.5000
+#   x_l=0 x_h=0  y_l=1 y_h=2
+#   x_w=0.0000 y_w=0.5000
+#   a=90 b=90 c=170 d=170
+#   expected=130
+# 
+# Ref pixel (1,1):
+#   x_src=1.5000 y_src=1.5000
+#   x_l=1 x_h=2  y_l=1 y_h=2
+#   x_w=0.5000 y_w=0.5000
+#   a=110 b=130 c=190 d=210
+#   expected=160
+# 
+# Ref pixel (1,2):
+#   x_src=3.0000 y_src=1.5000
+#   x_l=3 x_h=3  y_l=1 y_h=2
+#   x_w=0.0000 y_w=0.5000
+#   a=150 b=150 c=230 d=230
+#   expected=190
+# 
+# Ref pixel (2,0):
+#   x_src=0.0000 y_src=3.0000
+#   x_l=0 x_h=0  y_l=3 y_h=3
+#   x_w=0.0000 y_w=0.0000
+#   a=240 b=240 c=240 d=240
+#   expected=240
+# 
+# Ref pixel (2,1):
+#   x_src=1.5000 y_src=3.0000
+#   x_l=1 x_h=2  y_l=3 y_h=3
+#   x_w=0.5000 y_w=0.0000
+#   a=245 b=250 c=245 d=250
+#   expected=248
+# 
+# Ref pixel (2,2):
+#   x_src=3.0000 y_src=3.0000
+#   x_l=3 x_h=3  y_l=3 y_h=3
+#   x_w=0.0000 y_w=0.0000
+#   a=255 b=255 c=255 d=255
+#   expected=255
+# 
+# === COMPARACIÓN HW vs REF ===
+# Pixel (0,0): HW=10 REF=10 diff=0
+# Pixel (0,1): HW=40 REF=40 diff=0
+# Pixel (0,2): HW=70 REF=70 diff=0
+# Pixel (1,0): HW=130 REF=130 diff=0
+# Pixel (1,1): HW=160 REF=160 diff=0
+# Pixel (1,2): HW=190 REF=190 diff=0
+# Pixel (2,0): HW=240 REF=240 diff=0
+# Pixel (2,1): HW=248 REF=248 diff=0
+# Pixel (2,2): HW=255 REF=255 diff=0
+# 
+# Resumen: PASS=9  FAIL=0
+# TODOS los píxeles pasaron (±1 LSB).
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Downscale_Secuencial.sv(177)
+#    Time: 345 ns  Iteration: 0  Instance: /tb_Downscale_Secuencial
 # 1
-# Break in Module tb_Top_SIMD at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv line 203
-# End time: 13:03:13 on Nov 19,2025, Elapsed time: 0:48:55
+# Break in Module tb_Downscale_Secuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Downscale_Secuencial.sv line 177
+# End time: 14:23:59 on Nov 20,2025, Elapsed time: 0:14:35
 # Errors: 0, Warnings: 0
