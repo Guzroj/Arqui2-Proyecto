@@ -19,7 +19,9 @@ module Downscale_SIMD #(
     output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
 );
 
-
+    // ===============================
+    // Parámetros de punto fijo
+    // ===============================
     localparam int FRAC       = 8;
     localparam int X_RATIO_FP = ((SRC_W - 1) << FRAC) / (DST_W - 1);
     localparam int Y_RATIO_FP = ((SRC_H - 1) << FRAC) / (DST_H - 1);
@@ -29,8 +31,9 @@ module Downscale_SIMD #(
     localparam int COORD_BITS = $clog2(SRC_W > SRC_H ? SRC_W : SRC_H) + 1;
     localparam int DST_BITS   = $clog2(DST_W > DST_H ? DST_W : DST_H) + 1;
 
-
+    // ===============================
     // Señales hacia/desde Top_SIMD
+    // ===============================
     logic [7:0] I00_vec   [N];
     logic [7:0] I10_vec   [N];
     logic [7:0] I01_vec   [N];
@@ -57,8 +60,9 @@ module Downscale_SIMD #(
         .pixel_out_vec(pixel_out_vec)
     );
 
-
+    // ===============================
     // FSM
+    // ===============================
     typedef enum logic [2:0] {
         S_IDLE,
         S_PREP_BATCH,
@@ -73,7 +77,9 @@ module Downscale_SIMD #(
     // Índice del primer píxel del batch actual
     logic [IDX_BITS-1:0] base_idx;
 
-
+    // ===============================
+    // Señales para cálculo de coordenadas (combinacionales)
+    // ===============================
     // Para cada lane SIMD [0..N-1]
     logic [IDX_BITS-1:0]   idx       [N];
     logic [DST_BITS-1:0]   i_dst     [N];
@@ -86,7 +92,9 @@ module Downscale_SIMD #(
     logic [COORD_BITS-1:0] y_h       [N];
     logic                  valid_lane[N];
 
-
+    // ===============================
+    // Lógica combinacional: preparar datos para cada lane
+    // ===============================
     genvar g;
     generate
         for (g = 0; g < N; g++) begin : gen_lanes
@@ -130,7 +138,9 @@ module Downscale_SIMD #(
         end
     endgenerate
 
+    // ===============================
     // FSM secuencial
+    // ===============================
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             state     <= S_IDLE;
@@ -156,8 +166,9 @@ module Downscale_SIMD #(
         end else begin
             case (state)
 
-
+                // ==================
                 // IDLE
+                // ==================
                 S_IDLE: begin
                     done      <= 1'b0;
                     top_start <= 1'b0;
@@ -167,8 +178,9 @@ module Downscale_SIMD #(
                         state <= S_PREP_BATCH;
                 end
 
-
+                // ==================
                 // PREP_BATCH: Cargar datos para N píxeles
+                // ==================
                 S_PREP_BATCH: begin
                     // Usar lógica combinacional ya calculada
                     for (int k = 0; k < N; k++) begin
@@ -196,22 +208,26 @@ module Downscale_SIMD #(
                     state <= S_START_TOP;
                 end
 
-
+                // ==================
                 // START_TOP: Pulso de start
+                // ==================
                 S_START_TOP: begin
                     top_start <= 1'b1;
                     state     <= S_WAIT_TOP;
                 end
 
- 
+                // ==================
                 // WAIT_TOP: Esperar resultado
+                // ==================
                 S_WAIT_TOP: begin
                     top_start <= 1'b0;
                     if (top_done)
                         state <= S_WRITE_BATCH;
                 end
 
+                // ==================
                 // WRITE_BATCH: Escribir resultados
+                // ==================
                 S_WRITE_BATCH: begin
                     for (int k = 0; k < N; k++) begin
                         if (valid_lane[k]) begin
@@ -219,7 +235,7 @@ module Downscale_SIMD #(
                         end
                     end
 
-                    //Si se acaban los pixeles
+                    // ¿Terminamos todos los píxeles?
                     if (base_idx + N >= TOT_PIX) begin
                         done  <= 1'b1;
                         state <= S_DONE;
@@ -229,7 +245,9 @@ module Downscale_SIMD #(
                     end
                 end
 
+                // ==================
                 // DONE
+                // ==================
                 S_DONE: begin
                     if (!start)
                         state <= S_IDLE;

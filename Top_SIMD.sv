@@ -35,9 +35,7 @@ module Top_SIMD #(
     logic [7:0] alpha_reg [N];
     logic [7:0] beta_reg  [N];
 
-    // ===========================
-    // FSM de control
-    // ===========================
+
     FSM_SIMD fsm_inst (
         .clk        (clk),
         .rst        (rst),
@@ -49,9 +47,6 @@ module Top_SIMD #(
         .done       (done)
     );
 
-    // ===========================
-    // Registros SIMD
-    // ===========================
     SIMD_Registros #(.N(N)) regs_inst (
         .clk      (clk),
         .rst      (rst),
@@ -72,9 +67,7 @@ module Top_SIMD #(
         .beta_out (beta_reg)
     );
 
-    // ===========================
-    // Bloque SIMD (N píxeles/ciclo)
-    // ===========================
+
     ModoSIMD #(.N(N)) simd_inst (
         .clk          (clk),
         .rst          (rst),

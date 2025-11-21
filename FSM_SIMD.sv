@@ -23,7 +23,7 @@ module FSM_SIMD (
 
     state_t state, next;
 
-    // Registro de estado
+    //Registro de estado
     always_ff @(posedge clk or posedge rst) begin
         if (rst)
             state <= S_IDLE;
@@ -31,9 +31,8 @@ module FSM_SIMD (
             state <= next;
     end
 
-    // Lógica combinacional
     always_comb begin
-        // valores por defecto
+        //Valores por defecto
         load_regs  = 1'b0;
         run_simd   = 1'b0;
         write_back = 1'b0;
@@ -48,25 +47,24 @@ module FSM_SIMD (
             end
 
             S_LOAD: begin
-                // un ciclo para capturar los datos en los registros
+                //Un ciclo para capturar los datos en los registros
                 load_regs = 1'b1;
                 next      = S_RUN;
             end
 
             S_RUN: begin
-                // un ciclo de valid_in hacia ModoSIMD
+                //Un ciclo de valid_in hacia ModoSIMD
                 run_simd = 1'b1;
                 next     = S_WAIT;
             end
 
             S_WAIT: begin
-                // esperamos a que ModoSIMD diga que terminó el batch
+                //Esperamos a que ModoSIMD diga que terminó el batch
                 if (simd_valid)
                     next = S_WRITE;
             end
 
             S_WRITE: begin
-                // aquí podrías hacer write-back si quisieras
                 write_back = 1'b1;
                 done       = 1'b1; // pulso de 1 ciclo
                 next       = S_IDLE;

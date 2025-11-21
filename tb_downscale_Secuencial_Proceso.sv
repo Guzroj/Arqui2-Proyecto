@@ -1,13 +1,13 @@
 `timescale 1ns/1ps
 
-module tb_Downscale_Secuencial;
+module tb_downscale_Secuencial_Proceso;
 
     localparam int SRC_H = 32;
     localparam int SRC_W = 32;
     localparam int DST_H = 16;
     localparam int DST_W = 16;
 
-    // Señales DUT
+ 
     logic clk, rst, start;
     logic done;
 
@@ -35,12 +35,13 @@ module tb_Downscale_Secuencial;
         .image_out(image_out)
     );
 
+
     initial begin
         clk = 0;
         forever #5 clk = ~clk;   // periodo = 10ns
     end
 
-
+	 //Referencia
     function automatic int bilinear_ref_pixel(
         input int a, b, c, d,
         input real xw, yw
@@ -77,6 +78,8 @@ module tb_Downscale_Secuencial;
 
         $display("Imagen fuente %0dx%0d inicializada.", SRC_H, SRC_W);
 
+
+
         xr = real'(SRC_W-1) / real'(DST_W-1);
         yr = real'(SRC_H-1) / real'(DST_H-1);
 
@@ -108,6 +111,7 @@ module tb_Downscale_Secuencial;
             end
         end
 
+
         rst   = 1;
         start = 0;
         repeat(4) @(posedge clk);
@@ -131,23 +135,54 @@ module tb_Downscale_Secuencial;
         $display("[SECUENCIAL] Tiempo = %0d ns (periodo=10ns)", cycle_count*10);
 
 
-        $display("\n=== COMPARACIÓN HW (Downscale_Secuencial) vs REF ===");
+        $display("\n=== COMPARACIÓN HW (Downscale_Secuencial) vs REF — MODO PROCESO ===");
+
         for (i = 0; i < DST_H; i++) begin
             for (j = 0; j < DST_W; j++) begin
+
+                xs = xr * j;
+                ys = yr * i;
+
+                x_l = int'($floor(xs));
+                y_l = int'($floor(ys));
+                x_h = int'($ceil(xs));
+                y_h = int'($ceil(ys));
+
+                if (x_h > SRC_W-1) x_h = SRC_W-1;
+                if (y_h > SRC_H-1) y_h = SRC_H-1;
+
+                x_w = xs - x_l;
+                y_w = ys - y_l;
+
+                a = image_in[y_l][x_l];
+                b = image_in[y_l][x_h];
+                c = image_in[y_h][x_l];
+                d = image_in[y_h][x_h];
+
                 diff = image_out[i][j] - expected[i][j];
                 if (diff < 0) diff = -diff;
 
+
+                $display("\n--- Pixel destino (%0d,%0d) ---", i, j);
+                $display("  x_src=%.4f, y_src=%.4f", xs, ys);
+                $display("  x_l=%0d, x_h=%0d, y_l=%0d, y_h=%0d",
+                         x_l, x_h, y_l, y_h);
+                $display("  x_w=%.4f, y_w=%.4f", x_w, y_w);
+                $display("  a=%0d, b=%0d, c=%0d, d=%0d", a, b, c, d);
+                $display("  REF=%0d, HW=%0d, diff=%0d",
+                         expected[i][j], image_out[i][j], diff);
+
                 if (diff <= 1) begin
                     pass_count++;
+                    $display("  ✓ PASS (dentro de ±1 LSB)");
                 end else begin
                     fail_count++;
-                    $display("Pixel (%0d,%0d): HW=%0d REF=%0d diff=%0d  --> FAIL",
-                             i, j, image_out[i][j], expected[i][j], diff);
+                    $display("  ✗ FAIL (fuera de tolerancia)");
                 end
             end
         end
 
-        $display("\nResumen SECUENCIAL: PASS=%0d  FAIL=%0d", pass_count, fail_count);
+        $display("\nResumen SECUENCIAL (PROCESO): PASS=%0d  FAIL=%0d", pass_count, fail_count);
         if (fail_count == 0)
             $display("TODOS los píxeles pasaron (±1 LSB).");
         else

@@ -18,7 +18,9 @@ module Downscale_Secuencial #(
     output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
 );
 
-	 //Formato q8.8
+    // ===============================
+    // Formato fijo Q8.8
+    // ===============================
     localparam int FRAC       = 8;
     localparam int ONE_FP     = 1 << FRAC;
     
@@ -32,7 +34,9 @@ module Downscale_Secuencial #(
     localparam int DST_I_BITS = $clog2(DST_H);
     localparam int DST_J_BITS = $clog2(DST_W);
 
-	 //Señales modo secuencial
+    // ===============================
+    // Señales hacia/desde ModoSecuencial
+    // ===============================
     logic        valid_in;
     logic [7:0]  I00, I10, I01, I11;
     logic [7:0]  alpha, beta;
@@ -54,7 +58,9 @@ module Downscale_Secuencial #(
         .pixel_out (pixel_out)
     );
 
-	 //FSM
+    // ===============================
+    // FSM
+    // ===============================
     typedef enum logic [1:0] {
         S_IDLE,
         S_SETUP,
@@ -68,11 +74,13 @@ module Downscale_Secuencial #(
     logic [DST_I_BITS:0] i_dst;
     logic [DST_J_BITS:0] j_dst;
 
-    // Señales combinacionales para calculo de coordenadas fuente
+    // Señales combinacionales para cálculo de coordenadas fuente
     logic [15:0] x_src_fp, y_src_fp;  // Q8.8
     logic [COORD_BITS-1:0] x_l, x_h, y_l, y_h;
-	 
-    //Calculo de coordenadas
+    
+    // ===============================
+    // Lógica combinacional: cálculo de coordenadas
+    // ===============================
     always_comb begin
         // Posición fuente en Q8.8
         x_src_fp = j_dst * X_RATIO_FP;
@@ -87,8 +95,9 @@ module Downscale_Secuencial #(
         y_h = (y_l < (SRC_H-1)) ? (y_l + 1) : y_l;
     end
 
-
+    // ===============================
     // FSM secuencial
+    // ===============================
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             state    <= S_IDLE;
@@ -104,8 +113,9 @@ module Downscale_Secuencial #(
                     
         end else begin
             case (state)
-				
+                // ==================
                 // IDLE: Esperar start
+                // ==================
                 S_IDLE: begin
                     done     <= 1'b0;
                     valid_in <= 1'b0;
@@ -116,7 +126,9 @@ module Downscale_Secuencial #(
                     end
                 end
 
+                // ==================
                 // SETUP: Calcular coordenadas y vecinos
+                // ==================
                 S_SETUP: begin
                     // Asignar píxeles vecinos desde la imagen de entrada
                     I00 <= image_in[y_l][x_l];
@@ -132,9 +144,10 @@ module Downscale_Secuencial #(
                     valid_in <= 1'b1;
                     state    <= S_WAIT_RESULT;
                 end
-					 
 
+                // ==================
                 // WAIT: Esperar resultado del interpolador
+                // ==================
                 S_WAIT_RESULT: begin
                     // Desactivar valid_in después de 1 ciclo
                     valid_in <= 1'b0;
@@ -143,7 +156,7 @@ module Downscale_Secuencial #(
                         // Guardar píxel en imagen de salida
                         image_out[i_dst][j_dst] <= pixel_out;
 
-                        // Verificar si es ultimo pixel
+                        // ¿Último píxel?
                         if ((i_dst == (DST_H-1)) && (j_dst == (DST_W-1))) begin
                             done  <= 1'b1;
                             state <= S_DONE;
@@ -160,7 +173,9 @@ module Downscale_Secuencial #(
                     end
                 end
 
+                // ==================
                 // DONE: Mantener señal done hasta que start baje
+                // ==================
                 S_DONE: begin
                     if (!start)
                         state <= S_IDLE;
