@@ -5,7 +5,7 @@ module ModoSIMD #(
     input  logic rst,
     input  logic valid_in,
 
-    //Vectores de entrada (cada uno N elementos)
+    // vectores de entrada (cada uno N elementos)
     input  logic [7:0] I00_vec  [N],
     input  logic [7:0] I10_vec  [N],
     input  logic [7:0] I01_vec  [N],
@@ -38,7 +38,7 @@ module ModoSIMD #(
         end
     endgenerate
 
-    //Valid_out será válido cuando el primer núcleo lo esté
+    // valid_out será válido cuando el primer núcleo lo esté
     assign valid_out = valid_int[0];
 
 endmodule

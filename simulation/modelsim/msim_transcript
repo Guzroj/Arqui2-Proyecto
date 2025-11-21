@@ -12,101 +12,43 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
+# Start time: 21:18:58 on Nov 20,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 12:14:16 on Nov 19,2025, Elapsed time: 0:00:00
+# End time: 21:18:58 on Nov 20,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv}
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv 
-# -- Compiling module ModoSIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(9): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(10): (vlog-13314) Defaulting port 'I10_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(11): (vlog-13314) Defaulting port 'I01_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(12): (vlog-13314) Defaulting port 'I11_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(13): (vlog-13314) Defaulting port 'alpha_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(14): (vlog-13314) Defaulting port 'beta_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# Start time: 21:18:58 on Nov 20,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv 
+# -- Compiling module Downscale_Secuencial
+# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv(14): (vlog-13314) Defaulting port 'image_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
 # Top level modules:
-# 	ModoSIMD
-# End time: 12:14:16 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 6
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv}
+# 	Downscale_Secuencial
+# End time: 21:18:58 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# 
+# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_Secuencial_Proceso.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:16 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv 
-# -- Compiling module SIMD_Registros
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(8): (vlog-13314) Defaulting port 'I00_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(9): (vlog-13314) Defaulting port 'I10_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(10): (vlog-13314) Defaulting port 'I01_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(11): (vlog-13314) Defaulting port 'I11_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(12): (vlog-13314) Defaulting port 'alpha_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(13): (vlog-13314) Defaulting port 'beta_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# Start time: 21:19:00 on Nov 20,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_Secuencial_Proceso.sv 
+# -- Compiling module tb_downscale_Secuencial_Proceso
 # 
 # Top level modules:
-# 	SIMD_Registros
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 6
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv 
-# -- Compiling module FSM_SIMD
-# 
-# Top level modules:
-# 	FSM_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
+# 	tb_downscale_Secuencial_Proceso
+# End time: 21:19:00 on Nov 20,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv 
-# -- Compiling module Top_SIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(12): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(13): (vlog-13314) Defaulting port 'I10_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(14): (vlog-13314) Defaulting port 'I01_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(15): (vlog-13314) Defaulting port 'I11_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(16): (vlog-13314) Defaulting port 'alpha_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(17): (vlog-13314) Defaulting port 'beta_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
-# Top level modules:
-# 	Top_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 6
-# 
-# vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv}
-# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:14:17 on Nov 19,2025
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv 
-# -- Compiling module tb_Top_SIMD
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(130): (vlog-2244) Variable 'total_pixels' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(131): (vlog-2244) Variable 'total_batches' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(136): (vlog-2244) Variable 'xr' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(137): (vlog-2244) Variable 'yr' is implicitly static. You must either explicitly declare it as static or automatic
-# or remove the initialization in the declaration of variable.
-# 
-# Top level modules:
-# 	tb_Top_SIMD
-# End time: 12:14:17 on Nov 19,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 4
-# 
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_Top_SIMD
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_Top_SIMD 
-# Start time: 12:14:18 on Nov 19,2025
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_downscale_Secuencial_Proceso
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_downscale_Secuencial_Proceso 
+# Start time: 21:19:00 on Nov 20,2025
 # Loading sv_std.std
-# Loading work.tb_Top_SIMD
-# Loading work.Top_SIMD
-# Loading work.FSM_SIMD
-# Loading work.SIMD_Registros
-# Loading work.ModoSIMD
+# Loading work.tb_downscale_Secuencial_Proceso
+# Loading work.Downscale_Secuencial
 # Loading work.ModoSecuencial
 # 
 # add wave *
@@ -115,45 +57,2067 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
+# Imagen fuente 32x32 inicializada.
+# Ratios: x_ratio=2.0667, y_ratio=2.0667
 # 
-# ======== INICIO TEST INTEGRADO (Top_SIMD) =========
+# [SECUENCIAL] Ciclos totales = 769
+# [SECUENCIAL] Tiempo = 7690 ns (periodo=10ns)
 # 
-# =======================================
-# ===  BATCH 0  ===
-# =======================================
-#   HW[0] = 10  REF=10  diff=0
-#    ✓ PASS
-#   HW[1] = 40  REF=40  diff=0
-#    ✓ PASS
-#   HW[2] = 70  REF=70  diff=0
-#    ✓ PASS
-#   HW[3] = 130  REF=130  diff=0
-#    ✓ PASS
+# === COMPARACIÓN HW (Downscale_Secuencial) vs REF — MODO PROCESO ===
 # 
-# =======================================
-# ===  BATCH 1  ===
-# =======================================
-#   HW[0] = 160  REF=160  diff=0
-#    ✓ PASS
-#   HW[1] = 190  REF=190  diff=0
-#    ✓ PASS
-#   HW[2] = 240  REF=240  diff=0
-#    ✓ PASS
-#   HW[3] = 248  REF=248  diff=0
-#    ✓ PASS
+# --- Pixel destino (0,0) ---
+#   x_src=0.0000, y_src=0.0000
+#   x_l=0, x_h=0, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=0, b=0, c=0, d=0
+#   REF=0, HW=0, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# =======================================
-# ===  BATCH 2  ===
-# =======================================
-#   HW[0] = 255  REF=255  diff=0
-#    ✓ PASS
+# --- Pixel destino (0,1) ---
+#   x_src=2.0667, y_src=0.0000
+#   x_l=2, x_h=3, y_l=0, y_h=0
+#   x_w=0.0667, y_w=0.0000
+#   a=4, b=6, c=4, d=6
+#   REF=4, HW=4, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
 # 
-# ==== FIN INTEGRACIÓN (Top_SIMD) ====
-# PASS=9  FAIL=0
-# TODO OK — INTEGRACIÓN COMPLETA FUNCIONA!
-# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv(203)
-#    Time: 185 ns  Iteration: 3  Instance: /tb_Top_SIMD
+# --- Pixel destino (0,2) ---
+#   x_src=4.1333, y_src=0.0000
+#   x_l=4, x_h=5, y_l=0, y_h=0
+#   x_w=0.1333, y_w=0.0000
+#   a=8, b=10, c=8, d=10
+#   REF=8, HW=8, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,3) ---
+#   x_src=6.2000, y_src=0.0000
+#   x_l=6, x_h=7, y_l=0, y_h=0
+#   x_w=0.2000, y_w=0.0000
+#   a=12, b=14, c=12, d=14
+#   REF=12, HW=12, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,4) ---
+#   x_src=8.2667, y_src=0.0000
+#   x_l=8, x_h=9, y_l=0, y_h=0
+#   x_w=0.2667, y_w=0.0000
+#   a=16, b=18, c=16, d=18
+#   REF=17, HW=17, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,5) ---
+#   x_src=10.3333, y_src=0.0000
+#   x_l=10, x_h=11, y_l=0, y_h=0
+#   x_w=0.3333, y_w=0.0000
+#   a=20, b=22, c=20, d=22
+#   REF=21, HW=21, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,6) ---
+#   x_src=12.4000, y_src=0.0000
+#   x_l=12, x_h=13, y_l=0, y_h=0
+#   x_w=0.4000, y_w=0.0000
+#   a=24, b=26, c=24, d=26
+#   REF=25, HW=25, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,7) ---
+#   x_src=14.4667, y_src=0.0000
+#   x_l=14, x_h=15, y_l=0, y_h=0
+#   x_w=0.4667, y_w=0.0000
+#   a=28, b=30, c=28, d=30
+#   REF=29, HW=29, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,8) ---
+#   x_src=16.5333, y_src=0.0000
+#   x_l=16, x_h=17, y_l=0, y_h=0
+#   x_w=0.5333, y_w=0.0000
+#   a=32, b=34, c=32, d=34
+#   REF=33, HW=33, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,9) ---
+#   x_src=18.6000, y_src=0.0000
+#   x_l=18, x_h=19, y_l=0, y_h=0
+#   x_w=0.6000, y_w=0.0000
+#   a=36, b=38, c=36, d=38
+#   REF=37, HW=37, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,10) ---
+#   x_src=20.6667, y_src=0.0000
+#   x_l=20, x_h=21, y_l=0, y_h=0
+#   x_w=0.6667, y_w=0.0000
+#   a=40, b=42, c=40, d=42
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,11) ---
+#   x_src=22.7333, y_src=0.0000
+#   x_l=22, x_h=23, y_l=0, y_h=0
+#   x_w=0.7333, y_w=0.0000
+#   a=44, b=46, c=44, d=46
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,12) ---
+#   x_src=24.8000, y_src=0.0000
+#   x_l=24, x_h=25, y_l=0, y_h=0
+#   x_w=0.8000, y_w=0.0000
+#   a=48, b=50, c=48, d=50
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,13) ---
+#   x_src=26.8667, y_src=0.0000
+#   x_l=26, x_h=27, y_l=0, y_h=0
+#   x_w=0.8667, y_w=0.0000
+#   a=52, b=54, c=52, d=54
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,14) ---
+#   x_src=28.9333, y_src=0.0000
+#   x_l=28, x_h=29, y_l=0, y_h=0
+#   x_w=0.9333, y_w=0.0000
+#   a=56, b=58, c=56, d=58
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (0,15) ---
+#   x_src=31.0000, y_src=0.0000
+#   x_l=31, x_h=31, y_l=0, y_h=0
+#   x_w=0.0000, y_w=0.0000
+#   a=62, b=62, c=62, d=62
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,0) ---
+#   x_src=0.0000, y_src=2.0667
+#   x_l=0, x_h=0, y_l=2, y_h=3
+#   x_w=0.0000, y_w=0.0667
+#   a=8, b=8, c=12, d=12
+#   REF=8, HW=8, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,1) ---
+#   x_src=2.0667, y_src=2.0667
+#   x_l=2, x_h=3, y_l=2, y_h=3
+#   x_w=0.0667, y_w=0.0667
+#   a=12, b=14, c=16, d=18
+#   REF=12, HW=12, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,2) ---
+#   x_src=4.1333, y_src=2.0667
+#   x_l=4, x_h=5, y_l=2, y_h=3
+#   x_w=0.1333, y_w=0.0667
+#   a=16, b=18, c=20, d=22
+#   REF=17, HW=17, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,3) ---
+#   x_src=6.2000, y_src=2.0667
+#   x_l=6, x_h=7, y_l=2, y_h=3
+#   x_w=0.2000, y_w=0.0667
+#   a=20, b=22, c=24, d=26
+#   REF=21, HW=21, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,4) ---
+#   x_src=8.2667, y_src=2.0667
+#   x_l=8, x_h=9, y_l=2, y_h=3
+#   x_w=0.2667, y_w=0.0667
+#   a=24, b=26, c=28, d=30
+#   REF=25, HW=25, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,5) ---
+#   x_src=10.3333, y_src=2.0667
+#   x_l=10, x_h=11, y_l=2, y_h=3
+#   x_w=0.3333, y_w=0.0667
+#   a=28, b=30, c=32, d=34
+#   REF=29, HW=29, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,6) ---
+#   x_src=12.4000, y_src=2.0667
+#   x_l=12, x_h=13, y_l=2, y_h=3
+#   x_w=0.4000, y_w=0.0667
+#   a=32, b=34, c=36, d=38
+#   REF=33, HW=33, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,7) ---
+#   x_src=14.4667, y_src=2.0667
+#   x_l=14, x_h=15, y_l=2, y_h=3
+#   x_w=0.4667, y_w=0.0667
+#   a=36, b=38, c=40, d=42
+#   REF=37, HW=37, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,8) ---
+#   x_src=16.5333, y_src=2.0667
+#   x_l=16, x_h=17, y_l=2, y_h=3
+#   x_w=0.5333, y_w=0.0667
+#   a=40, b=42, c=44, d=46
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,9) ---
+#   x_src=18.6000, y_src=2.0667
+#   x_l=18, x_h=19, y_l=2, y_h=3
+#   x_w=0.6000, y_w=0.0667
+#   a=44, b=46, c=48, d=50
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,10) ---
+#   x_src=20.6667, y_src=2.0667
+#   x_l=20, x_h=21, y_l=2, y_h=3
+#   x_w=0.6667, y_w=0.0667
+#   a=48, b=50, c=52, d=54
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,11) ---
+#   x_src=22.7333, y_src=2.0667
+#   x_l=22, x_h=23, y_l=2, y_h=3
+#   x_w=0.7333, y_w=0.0667
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,12) ---
+#   x_src=24.8000, y_src=2.0667
+#   x_l=24, x_h=25, y_l=2, y_h=3
+#   x_w=0.8000, y_w=0.0667
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,13) ---
+#   x_src=26.8667, y_src=2.0667
+#   x_l=26, x_h=27, y_l=2, y_h=3
+#   x_w=0.8667, y_w=0.0667
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,14) ---
+#   x_src=28.9333, y_src=2.0667
+#   x_l=28, x_h=29, y_l=2, y_h=3
+#   x_w=0.9333, y_w=0.0667
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (1,15) ---
+#   x_src=31.0000, y_src=2.0667
+#   x_l=31, x_h=31, y_l=2, y_h=3
+#   x_w=0.0000, y_w=0.0667
+#   a=70, b=70, c=74, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,0) ---
+#   x_src=0.0000, y_src=4.1333
+#   x_l=0, x_h=0, y_l=4, y_h=5
+#   x_w=0.0000, y_w=0.1333
+#   a=16, b=16, c=20, d=20
+#   REF=17, HW=17, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,1) ---
+#   x_src=2.0667, y_src=4.1333
+#   x_l=2, x_h=3, y_l=4, y_h=5
+#   x_w=0.0667, y_w=0.1333
+#   a=20, b=22, c=24, d=26
+#   REF=21, HW=21, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,2) ---
+#   x_src=4.1333, y_src=4.1333
+#   x_l=4, x_h=5, y_l=4, y_h=5
+#   x_w=0.1333, y_w=0.1333
+#   a=24, b=26, c=28, d=30
+#   REF=25, HW=25, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,3) ---
+#   x_src=6.2000, y_src=4.1333
+#   x_l=6, x_h=7, y_l=4, y_h=5
+#   x_w=0.2000, y_w=0.1333
+#   a=28, b=30, c=32, d=34
+#   REF=29, HW=29, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,4) ---
+#   x_src=8.2667, y_src=4.1333
+#   x_l=8, x_h=9, y_l=4, y_h=5
+#   x_w=0.2667, y_w=0.1333
+#   a=32, b=34, c=36, d=38
+#   REF=33, HW=33, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,5) ---
+#   x_src=10.3333, y_src=4.1333
+#   x_l=10, x_h=11, y_l=4, y_h=5
+#   x_w=0.3333, y_w=0.1333
+#   a=36, b=38, c=40, d=42
+#   REF=37, HW=37, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,6) ---
+#   x_src=12.4000, y_src=4.1333
+#   x_l=12, x_h=13, y_l=4, y_h=5
+#   x_w=0.4000, y_w=0.1333
+#   a=40, b=42, c=44, d=46
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,7) ---
+#   x_src=14.4667, y_src=4.1333
+#   x_l=14, x_h=15, y_l=4, y_h=5
+#   x_w=0.4667, y_w=0.1333
+#   a=44, b=46, c=48, d=50
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,8) ---
+#   x_src=16.5333, y_src=4.1333
+#   x_l=16, x_h=17, y_l=4, y_h=5
+#   x_w=0.5333, y_w=0.1333
+#   a=48, b=50, c=52, d=54
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,9) ---
+#   x_src=18.6000, y_src=4.1333
+#   x_l=18, x_h=19, y_l=4, y_h=5
+#   x_w=0.6000, y_w=0.1333
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,10) ---
+#   x_src=20.6667, y_src=4.1333
+#   x_l=20, x_h=21, y_l=4, y_h=5
+#   x_w=0.6667, y_w=0.1333
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,11) ---
+#   x_src=22.7333, y_src=4.1333
+#   x_l=22, x_h=23, y_l=4, y_h=5
+#   x_w=0.7333, y_w=0.1333
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,12) ---
+#   x_src=24.8000, y_src=4.1333
+#   x_l=24, x_h=25, y_l=4, y_h=5
+#   x_w=0.8000, y_w=0.1333
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,13) ---
+#   x_src=26.8667, y_src=4.1333
+#   x_l=26, x_h=27, y_l=4, y_h=5
+#   x_w=0.8667, y_w=0.1333
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,14) ---
+#   x_src=28.9333, y_src=4.1333
+#   x_l=28, x_h=29, y_l=4, y_h=5
+#   x_w=0.9333, y_w=0.1333
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (2,15) ---
+#   x_src=31.0000, y_src=4.1333
+#   x_l=31, x_h=31, y_l=4, y_h=5
+#   x_w=0.0000, y_w=0.1333
+#   a=78, b=78, c=82, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,0) ---
+#   x_src=0.0000, y_src=6.2000
+#   x_l=0, x_h=0, y_l=6, y_h=7
+#   x_w=0.0000, y_w=0.2000
+#   a=24, b=24, c=28, d=28
+#   REF=25, HW=25, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,1) ---
+#   x_src=2.0667, y_src=6.2000
+#   x_l=2, x_h=3, y_l=6, y_h=7
+#   x_w=0.0667, y_w=0.2000
+#   a=28, b=30, c=32, d=34
+#   REF=29, HW=29, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,2) ---
+#   x_src=4.1333, y_src=6.2000
+#   x_l=4, x_h=5, y_l=6, y_h=7
+#   x_w=0.1333, y_w=0.2000
+#   a=32, b=34, c=36, d=38
+#   REF=33, HW=33, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,3) ---
+#   x_src=6.2000, y_src=6.2000
+#   x_l=6, x_h=7, y_l=6, y_h=7
+#   x_w=0.2000, y_w=0.2000
+#   a=36, b=38, c=40, d=42
+#   REF=37, HW=37, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,4) ---
+#   x_src=8.2667, y_src=6.2000
+#   x_l=8, x_h=9, y_l=6, y_h=7
+#   x_w=0.2667, y_w=0.2000
+#   a=40, b=42, c=44, d=46
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,5) ---
+#   x_src=10.3333, y_src=6.2000
+#   x_l=10, x_h=11, y_l=6, y_h=7
+#   x_w=0.3333, y_w=0.2000
+#   a=44, b=46, c=48, d=50
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,6) ---
+#   x_src=12.4000, y_src=6.2000
+#   x_l=12, x_h=13, y_l=6, y_h=7
+#   x_w=0.4000, y_w=0.2000
+#   a=48, b=50, c=52, d=54
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,7) ---
+#   x_src=14.4667, y_src=6.2000
+#   x_l=14, x_h=15, y_l=6, y_h=7
+#   x_w=0.4667, y_w=0.2000
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,8) ---
+#   x_src=16.5333, y_src=6.2000
+#   x_l=16, x_h=17, y_l=6, y_h=7
+#   x_w=0.5333, y_w=0.2000
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,9) ---
+#   x_src=18.6000, y_src=6.2000
+#   x_l=18, x_h=19, y_l=6, y_h=7
+#   x_w=0.6000, y_w=0.2000
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,10) ---
+#   x_src=20.6667, y_src=6.2000
+#   x_l=20, x_h=21, y_l=6, y_h=7
+#   x_w=0.6667, y_w=0.2000
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,11) ---
+#   x_src=22.7333, y_src=6.2000
+#   x_l=22, x_h=23, y_l=6, y_h=7
+#   x_w=0.7333, y_w=0.2000
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,12) ---
+#   x_src=24.8000, y_src=6.2000
+#   x_l=24, x_h=25, y_l=6, y_h=7
+#   x_w=0.8000, y_w=0.2000
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,13) ---
+#   x_src=26.8667, y_src=6.2000
+#   x_l=26, x_h=27, y_l=6, y_h=7
+#   x_w=0.8667, y_w=0.2000
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,14) ---
+#   x_src=28.9333, y_src=6.2000
+#   x_l=28, x_h=29, y_l=6, y_h=7
+#   x_w=0.9333, y_w=0.2000
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (3,15) ---
+#   x_src=31.0000, y_src=6.2000
+#   x_l=31, x_h=31, y_l=6, y_h=7
+#   x_w=0.0000, y_w=0.2000
+#   a=86, b=86, c=90, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,0) ---
+#   x_src=0.0000, y_src=8.2667
+#   x_l=0, x_h=0, y_l=8, y_h=9
+#   x_w=0.0000, y_w=0.2667
+#   a=32, b=32, c=36, d=36
+#   REF=33, HW=33, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,1) ---
+#   x_src=2.0667, y_src=8.2667
+#   x_l=2, x_h=3, y_l=8, y_h=9
+#   x_w=0.0667, y_w=0.2667
+#   a=36, b=38, c=40, d=42
+#   REF=37, HW=37, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,2) ---
+#   x_src=4.1333, y_src=8.2667
+#   x_l=4, x_h=5, y_l=8, y_h=9
+#   x_w=0.1333, y_w=0.2667
+#   a=40, b=42, c=44, d=46
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,3) ---
+#   x_src=6.2000, y_src=8.2667
+#   x_l=6, x_h=7, y_l=8, y_h=9
+#   x_w=0.2000, y_w=0.2667
+#   a=44, b=46, c=48, d=50
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,4) ---
+#   x_src=8.2667, y_src=8.2667
+#   x_l=8, x_h=9, y_l=8, y_h=9
+#   x_w=0.2667, y_w=0.2667
+#   a=48, b=50, c=52, d=54
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,5) ---
+#   x_src=10.3333, y_src=8.2667
+#   x_l=10, x_h=11, y_l=8, y_h=9
+#   x_w=0.3333, y_w=0.2667
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,6) ---
+#   x_src=12.4000, y_src=8.2667
+#   x_l=12, x_h=13, y_l=8, y_h=9
+#   x_w=0.4000, y_w=0.2667
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,7) ---
+#   x_src=14.4667, y_src=8.2667
+#   x_l=14, x_h=15, y_l=8, y_h=9
+#   x_w=0.4667, y_w=0.2667
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,8) ---
+#   x_src=16.5333, y_src=8.2667
+#   x_l=16, x_h=17, y_l=8, y_h=9
+#   x_w=0.5333, y_w=0.2667
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,9) ---
+#   x_src=18.6000, y_src=8.2667
+#   x_l=18, x_h=19, y_l=8, y_h=9
+#   x_w=0.6000, y_w=0.2667
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,10) ---
+#   x_src=20.6667, y_src=8.2667
+#   x_l=20, x_h=21, y_l=8, y_h=9
+#   x_w=0.6667, y_w=0.2667
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,11) ---
+#   x_src=22.7333, y_src=8.2667
+#   x_l=22, x_h=23, y_l=8, y_h=9
+#   x_w=0.7333, y_w=0.2667
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,12) ---
+#   x_src=24.8000, y_src=8.2667
+#   x_l=24, x_h=25, y_l=8, y_h=9
+#   x_w=0.8000, y_w=0.2667
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,13) ---
+#   x_src=26.8667, y_src=8.2667
+#   x_l=26, x_h=27, y_l=8, y_h=9
+#   x_w=0.8667, y_w=0.2667
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,14) ---
+#   x_src=28.9333, y_src=8.2667
+#   x_l=28, x_h=29, y_l=8, y_h=9
+#   x_w=0.9333, y_w=0.2667
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (4,15) ---
+#   x_src=31.0000, y_src=8.2667
+#   x_l=31, x_h=31, y_l=8, y_h=9
+#   x_w=0.0000, y_w=0.2667
+#   a=94, b=94, c=98, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,0) ---
+#   x_src=0.0000, y_src=10.3333
+#   x_l=0, x_h=0, y_l=10, y_h=11
+#   x_w=0.0000, y_w=0.3333
+#   a=40, b=40, c=44, d=44
+#   REF=41, HW=41, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,1) ---
+#   x_src=2.0667, y_src=10.3333
+#   x_l=2, x_h=3, y_l=10, y_h=11
+#   x_w=0.0667, y_w=0.3333
+#   a=44, b=46, c=48, d=50
+#   REF=45, HW=45, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,2) ---
+#   x_src=4.1333, y_src=10.3333
+#   x_l=4, x_h=5, y_l=10, y_h=11
+#   x_w=0.1333, y_w=0.3333
+#   a=48, b=50, c=52, d=54
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,3) ---
+#   x_src=6.2000, y_src=10.3333
+#   x_l=6, x_h=7, y_l=10, y_h=11
+#   x_w=0.2000, y_w=0.3333
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,4) ---
+#   x_src=8.2667, y_src=10.3333
+#   x_l=8, x_h=9, y_l=10, y_h=11
+#   x_w=0.2667, y_w=0.3333
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,5) ---
+#   x_src=10.3333, y_src=10.3333
+#   x_l=10, x_h=11, y_l=10, y_h=11
+#   x_w=0.3333, y_w=0.3333
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,6) ---
+#   x_src=12.4000, y_src=10.3333
+#   x_l=12, x_h=13, y_l=10, y_h=11
+#   x_w=0.4000, y_w=0.3333
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,7) ---
+#   x_src=14.4667, y_src=10.3333
+#   x_l=14, x_h=15, y_l=10, y_h=11
+#   x_w=0.4667, y_w=0.3333
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,8) ---
+#   x_src=16.5333, y_src=10.3333
+#   x_l=16, x_h=17, y_l=10, y_h=11
+#   x_w=0.5333, y_w=0.3333
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,9) ---
+#   x_src=18.6000, y_src=10.3333
+#   x_l=18, x_h=19, y_l=10, y_h=11
+#   x_w=0.6000, y_w=0.3333
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,10) ---
+#   x_src=20.6667, y_src=10.3333
+#   x_l=20, x_h=21, y_l=10, y_h=11
+#   x_w=0.6667, y_w=0.3333
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,11) ---
+#   x_src=22.7333, y_src=10.3333
+#   x_l=22, x_h=23, y_l=10, y_h=11
+#   x_w=0.7333, y_w=0.3333
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,12) ---
+#   x_src=24.8000, y_src=10.3333
+#   x_l=24, x_h=25, y_l=10, y_h=11
+#   x_w=0.8000, y_w=0.3333
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,13) ---
+#   x_src=26.8667, y_src=10.3333
+#   x_l=26, x_h=27, y_l=10, y_h=11
+#   x_w=0.8667, y_w=0.3333
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,14) ---
+#   x_src=28.9333, y_src=10.3333
+#   x_l=28, x_h=29, y_l=10, y_h=11
+#   x_w=0.9333, y_w=0.3333
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (5,15) ---
+#   x_src=31.0000, y_src=10.3333
+#   x_l=31, x_h=31, y_l=10, y_h=11
+#   x_w=0.0000, y_w=0.3333
+#   a=102, b=102, c=106, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,0) ---
+#   x_src=0.0000, y_src=12.4000
+#   x_l=0, x_h=0, y_l=12, y_h=13
+#   x_w=0.0000, y_w=0.4000
+#   a=48, b=48, c=52, d=52
+#   REF=50, HW=50, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,1) ---
+#   x_src=2.0667, y_src=12.4000
+#   x_l=2, x_h=3, y_l=12, y_h=13
+#   x_w=0.0667, y_w=0.4000
+#   a=52, b=54, c=56, d=58
+#   REF=54, HW=54, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,2) ---
+#   x_src=4.1333, y_src=12.4000
+#   x_l=4, x_h=5, y_l=12, y_h=13
+#   x_w=0.1333, y_w=0.4000
+#   a=56, b=58, c=60, d=62
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,3) ---
+#   x_src=6.2000, y_src=12.4000
+#   x_l=6, x_h=7, y_l=12, y_h=13
+#   x_w=0.2000, y_w=0.4000
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,4) ---
+#   x_src=8.2667, y_src=12.4000
+#   x_l=8, x_h=9, y_l=12, y_h=13
+#   x_w=0.2667, y_w=0.4000
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,5) ---
+#   x_src=10.3333, y_src=12.4000
+#   x_l=10, x_h=11, y_l=12, y_h=13
+#   x_w=0.3333, y_w=0.4000
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,6) ---
+#   x_src=12.4000, y_src=12.4000
+#   x_l=12, x_h=13, y_l=12, y_h=13
+#   x_w=0.4000, y_w=0.4000
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,7) ---
+#   x_src=14.4667, y_src=12.4000
+#   x_l=14, x_h=15, y_l=12, y_h=13
+#   x_w=0.4667, y_w=0.4000
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,8) ---
+#   x_src=16.5333, y_src=12.4000
+#   x_l=16, x_h=17, y_l=12, y_h=13
+#   x_w=0.5333, y_w=0.4000
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,9) ---
+#   x_src=18.6000, y_src=12.4000
+#   x_l=18, x_h=19, y_l=12, y_h=13
+#   x_w=0.6000, y_w=0.4000
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,10) ---
+#   x_src=20.6667, y_src=12.4000
+#   x_l=20, x_h=21, y_l=12, y_h=13
+#   x_w=0.6667, y_w=0.4000
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,11) ---
+#   x_src=22.7333, y_src=12.4000
+#   x_l=22, x_h=23, y_l=12, y_h=13
+#   x_w=0.7333, y_w=0.4000
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,12) ---
+#   x_src=24.8000, y_src=12.4000
+#   x_l=24, x_h=25, y_l=12, y_h=13
+#   x_w=0.8000, y_w=0.4000
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,13) ---
+#   x_src=26.8667, y_src=12.4000
+#   x_l=26, x_h=27, y_l=12, y_h=13
+#   x_w=0.8667, y_w=0.4000
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,14) ---
+#   x_src=28.9333, y_src=12.4000
+#   x_l=28, x_h=29, y_l=12, y_h=13
+#   x_w=0.9333, y_w=0.4000
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (6,15) ---
+#   x_src=31.0000, y_src=12.4000
+#   x_l=31, x_h=31, y_l=12, y_h=13
+#   x_w=0.0000, y_w=0.4000
+#   a=110, b=110, c=114, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,0) ---
+#   x_src=0.0000, y_src=14.4667
+#   x_l=0, x_h=0, y_l=14, y_h=15
+#   x_w=0.0000, y_w=0.4667
+#   a=56, b=56, c=60, d=60
+#   REF=58, HW=58, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,1) ---
+#   x_src=2.0667, y_src=14.4667
+#   x_l=2, x_h=3, y_l=14, y_h=15
+#   x_w=0.0667, y_w=0.4667
+#   a=60, b=62, c=64, d=66
+#   REF=62, HW=62, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,2) ---
+#   x_src=4.1333, y_src=14.4667
+#   x_l=4, x_h=5, y_l=14, y_h=15
+#   x_w=0.1333, y_w=0.4667
+#   a=64, b=66, c=68, d=70
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,3) ---
+#   x_src=6.2000, y_src=14.4667
+#   x_l=6, x_h=7, y_l=14, y_h=15
+#   x_w=0.2000, y_w=0.4667
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,4) ---
+#   x_src=8.2667, y_src=14.4667
+#   x_l=8, x_h=9, y_l=14, y_h=15
+#   x_w=0.2667, y_w=0.4667
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,5) ---
+#   x_src=10.3333, y_src=14.4667
+#   x_l=10, x_h=11, y_l=14, y_h=15
+#   x_w=0.3333, y_w=0.4667
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,6) ---
+#   x_src=12.4000, y_src=14.4667
+#   x_l=12, x_h=13, y_l=14, y_h=15
+#   x_w=0.4000, y_w=0.4667
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,7) ---
+#   x_src=14.4667, y_src=14.4667
+#   x_l=14, x_h=15, y_l=14, y_h=15
+#   x_w=0.4667, y_w=0.4667
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,8) ---
+#   x_src=16.5333, y_src=14.4667
+#   x_l=16, x_h=17, y_l=14, y_h=15
+#   x_w=0.5333, y_w=0.4667
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,9) ---
+#   x_src=18.6000, y_src=14.4667
+#   x_l=18, x_h=19, y_l=14, y_h=15
+#   x_w=0.6000, y_w=0.4667
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,10) ---
+#   x_src=20.6667, y_src=14.4667
+#   x_l=20, x_h=21, y_l=14, y_h=15
+#   x_w=0.6667, y_w=0.4667
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,11) ---
+#   x_src=22.7333, y_src=14.4667
+#   x_l=22, x_h=23, y_l=14, y_h=15
+#   x_w=0.7333, y_w=0.4667
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,12) ---
+#   x_src=24.8000, y_src=14.4667
+#   x_l=24, x_h=25, y_l=14, y_h=15
+#   x_w=0.8000, y_w=0.4667
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,13) ---
+#   x_src=26.8667, y_src=14.4667
+#   x_l=26, x_h=27, y_l=14, y_h=15
+#   x_w=0.8667, y_w=0.4667
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,14) ---
+#   x_src=28.9333, y_src=14.4667
+#   x_l=28, x_h=29, y_l=14, y_h=15
+#   x_w=0.9333, y_w=0.4667
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (7,15) ---
+#   x_src=31.0000, y_src=14.4667
+#   x_l=31, x_h=31, y_l=14, y_h=15
+#   x_w=0.0000, y_w=0.4667
+#   a=118, b=118, c=122, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,0) ---
+#   x_src=0.0000, y_src=16.5333
+#   x_l=0, x_h=0, y_l=16, y_h=17
+#   x_w=0.0000, y_w=0.5333
+#   a=64, b=64, c=68, d=68
+#   REF=66, HW=66, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,1) ---
+#   x_src=2.0667, y_src=16.5333
+#   x_l=2, x_h=3, y_l=16, y_h=17
+#   x_w=0.0667, y_w=0.5333
+#   a=68, b=70, c=72, d=74
+#   REF=70, HW=70, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,2) ---
+#   x_src=4.1333, y_src=16.5333
+#   x_l=4, x_h=5, y_l=16, y_h=17
+#   x_w=0.1333, y_w=0.5333
+#   a=72, b=74, c=76, d=78
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,3) ---
+#   x_src=6.2000, y_src=16.5333
+#   x_l=6, x_h=7, y_l=16, y_h=17
+#   x_w=0.2000, y_w=0.5333
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,4) ---
+#   x_src=8.2667, y_src=16.5333
+#   x_l=8, x_h=9, y_l=16, y_h=17
+#   x_w=0.2667, y_w=0.5333
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,5) ---
+#   x_src=10.3333, y_src=16.5333
+#   x_l=10, x_h=11, y_l=16, y_h=17
+#   x_w=0.3333, y_w=0.5333
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,6) ---
+#   x_src=12.4000, y_src=16.5333
+#   x_l=12, x_h=13, y_l=16, y_h=17
+#   x_w=0.4000, y_w=0.5333
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,7) ---
+#   x_src=14.4667, y_src=16.5333
+#   x_l=14, x_h=15, y_l=16, y_h=17
+#   x_w=0.4667, y_w=0.5333
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,8) ---
+#   x_src=16.5333, y_src=16.5333
+#   x_l=16, x_h=17, y_l=16, y_h=17
+#   x_w=0.5333, y_w=0.5333
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,9) ---
+#   x_src=18.6000, y_src=16.5333
+#   x_l=18, x_h=19, y_l=16, y_h=17
+#   x_w=0.6000, y_w=0.5333
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,10) ---
+#   x_src=20.6667, y_src=16.5333
+#   x_l=20, x_h=21, y_l=16, y_h=17
+#   x_w=0.6667, y_w=0.5333
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,11) ---
+#   x_src=22.7333, y_src=16.5333
+#   x_l=22, x_h=23, y_l=16, y_h=17
+#   x_w=0.7333, y_w=0.5333
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,12) ---
+#   x_src=24.8000, y_src=16.5333
+#   x_l=24, x_h=25, y_l=16, y_h=17
+#   x_w=0.8000, y_w=0.5333
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,13) ---
+#   x_src=26.8667, y_src=16.5333
+#   x_l=26, x_h=27, y_l=16, y_h=17
+#   x_w=0.8667, y_w=0.5333
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,14) ---
+#   x_src=28.9333, y_src=16.5333
+#   x_l=28, x_h=29, y_l=16, y_h=17
+#   x_w=0.9333, y_w=0.5333
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (8,15) ---
+#   x_src=31.0000, y_src=16.5333
+#   x_l=31, x_h=31, y_l=16, y_h=17
+#   x_w=0.0000, y_w=0.5333
+#   a=126, b=126, c=130, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,0) ---
+#   x_src=0.0000, y_src=18.6000
+#   x_l=0, x_h=0, y_l=18, y_h=19
+#   x_w=0.0000, y_w=0.6000
+#   a=72, b=72, c=76, d=76
+#   REF=74, HW=74, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,1) ---
+#   x_src=2.0667, y_src=18.6000
+#   x_l=2, x_h=3, y_l=18, y_h=19
+#   x_w=0.0667, y_w=0.6000
+#   a=76, b=78, c=80, d=82
+#   REF=79, HW=79, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,2) ---
+#   x_src=4.1333, y_src=18.6000
+#   x_l=4, x_h=5, y_l=18, y_h=19
+#   x_w=0.1333, y_w=0.6000
+#   a=80, b=82, c=84, d=86
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,3) ---
+#   x_src=6.2000, y_src=18.6000
+#   x_l=6, x_h=7, y_l=18, y_h=19
+#   x_w=0.2000, y_w=0.6000
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,4) ---
+#   x_src=8.2667, y_src=18.6000
+#   x_l=8, x_h=9, y_l=18, y_h=19
+#   x_w=0.2667, y_w=0.6000
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,5) ---
+#   x_src=10.3333, y_src=18.6000
+#   x_l=10, x_h=11, y_l=18, y_h=19
+#   x_w=0.3333, y_w=0.6000
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,6) ---
+#   x_src=12.4000, y_src=18.6000
+#   x_l=12, x_h=13, y_l=18, y_h=19
+#   x_w=0.4000, y_w=0.6000
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,7) ---
+#   x_src=14.4667, y_src=18.6000
+#   x_l=14, x_h=15, y_l=18, y_h=19
+#   x_w=0.4667, y_w=0.6000
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,8) ---
+#   x_src=16.5333, y_src=18.6000
+#   x_l=16, x_h=17, y_l=18, y_h=19
+#   x_w=0.5333, y_w=0.6000
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,9) ---
+#   x_src=18.6000, y_src=18.6000
+#   x_l=18, x_h=19, y_l=18, y_h=19
+#   x_w=0.6000, y_w=0.6000
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,10) ---
+#   x_src=20.6667, y_src=18.6000
+#   x_l=20, x_h=21, y_l=18, y_h=19
+#   x_w=0.6667, y_w=0.6000
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,11) ---
+#   x_src=22.7333, y_src=18.6000
+#   x_l=22, x_h=23, y_l=18, y_h=19
+#   x_w=0.7333, y_w=0.6000
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,12) ---
+#   x_src=24.8000, y_src=18.6000
+#   x_l=24, x_h=25, y_l=18, y_h=19
+#   x_w=0.8000, y_w=0.6000
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,13) ---
+#   x_src=26.8667, y_src=18.6000
+#   x_l=26, x_h=27, y_l=18, y_h=19
+#   x_w=0.8667, y_w=0.6000
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,14) ---
+#   x_src=28.9333, y_src=18.6000
+#   x_l=28, x_h=29, y_l=18, y_h=19
+#   x_w=0.9333, y_w=0.6000
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (9,15) ---
+#   x_src=31.0000, y_src=18.6000
+#   x_l=31, x_h=31, y_l=18, y_h=19
+#   x_w=0.0000, y_w=0.6000
+#   a=134, b=134, c=138, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,0) ---
+#   x_src=0.0000, y_src=20.6667
+#   x_l=0, x_h=0, y_l=20, y_h=21
+#   x_w=0.0000, y_w=0.6667
+#   a=80, b=80, c=84, d=84
+#   REF=83, HW=83, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,1) ---
+#   x_src=2.0667, y_src=20.6667
+#   x_l=2, x_h=3, y_l=20, y_h=21
+#   x_w=0.0667, y_w=0.6667
+#   a=84, b=86, c=88, d=90
+#   REF=87, HW=87, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,2) ---
+#   x_src=4.1333, y_src=20.6667
+#   x_l=4, x_h=5, y_l=20, y_h=21
+#   x_w=0.1333, y_w=0.6667
+#   a=88, b=90, c=92, d=94
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,3) ---
+#   x_src=6.2000, y_src=20.6667
+#   x_l=6, x_h=7, y_l=20, y_h=21
+#   x_w=0.2000, y_w=0.6667
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,4) ---
+#   x_src=8.2667, y_src=20.6667
+#   x_l=8, x_h=9, y_l=20, y_h=21
+#   x_w=0.2667, y_w=0.6667
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,5) ---
+#   x_src=10.3333, y_src=20.6667
+#   x_l=10, x_h=11, y_l=20, y_h=21
+#   x_w=0.3333, y_w=0.6667
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,6) ---
+#   x_src=12.4000, y_src=20.6667
+#   x_l=12, x_h=13, y_l=20, y_h=21
+#   x_w=0.4000, y_w=0.6667
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,7) ---
+#   x_src=14.4667, y_src=20.6667
+#   x_l=14, x_h=15, y_l=20, y_h=21
+#   x_w=0.4667, y_w=0.6667
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,8) ---
+#   x_src=16.5333, y_src=20.6667
+#   x_l=16, x_h=17, y_l=20, y_h=21
+#   x_w=0.5333, y_w=0.6667
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,9) ---
+#   x_src=18.6000, y_src=20.6667
+#   x_l=18, x_h=19, y_l=20, y_h=21
+#   x_w=0.6000, y_w=0.6667
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,10) ---
+#   x_src=20.6667, y_src=20.6667
+#   x_l=20, x_h=21, y_l=20, y_h=21
+#   x_w=0.6667, y_w=0.6667
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,11) ---
+#   x_src=22.7333, y_src=20.6667
+#   x_l=22, x_h=23, y_l=20, y_h=21
+#   x_w=0.7333, y_w=0.6667
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,12) ---
+#   x_src=24.8000, y_src=20.6667
+#   x_l=24, x_h=25, y_l=20, y_h=21
+#   x_w=0.8000, y_w=0.6667
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,13) ---
+#   x_src=26.8667, y_src=20.6667
+#   x_l=26, x_h=27, y_l=20, y_h=21
+#   x_w=0.8667, y_w=0.6667
+#   a=132, b=134, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,14) ---
+#   x_src=28.9333, y_src=20.6667
+#   x_l=28, x_h=29, y_l=20, y_h=21
+#   x_w=0.9333, y_w=0.6667
+#   a=136, b=138, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (10,15) ---
+#   x_src=31.0000, y_src=20.6667
+#   x_l=31, x_h=31, y_l=20, y_h=21
+#   x_w=0.0000, y_w=0.6667
+#   a=142, b=142, c=146, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,0) ---
+#   x_src=0.0000, y_src=22.7333
+#   x_l=0, x_h=0, y_l=22, y_h=23
+#   x_w=0.0000, y_w=0.7333
+#   a=88, b=88, c=92, d=92
+#   REF=91, HW=91, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,1) ---
+#   x_src=2.0667, y_src=22.7333
+#   x_l=2, x_h=3, y_l=22, y_h=23
+#   x_w=0.0667, y_w=0.7333
+#   a=92, b=94, c=96, d=98
+#   REF=95, HW=95, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,2) ---
+#   x_src=4.1333, y_src=22.7333
+#   x_l=4, x_h=5, y_l=22, y_h=23
+#   x_w=0.1333, y_w=0.7333
+#   a=96, b=98, c=100, d=102
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,3) ---
+#   x_src=6.2000, y_src=22.7333
+#   x_l=6, x_h=7, y_l=22, y_h=23
+#   x_w=0.2000, y_w=0.7333
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,4) ---
+#   x_src=8.2667, y_src=22.7333
+#   x_l=8, x_h=9, y_l=22, y_h=23
+#   x_w=0.2667, y_w=0.7333
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,5) ---
+#   x_src=10.3333, y_src=22.7333
+#   x_l=10, x_h=11, y_l=22, y_h=23
+#   x_w=0.3333, y_w=0.7333
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,6) ---
+#   x_src=12.4000, y_src=22.7333
+#   x_l=12, x_h=13, y_l=22, y_h=23
+#   x_w=0.4000, y_w=0.7333
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,7) ---
+#   x_src=14.4667, y_src=22.7333
+#   x_l=14, x_h=15, y_l=22, y_h=23
+#   x_w=0.4667, y_w=0.7333
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,8) ---
+#   x_src=16.5333, y_src=22.7333
+#   x_l=16, x_h=17, y_l=22, y_h=23
+#   x_w=0.5333, y_w=0.7333
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,9) ---
+#   x_src=18.6000, y_src=22.7333
+#   x_l=18, x_h=19, y_l=22, y_h=23
+#   x_w=0.6000, y_w=0.7333
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,10) ---
+#   x_src=20.6667, y_src=22.7333
+#   x_l=20, x_h=21, y_l=22, y_h=23
+#   x_w=0.6667, y_w=0.7333
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,11) ---
+#   x_src=22.7333, y_src=22.7333
+#   x_l=22, x_h=23, y_l=22, y_h=23
+#   x_w=0.7333, y_w=0.7333
+#   a=132, b=134, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,12) ---
+#   x_src=24.8000, y_src=22.7333
+#   x_l=24, x_h=25, y_l=22, y_h=23
+#   x_w=0.8000, y_w=0.7333
+#   a=136, b=138, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,13) ---
+#   x_src=26.8667, y_src=22.7333
+#   x_l=26, x_h=27, y_l=22, y_h=23
+#   x_w=0.8667, y_w=0.7333
+#   a=140, b=142, c=144, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,14) ---
+#   x_src=28.9333, y_src=22.7333
+#   x_l=28, x_h=29, y_l=22, y_h=23
+#   x_w=0.9333, y_w=0.7333
+#   a=144, b=146, c=148, d=150
+#   REF=149, HW=149, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (11,15) ---
+#   x_src=31.0000, y_src=22.7333
+#   x_l=31, x_h=31, y_l=22, y_h=23
+#   x_w=0.0000, y_w=0.7333
+#   a=150, b=150, c=154, d=154
+#   REF=153, HW=153, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,0) ---
+#   x_src=0.0000, y_src=24.8000
+#   x_l=0, x_h=0, y_l=24, y_h=25
+#   x_w=0.0000, y_w=0.8000
+#   a=96, b=96, c=100, d=100
+#   REF=99, HW=99, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,1) ---
+#   x_src=2.0667, y_src=24.8000
+#   x_l=2, x_h=3, y_l=24, y_h=25
+#   x_w=0.0667, y_w=0.8000
+#   a=100, b=102, c=104, d=106
+#   REF=103, HW=103, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,2) ---
+#   x_src=4.1333, y_src=24.8000
+#   x_l=4, x_h=5, y_l=24, y_h=25
+#   x_w=0.1333, y_w=0.8000
+#   a=104, b=106, c=108, d=110
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,3) ---
+#   x_src=6.2000, y_src=24.8000
+#   x_l=6, x_h=7, y_l=24, y_h=25
+#   x_w=0.2000, y_w=0.8000
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,4) ---
+#   x_src=8.2667, y_src=24.8000
+#   x_l=8, x_h=9, y_l=24, y_h=25
+#   x_w=0.2667, y_w=0.8000
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,5) ---
+#   x_src=10.3333, y_src=24.8000
+#   x_l=10, x_h=11, y_l=24, y_h=25
+#   x_w=0.3333, y_w=0.8000
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,6) ---
+#   x_src=12.4000, y_src=24.8000
+#   x_l=12, x_h=13, y_l=24, y_h=25
+#   x_w=0.4000, y_w=0.8000
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,7) ---
+#   x_src=14.4667, y_src=24.8000
+#   x_l=14, x_h=15, y_l=24, y_h=25
+#   x_w=0.4667, y_w=0.8000
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,8) ---
+#   x_src=16.5333, y_src=24.8000
+#   x_l=16, x_h=17, y_l=24, y_h=25
+#   x_w=0.5333, y_w=0.8000
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,9) ---
+#   x_src=18.6000, y_src=24.8000
+#   x_l=18, x_h=19, y_l=24, y_h=25
+#   x_w=0.6000, y_w=0.8000
+#   a=132, b=134, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,10) ---
+#   x_src=20.6667, y_src=24.8000
+#   x_l=20, x_h=21, y_l=24, y_h=25
+#   x_w=0.6667, y_w=0.8000
+#   a=136, b=138, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,11) ---
+#   x_src=22.7333, y_src=24.8000
+#   x_l=22, x_h=23, y_l=24, y_h=25
+#   x_w=0.7333, y_w=0.8000
+#   a=140, b=142, c=144, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,12) ---
+#   x_src=24.8000, y_src=24.8000
+#   x_l=24, x_h=25, y_l=24, y_h=25
+#   x_w=0.8000, y_w=0.8000
+#   a=144, b=146, c=148, d=150
+#   REF=149, HW=149, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,13) ---
+#   x_src=26.8667, y_src=24.8000
+#   x_l=26, x_h=27, y_l=24, y_h=25
+#   x_w=0.8667, y_w=0.8000
+#   a=148, b=150, c=152, d=154
+#   REF=153, HW=153, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,14) ---
+#   x_src=28.9333, y_src=24.8000
+#   x_l=28, x_h=29, y_l=24, y_h=25
+#   x_w=0.9333, y_w=0.8000
+#   a=152, b=154, c=156, d=158
+#   REF=157, HW=157, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (12,15) ---
+#   x_src=31.0000, y_src=24.8000
+#   x_l=31, x_h=31, y_l=24, y_h=25
+#   x_w=0.0000, y_w=0.8000
+#   a=158, b=158, c=162, d=162
+#   REF=161, HW=161, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,0) ---
+#   x_src=0.0000, y_src=26.8667
+#   x_l=0, x_h=0, y_l=26, y_h=27
+#   x_w=0.0000, y_w=0.8667
+#   a=104, b=104, c=108, d=108
+#   REF=107, HW=107, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,1) ---
+#   x_src=2.0667, y_src=26.8667
+#   x_l=2, x_h=3, y_l=26, y_h=27
+#   x_w=0.0667, y_w=0.8667
+#   a=108, b=110, c=112, d=114
+#   REF=112, HW=112, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,2) ---
+#   x_src=4.1333, y_src=26.8667
+#   x_l=4, x_h=5, y_l=26, y_h=27
+#   x_w=0.1333, y_w=0.8667
+#   a=112, b=114, c=116, d=118
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,3) ---
+#   x_src=6.2000, y_src=26.8667
+#   x_l=6, x_h=7, y_l=26, y_h=27
+#   x_w=0.2000, y_w=0.8667
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,4) ---
+#   x_src=8.2667, y_src=26.8667
+#   x_l=8, x_h=9, y_l=26, y_h=27
+#   x_w=0.2667, y_w=0.8667
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,5) ---
+#   x_src=10.3333, y_src=26.8667
+#   x_l=10, x_h=11, y_l=26, y_h=27
+#   x_w=0.3333, y_w=0.8667
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,6) ---
+#   x_src=12.4000, y_src=26.8667
+#   x_l=12, x_h=13, y_l=26, y_h=27
+#   x_w=0.4000, y_w=0.8667
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,7) ---
+#   x_src=14.4667, y_src=26.8667
+#   x_l=14, x_h=15, y_l=26, y_h=27
+#   x_w=0.4667, y_w=0.8667
+#   a=132, b=134, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,8) ---
+#   x_src=16.5333, y_src=26.8667
+#   x_l=16, x_h=17, y_l=26, y_h=27
+#   x_w=0.5333, y_w=0.8667
+#   a=136, b=138, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,9) ---
+#   x_src=18.6000, y_src=26.8667
+#   x_l=18, x_h=19, y_l=26, y_h=27
+#   x_w=0.6000, y_w=0.8667
+#   a=140, b=142, c=144, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,10) ---
+#   x_src=20.6667, y_src=26.8667
+#   x_l=20, x_h=21, y_l=26, y_h=27
+#   x_w=0.6667, y_w=0.8667
+#   a=144, b=146, c=148, d=150
+#   REF=149, HW=149, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,11) ---
+#   x_src=22.7333, y_src=26.8667
+#   x_l=22, x_h=23, y_l=26, y_h=27
+#   x_w=0.7333, y_w=0.8667
+#   a=148, b=150, c=152, d=154
+#   REF=153, HW=153, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,12) ---
+#   x_src=24.8000, y_src=26.8667
+#   x_l=24, x_h=25, y_l=26, y_h=27
+#   x_w=0.8000, y_w=0.8667
+#   a=152, b=154, c=156, d=158
+#   REF=157, HW=157, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,13) ---
+#   x_src=26.8667, y_src=26.8667
+#   x_l=26, x_h=27, y_l=26, y_h=27
+#   x_w=0.8667, y_w=0.8667
+#   a=156, b=158, c=160, d=162
+#   REF=161, HW=161, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,14) ---
+#   x_src=28.9333, y_src=26.8667
+#   x_l=28, x_h=29, y_l=26, y_h=27
+#   x_w=0.9333, y_w=0.8667
+#   a=160, b=162, c=164, d=166
+#   REF=165, HW=165, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (13,15) ---
+#   x_src=31.0000, y_src=26.8667
+#   x_l=31, x_h=31, y_l=26, y_h=27
+#   x_w=0.0000, y_w=0.8667
+#   a=166, b=166, c=170, d=170
+#   REF=169, HW=169, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,0) ---
+#   x_src=0.0000, y_src=28.9333
+#   x_l=0, x_h=0, y_l=28, y_h=29
+#   x_w=0.0000, y_w=0.9333
+#   a=112, b=112, c=116, d=116
+#   REF=116, HW=116, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,1) ---
+#   x_src=2.0667, y_src=28.9333
+#   x_l=2, x_h=3, y_l=28, y_h=29
+#   x_w=0.0667, y_w=0.9333
+#   a=116, b=118, c=120, d=122
+#   REF=120, HW=120, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,2) ---
+#   x_src=4.1333, y_src=28.9333
+#   x_l=4, x_h=5, y_l=28, y_h=29
+#   x_w=0.1333, y_w=0.9333
+#   a=120, b=122, c=124, d=126
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,3) ---
+#   x_src=6.2000, y_src=28.9333
+#   x_l=6, x_h=7, y_l=28, y_h=29
+#   x_w=0.2000, y_w=0.9333
+#   a=124, b=126, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,4) ---
+#   x_src=8.2667, y_src=28.9333
+#   x_l=8, x_h=9, y_l=28, y_h=29
+#   x_w=0.2667, y_w=0.9333
+#   a=128, b=130, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,5) ---
+#   x_src=10.3333, y_src=28.9333
+#   x_l=10, x_h=11, y_l=28, y_h=29
+#   x_w=0.3333, y_w=0.9333
+#   a=132, b=134, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,6) ---
+#   x_src=12.4000, y_src=28.9333
+#   x_l=12, x_h=13, y_l=28, y_h=29
+#   x_w=0.4000, y_w=0.9333
+#   a=136, b=138, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,7) ---
+#   x_src=14.4667, y_src=28.9333
+#   x_l=14, x_h=15, y_l=28, y_h=29
+#   x_w=0.4667, y_w=0.9333
+#   a=140, b=142, c=144, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,8) ---
+#   x_src=16.5333, y_src=28.9333
+#   x_l=16, x_h=17, y_l=28, y_h=29
+#   x_w=0.5333, y_w=0.9333
+#   a=144, b=146, c=148, d=150
+#   REF=149, HW=149, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,9) ---
+#   x_src=18.6000, y_src=28.9333
+#   x_l=18, x_h=19, y_l=28, y_h=29
+#   x_w=0.6000, y_w=0.9333
+#   a=148, b=150, c=152, d=154
+#   REF=153, HW=153, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,10) ---
+#   x_src=20.6667, y_src=28.9333
+#   x_l=20, x_h=21, y_l=28, y_h=29
+#   x_w=0.6667, y_w=0.9333
+#   a=152, b=154, c=156, d=158
+#   REF=157, HW=157, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,11) ---
+#   x_src=22.7333, y_src=28.9333
+#   x_l=22, x_h=23, y_l=28, y_h=29
+#   x_w=0.7333, y_w=0.9333
+#   a=156, b=158, c=160, d=162
+#   REF=161, HW=161, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,12) ---
+#   x_src=24.8000, y_src=28.9333
+#   x_l=24, x_h=25, y_l=28, y_h=29
+#   x_w=0.8000, y_w=0.9333
+#   a=160, b=162, c=164, d=166
+#   REF=165, HW=165, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,13) ---
+#   x_src=26.8667, y_src=28.9333
+#   x_l=26, x_h=27, y_l=28, y_h=29
+#   x_w=0.8667, y_w=0.9333
+#   a=164, b=166, c=168, d=170
+#   REF=169, HW=169, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,14) ---
+#   x_src=28.9333, y_src=28.9333
+#   x_l=28, x_h=29, y_l=28, y_h=29
+#   x_w=0.9333, y_w=0.9333
+#   a=168, b=170, c=172, d=174
+#   REF=174, HW=174, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (14,15) ---
+#   x_src=31.0000, y_src=28.9333
+#   x_l=31, x_h=31, y_l=28, y_h=29
+#   x_w=0.0000, y_w=0.9333
+#   a=174, b=174, c=178, d=178
+#   REF=178, HW=178, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,0) ---
+#   x_src=0.0000, y_src=31.0000
+#   x_l=0, x_h=0, y_l=31, y_h=31
+#   x_w=0.0000, y_w=0.0000
+#   a=124, b=124, c=124, d=124
+#   REF=124, HW=124, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,1) ---
+#   x_src=2.0667, y_src=31.0000
+#   x_l=2, x_h=3, y_l=31, y_h=31
+#   x_w=0.0667, y_w=0.0000
+#   a=128, b=130, c=128, d=130
+#   REF=128, HW=128, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,2) ---
+#   x_src=4.1333, y_src=31.0000
+#   x_l=4, x_h=5, y_l=31, y_h=31
+#   x_w=0.1333, y_w=0.0000
+#   a=132, b=134, c=132, d=134
+#   REF=132, HW=132, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,3) ---
+#   x_src=6.2000, y_src=31.0000
+#   x_l=6, x_h=7, y_l=31, y_h=31
+#   x_w=0.2000, y_w=0.0000
+#   a=136, b=138, c=136, d=138
+#   REF=136, HW=136, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,4) ---
+#   x_src=8.2667, y_src=31.0000
+#   x_l=8, x_h=9, y_l=31, y_h=31
+#   x_w=0.2667, y_w=0.0000
+#   a=140, b=142, c=140, d=142
+#   REF=141, HW=141, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,5) ---
+#   x_src=10.3333, y_src=31.0000
+#   x_l=10, x_h=11, y_l=31, y_h=31
+#   x_w=0.3333, y_w=0.0000
+#   a=144, b=146, c=144, d=146
+#   REF=145, HW=145, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,6) ---
+#   x_src=12.4000, y_src=31.0000
+#   x_l=12, x_h=13, y_l=31, y_h=31
+#   x_w=0.4000, y_w=0.0000
+#   a=148, b=150, c=148, d=150
+#   REF=149, HW=149, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,7) ---
+#   x_src=14.4667, y_src=31.0000
+#   x_l=14, x_h=15, y_l=31, y_h=31
+#   x_w=0.4667, y_w=0.0000
+#   a=152, b=154, c=152, d=154
+#   REF=153, HW=153, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,8) ---
+#   x_src=16.5333, y_src=31.0000
+#   x_l=16, x_h=17, y_l=31, y_h=31
+#   x_w=0.5333, y_w=0.0000
+#   a=156, b=158, c=156, d=158
+#   REF=157, HW=157, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,9) ---
+#   x_src=18.6000, y_src=31.0000
+#   x_l=18, x_h=19, y_l=31, y_h=31
+#   x_w=0.6000, y_w=0.0000
+#   a=160, b=162, c=160, d=162
+#   REF=161, HW=161, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,10) ---
+#   x_src=20.6667, y_src=31.0000
+#   x_l=20, x_h=21, y_l=31, y_h=31
+#   x_w=0.6667, y_w=0.0000
+#   a=164, b=166, c=164, d=166
+#   REF=165, HW=165, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,11) ---
+#   x_src=22.7333, y_src=31.0000
+#   x_l=22, x_h=23, y_l=31, y_h=31
+#   x_w=0.7333, y_w=0.0000
+#   a=168, b=170, c=168, d=170
+#   REF=169, HW=169, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,12) ---
+#   x_src=24.8000, y_src=31.0000
+#   x_l=24, x_h=25, y_l=31, y_h=31
+#   x_w=0.8000, y_w=0.0000
+#   a=172, b=174, c=172, d=174
+#   REF=174, HW=174, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,13) ---
+#   x_src=26.8667, y_src=31.0000
+#   x_l=26, x_h=27, y_l=31, y_h=31
+#   x_w=0.8667, y_w=0.0000
+#   a=176, b=178, c=176, d=178
+#   REF=178, HW=178, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,14) ---
+#   x_src=28.9333, y_src=31.0000
+#   x_l=28, x_h=29, y_l=31, y_h=31
+#   x_w=0.9333, y_w=0.0000
+#   a=180, b=182, c=180, d=182
+#   REF=182, HW=182, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# --- Pixel destino (15,15) ---
+#   x_src=31.0000, y_src=31.0000
+#   x_l=31, x_h=31, y_l=31, y_h=31
+#   x_w=0.0000, y_w=0.0000
+#   a=186, b=186, c=186, d=186
+#   REF=186, HW=186, diff=0
+#   ✓ PASS (dentro de ±1 LSB)
+# 
+# Resumen SECUENCIAL (PROCESO): PASS=256  FAIL=0
+# TODOS los píxeles pasaron (±1 LSB).
+# ** Note: $finish    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_Secuencial_Proceso.sv(191)
+#    Time: 7745 ns  Iteration: 1  Instance: /tb_downscale_Secuencial_Proceso
 # 1
-# Break in Module tb_Top_SIMD at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_SIMD.sv line 203
-# End time: 13:03:13 on Nov 19,2025, Elapsed time: 0:48:55
+# Break in Module tb_downscale_Secuencial_Proceso at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_downscale_Secuencial_Proceso.sv line 191
+# End time: 21:19:12 on Nov 20,2025, Elapsed time: 0:00:12
 # Errors: 0, Warnings: 0
