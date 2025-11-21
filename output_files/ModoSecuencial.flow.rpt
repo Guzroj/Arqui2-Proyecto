@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Thu Nov 20 14:09:09 2025
+Thu Nov 20 19:08:50 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,10 +41,10 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Thu Nov 20 14:09:09 2025       ;
+; Flow Status                 ; Successful - Thu Nov 20 19:08:50 2025       ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; ModoSecuencial                              ;
-; Top-level Entity Name       ; Downscale_Secuencial                        ;
+; Top-level Entity Name       ; Downscale_SIMD                              ;
 ; Family                      ; Cyclone V                                   ;
 ; Device                      ; 5CGXFC7C7F23C8                              ;
 ; Timing Models               ; Final                                       ;
@@ -63,49 +63,53 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/20/2025 14:09:03 ;
+; Start date & time ; 11/20/2025 19:08:44 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                    ;
-+--------------------------------------+----------------------------------------+----------------+----------------------+-----------------------------+
-; Assignment Name                      ; Value                                  ; Default Value  ; Entity Name          ; Section Id                  ;
-+--------------------------------------+----------------------------------------+----------------+----------------------+-----------------------------+
-; COMPILER_SIGNATURE_ID                ; 1097428162052.176366934322504          ; --             ; --                   ; --                          ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                   ; tb_Top_SIMD                 ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                   ; tb_Downscale_Secuencial     ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                   ; tb_downscale_ModoSIMD       ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                   ; tb_downscale_ModoSecuencial ;
-; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tb_Downscale_Secuencial                ; --             ; --                   ; eda_simulation              ;
-; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --             ; --                   ; eda_simulation              ;
-; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>         ; --                   ; --                          ;
-; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --             ; --                   ; eda_simulation              ;
-; EDA_TEST_BENCH_FILE                  ; tb_Top_SIMD.sv                         ; --             ; --                   ; tb_Top_SIMD                 ;
-; EDA_TEST_BENCH_FILE                  ; tb_Downscale_Secuencial.sv             ; --             ; --                   ; tb_Downscale_Secuencial     ;
-; EDA_TEST_BENCH_FILE                  ; tb_downscale_ModoSIMD.sv               ; --             ; --                   ; tb_downscale_ModoSIMD       ;
-; EDA_TEST_BENCH_FILE                  ; tb_downscale_ModoSecuencial.sv         ; --             ; --                   ; tb_downscale_ModoSecuencial ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_Top_SIMD                            ; --             ; --                   ; tb_Top_SIMD                 ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_Downscale_Secuencial                ; --             ; --                   ; tb_Downscale_Secuencial     ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_downscale_ModoSIMD                  ; --             ; --                   ; tb_downscale_ModoSIMD       ;
-; EDA_TEST_BENCH_MODULE_NAME           ; tb_downscale_ModoSecuencial            ; --             ; --                   ; tb_downscale_ModoSecuencial ;
-; EDA_TEST_BENCH_NAME                  ; tb_downscale_ModoSecuencial            ; --             ; --                   ; eda_simulation              ;
-; EDA_TEST_BENCH_NAME                  ; tb_downscale_ModoSIMD                  ; --             ; --                   ; eda_simulation              ;
-; EDA_TEST_BENCH_NAME                  ; tb_Top_SIMD                            ; --             ; --                   ; eda_simulation              ;
-; EDA_TEST_BENCH_NAME                  ; tb_Downscale_Secuencial                ; --             ; --                   ; eda_simulation              ;
-; EDA_TIME_SCALE                       ; 1 ps                                   ; --             ; --                   ; eda_simulation              ;
-; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --             ; --                   ; --                          ;
-; MIN_CORE_JUNCTION_TEMP               ; 0                                      ; --             ; --                   ; --                          ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --             ; Downscale_Secuencial ; Top                         ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --             ; Downscale_Secuencial ; Top                         ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --             ; Downscale_Secuencial ; Top                         ;
-; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --             ; --                   ; --                          ;
-; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --             ; --                   ; --                          ;
-; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --             ; --                   ; --                          ;
-; TOP_LEVEL_ENTITY                     ; Downscale_Secuencial                   ; ModoSecuencial ; --                   ; --                          ;
-+--------------------------------------+----------------------------------------+----------------+----------------------+-----------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                              ;
++--------------------------------------+----------------------------------------+----------------+----------------+-----------------------------+
+; Assignment Name                      ; Value                                  ; Default Value  ; Entity Name    ; Section Id                  ;
++--------------------------------------+----------------------------------------+----------------+----------------+-----------------------------+
+; COMPILER_SIGNATURE_ID                ; 1097428162052.176368732417268          ; --             ; --             ; --                          ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --             ; tb_Top_SIMD                 ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --             ; tb_Downscale_Secuencial     ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --             ; tb_downscale_ModoSIMD       ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --             ; tb_Downscale_SIMD           ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --             ; tb_downscale_ModoSecuencial ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tb_Downscale_SIMD                      ; --             ; --             ; eda_simulation              ;
+; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --             ; --             ; eda_simulation              ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>         ; --             ; --                          ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --             ; --             ; eda_simulation              ;
+; EDA_TEST_BENCH_FILE                  ; tb_Top_SIMD.sv                         ; --             ; --             ; tb_Top_SIMD                 ;
+; EDA_TEST_BENCH_FILE                  ; tb_Downscale_Secuencial.sv             ; --             ; --             ; tb_Downscale_Secuencial     ;
+; EDA_TEST_BENCH_FILE                  ; tb_downscale_ModoSIMD.sv               ; --             ; --             ; tb_downscale_ModoSIMD       ;
+; EDA_TEST_BENCH_FILE                  ; tb_Downscale_SIMD.sv                   ; --             ; --             ; tb_Downscale_SIMD           ;
+; EDA_TEST_BENCH_FILE                  ; tb_downscale_ModoSecuencial.sv         ; --             ; --             ; tb_downscale_ModoSecuencial ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_Top_SIMD                            ; --             ; --             ; tb_Top_SIMD                 ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_Downscale_Secuencial                ; --             ; --             ; tb_Downscale_Secuencial     ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_downscale_ModoSIMD                  ; --             ; --             ; tb_downscale_ModoSIMD       ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_Downscale_SIMD                      ; --             ; --             ; tb_Downscale_SIMD           ;
+; EDA_TEST_BENCH_MODULE_NAME           ; tb_downscale_ModoSecuencial            ; --             ; --             ; tb_downscale_ModoSecuencial ;
+; EDA_TEST_BENCH_NAME                  ; tb_downscale_ModoSecuencial            ; --             ; --             ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_downscale_ModoSIMD                  ; --             ; --             ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_Top_SIMD                            ; --             ; --             ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_Downscale_Secuencial                ; --             ; --             ; eda_simulation              ;
+; EDA_TEST_BENCH_NAME                  ; tb_Downscale_SIMD                      ; --             ; --             ; eda_simulation              ;
+; EDA_TIME_SCALE                       ; 1 ps                                   ; --             ; --             ; eda_simulation              ;
+; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --             ; --             ; --                          ;
+; MIN_CORE_JUNCTION_TEMP               ; 0                                      ; --             ; --             ; --                          ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --             ; Downscale_SIMD ; Top                         ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --             ; Downscale_SIMD ; Top                         ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --             ; Downscale_SIMD ; Top                         ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --             ; --             ; --                          ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --             ; --             ; --                          ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --             ; --             ; --                          ;
+; TOP_LEVEL_ENTITY                     ; Downscale_SIMD                         ; ModoSecuencial ; --             ; --                          ;
++--------------------------------------+----------------------------------------+----------------+----------------+-----------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------+
@@ -113,7 +117,7 @@ https://fpgasoftware.intel.com/eula.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:07     ; 1.0                     ; 4774 MB             ; 00:00:17                           ;
+; Analysis & Elaboration ; 00:00:07     ; 1.0                     ; 4777 MB             ; 00:00:17                           ;
 ; Total                  ; 00:00:07     ; --                      ; --                  ; 00:00:17                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
