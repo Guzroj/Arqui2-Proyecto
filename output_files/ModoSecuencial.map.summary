@@ -1,7 +1,7 @@
-Analysis & Elaboration Status : Failed - Wed Nov 26 16:28:40 2025
+Analysis & Elaboration Status : Successful - Thu Nov 27 16:17:43 2025
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : ModoSecuencial
-Top-level Entity Name : Top_MemorySystem
+Top-level Entity Name : Top_Downscale_Secuencial
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A until Partition Merge
 Total registers : N/A until Partition Merge
