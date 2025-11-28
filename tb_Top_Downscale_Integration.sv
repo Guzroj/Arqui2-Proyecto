@@ -2,324 +2,122 @@
 
 module tb_Top_Downscale_Integration;
 
-    // ==================================================
-    // Parámetros
-    // ==================================================
-    localparam SRC_H = 512;
-    localparam SRC_W = 512;
-    localparam DST_H = 256;
-    localparam DST_W = 256;
-    localparam N = 4;
-    localparam CLK_PERIOD = 10;
+    // ------------------------------------------------------------
+    // Parámetros (ajustables según tu diseño)
+    // ------------------------------------------------------------
+    localparam int SRCW = 32;
+    localparam int SRCH = 32;
+    localparam int DSTW = 16;
+    localparam int DSTH = 16;
+    localparam int N    = 4;
 
-    // ==================================================
-    // Señales
-    // ==================================================
-    reg clk, rst, start;
-    wire done;
-    reg wr_en;
-    reg [17:0] wr_addr;
-    reg [7:0] wr_data;
-    wire [7:0] image_out [0:DST_H-1][0:DST_W-1];
+    localparam int SRC_DEPTH = SRCW * SRCH;
+    localparam int ADDRBITS  = $clog2(SRC_DEPTH);
 
-    // ==================================================
-    // DUT
-    // ==================================================
+    // ------------------------------------------------------------
+    // Señales del DUT
+    // ------------------------------------------------------------
+    logic clk;
+    logic rst;
+    logic start;
+    logic done;
+
+    logic        wren;
+    logic [16:0] wraddr;
+    logic [7:0]  wrdata;
+
+    // Imagen de salida del DUT
+    logic [7:0] image_out [0:DSTH-1][0:DSTW-1];
+
+    logic [7:0] dbg;
+
+    // ------------------------------------------------------------
+    // Instancia del DUT (correcta)
+    // ------------------------------------------------------------
     Top_Downscale_Integration #(
-        .SRC_H(SRC_H), .SRC_W(SRC_W),
-        .DST_H(DST_H), .DST_W(DST_W), .N(N)
+        .SRCH(SRCH),
+        .SRCW(SRCW),
+        .DSTH(DSTH),
+        .DSTW(DSTW),
+        .N(N)
     ) dut (
-        .clk(clk), .rst(rst), .start(start), .done(done),
-        .wr_en(wr_en), .wr_addr(wr_addr), .wr_data(wr_data),
-        .image_out(image_out)
+        .clk      (clk),
+        .rst      (rst),
+        .start    (start),
+        .done     (done),
+        .wren     (wren),
+        .wraddr   (wraddr),
+        .wrdata   (wrdata),
+        .imageout (image_out),     // <-- CORRECTO
+        .dbgdata  (dbg)
     );
 
-    // ==================================================
-    // Reloj
-    // ==================================================
+    // ------------------------------------------------------------
+    // Generador de reloj
+    // ------------------------------------------------------------
+    always #5 clk = ~clk;   // 100 MHz
+
+    // ------------------------------------------------------------
+    // Inicialización
+    // ------------------------------------------------------------
     initial begin
-        clk = 0;
-        forever #(CLK_PERIOD/2) clk = ~clk;
-    end
-
-    // ==================================================
-    // Imagen 512x512
-    // ==================================================
-    reg [7:0] test_image [0:SRC_H-1][0:SRC_W-1];
-    integer file, code, i, j;
-
-    initial begin
-        $display("\n=== TEST 512x512 con DEBUG ===\n");
-        $display("[%0t] Leyendo archivo...", $time);
-
-        file = $fopen("C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_grayscale.txt", "r");
-
-        if (file == 0) begin
-            $display("ERROR: No se pudo abrir imagen_grayscale.txt");
-            $finish;
-        end
-
-        for (i = 0; i < SRC_H; i = i + 1) begin
-            for (j = 0; j < SRC_W; j = j + 1) begin
-                code = $fscanf(file, "%d", test_image[i][j]);
-                if (code != 1) begin
-                    $display("ERROR leyendo [%0d,%0d]", i, j);
-                    $finish;
-                end
-            end
-        end
-
-        $fclose(file);
-        $display("[%0t] ✓ Archivo leído", $time);
-        
-        // DEBUG: Mostrar primeros valores leídos
-        $display("\nPrimeros 8 píxeles del archivo:");
-        for (j = 0; j < 8; j = j + 1)
-            $display("  test_image[0][%0d] = %0d", j, test_image[0][j]);
-    end
-
-    // ==================================================
-    // Verificar memoria después de cargar
-    // ==================================================
-    task verify_memory_load;
-        begin
-            $display("\n[%0t] Verificando BRAM...", $time);
-            
-            // Acceder directamente a la memoria interna del DUT
-            $display("  Primeros 8 valores en BRAM:");
-            for (i = 0; i < 8; i = i + 1) begin
-                $display("    memory[%0d] = %0d", i, 
-                         dut.u_image_memory.memory[i]);
-            end
-            
-            // Verificar si hay 'x'
-            if (dut.u_image_memory.memory[0] === 8'bxxxxxxxx) begin
-                $display("  ✗ ERROR: Memoria contiene valores indefinidos!");
-            end else begin
-                $display("  ✓ Memoria inicializada correctamente");
-            end
-        end
-    endtask
-
-    // ==================================================
-    // Cargar imagen con verificación
-    // ==================================================
-    task load_image;
-        integer errors;
-        begin
-            $display("\n[%0t] Cargando imagen en BRAM...", $time);
-            errors = 0;
-            wr_en = 0;
-            @(posedge clk);
-
-            for (i = 0; i < SRC_H; i = i + 1) begin
-                for (j = 0; j < SRC_W; j = j + 1) begin
-                    wr_en = 1;
-                    wr_addr = i * SRC_W + j;
-                    wr_data = test_image[i][j];
-                    
-                    // Verificar que no estamos escribiendo 'x'
-                    if (test_image[i][j] === 8'bxxxxxxxx) begin
-                        $display("  ✗ WARNING: Escribiendo 'x' en [%0d,%0d]", i, j);
-                        errors = errors + 1;
-                        if (errors > 10) begin
-                            $display("  ✗ Demasiados errores, abortando...");
-                            $finish;
-                        end
-                    end
-                    
-                    @(posedge clk);
-                    
-                    // Progreso cada 10%
-                    if ((i * SRC_W + j) % (SRC_H * SRC_W / 10) == 0) begin
-                        $display("  Progreso: %0d%%", 
-                                 ((i * SRC_W + j) * 100) / (SRC_H * SRC_W));
-                    end
-                end
-            end
-
-            wr_en = 0;
-            @(posedge clk);
-            $display("[%0t] ✓ Carga completada", $time);
-            
-            // Verificar que se escribió correctamente
-            verify_memory_load();
-        end
-    endtask
-
-    // ==================================================
-    // Ejecutar downscale con monitoring
-    // ==================================================
-    task run_downscale;
-        integer timeout;
-        integer last_progress;
-        begin
-            $display("\n[%0t] Iniciando downscale...", $time);
-            
-            start = 1;
-            @(posedge clk);
-            start = 0;
-
-            timeout = 0;
-            last_progress = 0;
-            
-            while (!done && timeout < 10000000) begin
-                @(posedge clk);
-                timeout = timeout + 1;
-                
-                // Mostrar progreso cada 100k ciclos
-                if (timeout % 100000 == 0) begin
-                    $display("  Ciclos: %0d", timeout);
-                end
-            end
-
-            if (!done) begin
-                $display("[%0t] ✗ TIMEOUT después de %0d ciclos", $time, timeout);
-                $finish;
-            end
-
-            $display("[%0t] ✓ Downscale completado en %0d ciclos", $time, timeout);
-        end
-    endtask
-
-    // ==================================================
-    // Verificar salida
-    // ==================================================
-    task verify_output;
-        integer undefined_count;
-        integer zero_count;
-        begin
-            $display("\n[%0t] Verificando salida...", $time);
-            
-            undefined_count = 0;
-            zero_count = 0;
-            
-            // Contar problemas
-            for (i = 0; i < DST_H; i = i + 1) begin
-                for (j = 0; j < DST_W; j = j + 1) begin
-                    if (image_out[i][j] === 8'bxxxxxxxx)
-                        undefined_count = undefined_count + 1;
-                    if (image_out[i][j] == 8'd0)
-                        zero_count = zero_count + 1;
-                end
-            end
-            
-            $display("  Total píxeles: %0d", DST_H * DST_W);
-            $display("  Indefinidos (x): %0d", undefined_count);
-            $display("  Ceros: %0d", zero_count);
-            
-            if (undefined_count > 0) begin
-                $display("  ✗ ERROR: Hay valores indefinidos en la salida");
-                $display("\nPrimeros píxeles indefinidos:");
-                for (i = 0; i < DST_H && i < 5; i = i + 1) begin
-                    for (j = 0; j < DST_W && j < 5; j = j + 1) begin
-                        if (image_out[i][j] === 8'bxxxxxxxx)
-                            $display("    [%0d,%0d] = x", i, j);
-                    end
-                end
-            end else begin
-                $display("  ✓ No hay valores indefinidos");
-            end
-        end
-    endtask
-
-    // ==================================================
-    // Mostrar muestra de salida
-    // ==================================================
-    task display_sample;
-        begin
-            $display("\n=== MUESTRA DE SALIDA (primeras 8x16) ===");
-            for (i = 0; i < 8; i = i + 1) begin
-                $write("Row %3d: ", i);
-                for (j = 0; j < 16; j = j + 1) begin
-                    if (image_out[i][j] === 8'bxxxxxxxx)
-                        $write("  x ");
-                    else
-                        $write("%3d ", image_out[i][j]);
-                end
-                $write("\n");
-            end
-            $display("==========================================\n");
-        end
-    endtask
-
-    // ==================================================
-    // Guardar imagen de salida a archivo
-    // ==================================================
-    task save_output_image;
-        integer outfile;
-        begin
-            $display("\n[%0t] Guardando imagen de salida...", $time);
-            
-            outfile = $fopen("C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_output.txt", "w");
-            
-            if (outfile == 0) begin
-                $display("  ✗ ERROR: No se pudo crear imagen_output.txt");
-                return;
-            end
-            
-            // Escribir dimensiones como encabezado (opcional)
-            $fwrite(outfile, "%0d %0d\n", DST_H, DST_W);
-            
-            // Escribir todos los píxeles
-            for (i = 0; i < DST_H; i = i + 1) begin
-                for (j = 0; j < DST_W; j = j + 1) begin
-                    $fwrite(outfile, "%0d", image_out[i][j]);
-                    
-                    // Espacio entre píxeles, salto de línea al final de fila
-                    if (j < DST_W - 1)
-                        $fwrite(outfile, " ");
-                    else
-                        $fwrite(outfile, "\n");
-                end
-                
-                // Mostrar progreso cada 10%
-                if (i % (DST_H / 10) == 0)
-                    $display("  Progreso: %0d%%", (i * 100) / DST_H);
-            end
-            
-            $fclose(outfile);
-            $display("[%0t] ✓ Imagen guardada en imagen_output.txt", $time);
-            $display("  Formato: %0d filas x %0d columnas", DST_H, DST_W);
-        end
-    endtask
-
-    // ==================================================
-    // Secuencia principal
-    // ==================================================
-    initial begin
-        rst = 1;
+        clk   = 0;
+        rst   = 1;
         start = 0;
-        wr_en = 0;
-        wr_addr = 0;
-        wr_data = 0;
+        wren  = 0;
+        wraddr = 0;
+        wrdata = 0;
 
-        repeat(10) @(posedge clk);
+        #50;
         rst = 0;
-        repeat(5) @(posedge clk);
+        #20;
 
-        load_image();
-        repeat(10) @(posedge clk);
-        
-        run_downscale();
-        repeat(10) @(posedge clk);
-        
-        verify_output();
-        display_sample();
-        
-        // Guardar resultado
-        save_output_image();
+        // ------------------------------------------------------------
+        // Cargar imagen de prueba en memoria
+        // Ejemplo: gradiente simple 0..255
+        // ------------------------------------------------------------
+        $display("Cargando imagen fuente de %0d pixeles...", SRC_DEPTH);
 
-        $display("\n=== TEST COMPLETADO ===\n");
-        $stop;
-    end
+        for (int addr = 0; addr < SRC_DEPTH; addr++) begin
+            wren   = 1;
+            wraddr = addr;
+            wrdata = addr % 256;
+            #10;
+        end
 
-    // ==================================================
-    // Timeout global
-    // ==================================================
-    initial begin
-        #(CLK_PERIOD * 20000000);  // 200ms
-        $display("\n✗ TIMEOUT GLOBAL");
+        wren = 0;
+        #30;
+
+        // ------------------------------------------------------------
+        // Pulso de start
+        // ------------------------------------------------------------
+        $display("Iniciando downscale SIMD...");
+        start = 1;
+        #20;
+        start = 0;
+
+        // ------------------------------------------------------------
+        // Esperar done
+        // ------------------------------------------------------------
+        wait (done == 1);
+        #50;
+
+        $display("Downscale terminado!");
+
+        // ------------------------------------------------------------
+        // Mostrar la imagen reducida
+        // ------------------------------------------------------------
+        $display("Imagen downscale %0dx%0d:", DSTW, DSTH);
+
+        for (int r = 0; r < DSTH; r++) begin
+            for (int c = 0; c < DSTW; c++) begin
+                $write("%3d ", image_out[r][c]);
+            end
+            $write("\n");
+        end
+
+        $display("Simulación terminada.");
+        #50;
         $finish;
     end
 

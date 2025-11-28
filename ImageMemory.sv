@@ -1,25 +1,36 @@
+// ================================================================
+// ImageMemory.sv
+// Memoria lineal simple para almacenar una imagen
+// Acceso 1-puerto: escritura sincrónica, lectura combinacional
+// ================================================================
+
 module ImageMemory #(
-    parameter int IMG_W = 512,
-    parameter int IMG_H = 512
+    parameter int WIDTH  = 32,     // Ancho de la imagen
+    parameter int HEIGHT = 32      // Alto de la imagen
 )(
-    input  logic clk,
-    input  logic we,
-    input  logic [$clog2(IMG_W*IMG_H)-1:0] addr,
-    input  logic [7:0] wr_data,
-    output logic [7:0] rd_data
+    input  logic                          clk,
+    input  logic                          we,
+    
+    // Dirección lineal: 0 .. WIDTH*HEIGHT - 1
+    input  logic [$clog2(WIDTH*HEIGHT)-1:0] addr,
+
+    input  logic [7:0]                    wrdata,
+    output logic [7:0]                    rddata
 );
 
-    localparam int DEPTH = IMG_W * IMG_H;
+    // Cantidad total de píxeles
+    localparam int DEPTH = WIDTH * HEIGHT;
 
-    // Memoria BRAM inferida
+    // Memoria interna
     logic [7:0] mem [0:DEPTH-1];
 
-    // Escritura / Lectura sincronizada
+    // Escritura sincrónica
     always_ff @(posedge clk) begin
         if (we)
-            mem[addr] <= wr_data;
-
-        rd_data <= mem[addr];
+            mem[addr] <= wrdata;
     end
+
+    // Lectura combinacional
+    assign rddata = mem[addr];
 
 endmodule

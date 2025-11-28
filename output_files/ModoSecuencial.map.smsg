@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at Downscale_SIMD.sv(114): always construct contains both blocking and non-blocking assignments File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv Line: 114
+Warning (10268): Verilog HDL information at Downscale_SIMD.sv(89): always construct contains both blocking and non-blocking assignments File: C:/Obsidian/OrganizaciónJoseAndresVargasTorres/02-Studies/Computer Architecture II/Proyects/Proyecto 2/Arqui2-Proyecto/Downscale_SIMD.sv Line: 89

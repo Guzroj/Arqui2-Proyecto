@@ -1,11 +1,10 @@
 module ModoSIMD #(
-    parameter int N = 4   // cantidad de píxeles por ciclo
+    parameter int N = 4
 )(
     input  logic clk,
     input  logic rst,
     input  logic valid_in,
 
-    //Vectores de entrada (cada uno N elementos)
     input  logic [7:0] I00_vec  [N],
     input  logic [7:0] I10_vec  [N],
     input  logic [7:0] I01_vec  [N],
@@ -17,7 +16,11 @@ module ModoSIMD #(
     output logic [7:0] pixel_out_vec[N]
 );
 
-    logic valid_int [N];
+    // *** IMPORTANTE: ahora es VECTOR, NO ARRAY ***
+    logic [N-1:0] lane_valid;
+    logic [7:0]   lane_pixel [N];
+
+    logic all_valid;
 
     genvar i;
     generate
@@ -32,13 +35,30 @@ module ModoSIMD #(
                 .I11(I11_vec[i]),
                 .alpha(alpha_vec[i]),
                 .beta(beta_vec[i]),
-                .valid_out(valid_int[i]),
-                .pixel_out(pixel_out_vec[i])
+                .valid_out(lane_valid[i]),
+                .pixel_out(lane_pixel[i])
             );
         end
     endgenerate
 
-    //Valid_out será válido cuando el primer núcleo lo esté
-    assign valid_out = valid_int[0];
+    // Ahora sí: reducción válida
+    assign all_valid = &lane_valid;
+
+    // Registro de salida
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            valid_out <= 1'b0;
+            for (int k = 0; k < N; k++)
+                pixel_out_vec[k] <= 8'd0;
+
+        end else begin
+            valid_out <= all_valid;
+
+            if (all_valid) begin
+                for (int k = 0; k < N; k++)
+                    pixel_out_vec[k] <= lane_pixel[k];
+            end
+        end
+    end
 
 endmodule

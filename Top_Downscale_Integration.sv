@@ -1,88 +1,97 @@
 `timescale 1ns/1ps
 
 module Top_Downscale_Integration #(
-    parameter int SRC_H = 32,
-    parameter int SRC_W = 32,
-    parameter int DST_H = 16,
-    parameter int DST_W = 16,
-    parameter int N     = 4          // SIMD width
+    parameter int SRCH = 32,
+    parameter int SRCW = 32,
+    parameter int DSTH = 16,
+    parameter int DSTW = 16,
+    parameter int N    = 4           // SIMD width
 )(
-    input  logic clk,
-    input  logic rst,
-    
+    input  logic        clk,
+    input  logic        rst,
+
     // Control principal
-    input  logic start,
-    output logic done,
-    
-    // Interfaz de carga de imagen (desde PC/JTAG)
-    input  logic        wr_en,
-    input  logic [17:0] wr_addr,    // Dirección lineal para escritura
-    input  logic [7:0]  wr_data,
-    
+    input  logic        start,
+    output logic        done,
+
+    // Interfaz de carga de imagen desde PC/JTAG
+    input  logic        wren,
+    input  logic [16:0] wraddr,      // dirección lineal (hasta 131072)
+    input  logic [7:0]  wrdata,
+
     // Salida de imagen reducida
-    output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
+    output logic [7:0]  imageout [0:DSTH-1][0:DSTW-1],
+
+    // Debug
+    output logic [7:0]  dbgdata
 );
 
-    // ===============================================
     // Parámetros locales
-    // ===============================================
-    localparam int ADDR_BITS = $clog2(SRC_W * SRC_H);
-    localparam int MEM_SIZE  = SRC_W * SRC_H;
+    localparam int SRCDEPTH = SRCW * SRCH;
+    localparam int ADDRBITS = $clog2(SRCDEPTH);
 
-    // ===============================================
     // Señales de memoria SIMD
-    // ===============================================
-    logic                  mem_rd_req   [N];
-    logic [ADDR_BITS-1:0]  mem_rd_addr  [N];
-    logic                  mem_rd_valid [N];
-    logic [7:0]            mem_rd_data  [N];
+    logic                 memrdreq   [N];
+    logic [ADDRBITS-1:0]  memrdaddr  [N];
+    logic                 memrdvalid [N];
+    logic [7:0]           memrddata  [N];
 
-    // ===============================================
-    // Instancia: Memoria con puertos SIMD
-    // ===============================================
+    // ============================================================
+    // Memoria con puertos SIMD
+    // ============================================================
     ImageMemory_SIMDPort #(
-        .WIDTH      (SRC_W),
-        .HEIGHT     (SRC_H),
-        .N          (N)
-    ) u_image_memory (
-        .clk        (clk),
-        .rst        (rst),
-        
-        // Puerto de escritura (carga desde PC)
-        .wr_en      (wr_en),
-        .wr_addr    (wr_addr[ADDR_BITS-1:0]),
-        .wr_data    (wr_data),
-        
-        // Puertos de lectura SIMD
-        .rd_req     (mem_rd_req),
-        .rd_addr    (mem_rd_addr),
-        .rd_valid   (mem_rd_valid),
-        .rd_data    (mem_rd_data)
+        .WIDTH  (SRCW),
+        .HEIGHT (SRCH),
+        .N      (N)
+    ) uimagememory (
+        .clk     (clk),
+        .rst     (rst),
+
+        // Escritura desde PC/JTAG
+        .wr_en   (wren),
+        .wr_addr (wraddr[ADDRBITS-1:0]),
+        .wr_data (wrdata),
+
+        // Lectura SIMD
+        .rd_req   (memrdreq),
+        .rd_addr  (memrdaddr),
+        .rd_valid (memrdvalid),
+        .rd_data  (memrddata)
     );
 
-    // ===============================================
-    // Instancia: Downscale_SIMD con interfaz de memoria
-    // ===============================================
+    // ============================================================
+    // Downscale SIMD
+    // ============================================================
     Downscale_SIMD #(
-        .SRC_H      (SRC_H),
-        .SRC_W      (SRC_W),
-        .DST_H      (DST_H),
-        .DST_W      (DST_W),
-        .N          (N)
-    ) u_downscale (
-        .clk           (clk),
-        .rst           (rst),
-        .start         (start),
-        
-        // Interfaz de memoria
-        .mem_rd_req    (mem_rd_req),
-        .mem_rd_addr   (mem_rd_addr),
-        .mem_rd_valid  (mem_rd_valid),
-        .mem_rd_data   (mem_rd_data),
-        
-        // Salida
-        .done          (done),
-        .image_out     (image_out)
+        .SRC_H (SRCH),
+        .SRC_W (SRCW),
+        .DST_H (DSTH),
+        .DST_W (DSTW),
+        .N     (N)
+    ) udownscale (
+        .clk         (clk),
+        .rst         (rst),
+        .start       (start),
+
+        .mem_rd_req   (memrdreq),
+        .mem_rd_addr  (memrdaddr),
+        .mem_rd_valid (memrdvalid),
+        .mem_rd_data  (memrddata),
+
+        .done        (done),
+        .image_out   (imageout)
     );
+
+    // ============================================================
+    // Debug: dato leído por el lane 0
+    // ============================================================
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            dbgdata <= 8'd0;
+        end else begin
+            if (memrdvalid[0])
+                dbgdata <= memrddata[0];
+        end
+    end
 
 endmodule

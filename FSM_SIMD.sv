@@ -4,13 +4,13 @@ module FSM_SIMD (
     input  logic clk,
     input  logic rst,
 
-    input  logic start,       // pulso desde el testbench o top
-    input  logic simd_valid,  // viene del ModoSIMD cuando el batch está listo
+    input  logic start,       // pulso o nivel desde el top
+    input  logic simd_valid,  // viene de ModoSIMD cuando el batch está listo
 
-    output logic load_regs,   // carga registros SIMD
-    output logic run_simd,    // dispara el cálculo SIMD
-    output logic write_back,  // por si luego querés hacer algo con los resultados
-    output logic done         // pulso de 1 ciclo al terminar el batch
+    output logic load_regs,   // 1 ciclo: carga registros SIMD
+    output logic run_simd,    // 1 ciclo: dispara cálculo SIMD
+    output logic write_back,  // 1 ciclo: escribir resultados
+    output logic done         // 1 ciclo: batch terminado
 );
 
     typedef enum logic [2:0] {
@@ -23,7 +23,7 @@ module FSM_SIMD (
 
     state_t state, next;
 
-    //Registro de estado
+    // Registro de estado
     always_ff @(posedge clk or posedge rst) begin
         if (rst)
             state <= S_IDLE;
@@ -31,8 +31,9 @@ module FSM_SIMD (
             state <= next;
     end
 
+    // Lógica combinacional de la FSM
     always_comb begin
-        //Valores por defecto
+        // Valores por defecto
         load_regs  = 1'b0;
         run_simd   = 1'b0;
         write_back = 1'b0;
@@ -47,19 +48,19 @@ module FSM_SIMD (
             end
 
             S_LOAD: begin
-                //Un ciclo para capturar los datos en los registros
+                // Un ciclo para capturar los datos en los registros
                 load_regs = 1'b1;
                 next      = S_RUN;
             end
 
             S_RUN: begin
-                //Un ciclo de valid_in hacia ModoSIMD
+                // Un ciclo de valid_in hacia ModoSIMD
                 run_simd = 1'b1;
                 next     = S_WAIT;
             end
 
             S_WAIT: begin
-                //Esperamos a que ModoSIMD diga que terminó el batch
+                // Esperamos a que ModoSIMD diga que terminó el batch
                 if (simd_valid)
                     next = S_WRITE;
             end
@@ -71,6 +72,7 @@ module FSM_SIMD (
             end
 
             default: next = S_IDLE;
+
         endcase
     end
 

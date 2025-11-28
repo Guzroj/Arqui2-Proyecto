@@ -1,76 +1,108 @@
-// ======================================================
+// ================================================================
 // Top_Downscale_Secuencial.sv
-//  · Incluye: memoria + downscale secuencial + control
-// ======================================================
+// Integración de:
+//  - ImageMemory (memoria lineal simple)
+//  - Downscale_Secuencial (interpolación secuencial)
+//  - Carga por JTAG/Avalon
+// ================================================================
+
+`timescale 1ns/1ps
 
 module Top_Downscale_Secuencial #(
-    parameter int SRC_W = 32,
-    parameter int SRC_H = 32,
-    parameter int DST_W = 16,
-    parameter int DST_H = 16
+    parameter int SRCW = 32,
+    parameter int SRCH = 32,
+    parameter int DSTW = 16,
+    parameter int DSTH = 16
 )(
-    input  logic clk,
-    input  logic rst,
+    input  logic        clk,
+    input  logic        rst,
 
-    // ======== interfaz tipo JTAG (simulada) ========
-    input  logic        cfg_we,      // escribir en BRAM
-    input  logic [15:0] cfg_addr,
-    input  logic [7:0]  cfg_data,
+    // Interfaz desde JTAG / CPU para cargar imagen fuente
+    input  logic        cfgwe,
+    input  logic [15:0] cfgaddr,
+    input  logic [7:0]  cfgdata,
 
-    input  logic        start_req,   // iniciar procesamiento
-
+    // Control
+    input  logic        startreq,
     output logic        done,
-    output logic [7:0]  dbg_data
+
+    // Debug
+    output logic [7:0]  dbgdata
 );
 
-    localparam int DEPTH = SRC_W * SRC_H;
+    // Cantidad total de píxeles
+    localparam int DEPTH = SRCW * SRCH;
 
-    // ==================================================
-    // Memoria BRAM
-    // ==================================================
-    logic bram_we;
-    logic [7:0] bram_wr_data;
-    logic [15:0] bram_addr;
-    logic [7:0] bram_rd_data;
+    // ------------------------------------------------------------
+    // Señales a la memoria (si luego se usa realmente)
+    // ------------------------------------------------------------
+    logic        bramwe;
+    logic [15:0] bramaddr;
+    logic [7:0]  bramwrdata;
+    logic [7:0]  bramrddata;
 
+    // ============================================================
+    // MEMORIA LINEAL (Aún no utilizada por Downscale_Secuencial,
+    // pero se deja para lecturas futuras)
+    // ============================================================
     ImageMemory #(
-        .IMG_W(SRC_W),
-        .IMG_H(SRC_H)
+        .WIDTH  (SRCW),
+        .HEIGHT (SRCH)
     ) mem (
-        .clk(clk),
-        .we(bram_we),
-        .addr(bram_addr),
-        .wr_data(bram_wr_data),
-        .rd_data(bram_rd_data)
+        .clk    (clk),
+        .we     (bramwe),
+        .addr   (bramaddr),
+        .wrdata (bramwrdata),
+        .rddata (bramrddata)
     );
 
-    // ==================================================
-    // FSM secuencial
-    // ==================================================
-    logic [7:0] image_in  [0:SRC_H-1][0:SRC_W-1];
-    logic [7:0] image_out [0:DST_H-1][0:DST_W-1];
+    // ============================================================
+    // Buffers internos 2D para el interpolador secuencial
+    // ============================================================
+    logic [7:0] imagein  [0:SRCH-1][0:SRCW-1];
+    logic [7:0] imageout [0:DSTH-1][0:DSTW-1];
 
+    // ============================================================
+    // INSTANCIA DEL DOWNSCALE SECUENCIAL
+    // ============================================================
     Downscale_Secuencial #(
-        .SRC_W(SRC_W), .SRC_H(SRC_H),
-        .DST_W(DST_W), .DST_H(DST_H)
-    ) u_seq (
-        .clk(clk),
-        .rst(rst),
-        .start(start_req),
-        .image_in(image_in),
-        .image_out(image_out),
-        .done(done)
+        .SRC_H (SRCH),
+        .SRC_W (SRCW),
+        .DST_H (DSTH),
+        .DST_W (DSTW)
+    ) useq (
+        .clk       (clk),
+        .rst       (rst),
+        .start     (startreq),
+        .image_in  (imagein),
+        .done      (done),
+        .image_out (imageout)
     );
 
-    // ==================================================
-    // Cargar BRAM desde cfg_we
-    // ==================================================
+    // ============================================================
+    // Lógica de escritura de memoria externa (si se usa)
+    // ============================================================
     always_ff @(posedge clk) begin
-        bram_we      <= cfg_we;
-        bram_addr    <= cfg_addr;
-        bram_wr_data <= cfg_data;
+        bramwe     <= cfgwe;
+        bramaddr   <= cfgaddr;
+        bramwrdata <= cfgdata;
     end
 
-    assign dbg_data = bram_rd_data;
+    // ============================================================
+    // Carga sintetizable de la imagen 2D
+    // ============================================================
+    always_ff @(posedge clk) begin
+        if (cfgwe) begin
+            if (cfgaddr < SRCW * SRCH) begin
+                // El mapeo HxW a memoria lineal está permitido y sintetiza
+                imagein[cfgaddr / SRCW][cfgaddr % SRCW] <= cfgdata;
+            end
+        end
+    end
+
+    // ============================================================
+    // Señal de debug: pixel (0,0)
+    // ============================================================
+    assign dbgdata = imagein[0][0];
 
 endmodule

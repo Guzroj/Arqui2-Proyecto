@@ -1,0 +1,103 @@
+// ================================================================
+// Top_Downscale_Secuencial.sv
+// Integración de:
+//  - Memoria secuencial simple (ImageMemory)
+//  - Downscale secuencial (Downscale_Secuencial)
+//  - Carga por JTAG
+// ================================================================
+
+module Top_Downscale_Secuencial #(
+    parameter int SRCW = 32,
+    parameter int SRCH = 32,
+    parameter int DSTW = 16,
+    parameter int DSTH = 16
+)(
+    input  logic        clk,
+    input  logic        rst,
+
+    // Interfaz para carga de imagen desde JTAG
+    input  logic        cfgwe,
+    input  logic [15:0] cfgaddr,
+    input  logic [7:0]  cfgdata,
+
+    // Control
+    input  logic        startreq,
+    output logic        done,
+
+    // Debug
+    output logic [7:0]  dbgdata
+);
+
+    // Memoria lineal: SRCW * SRCH
+    localparam int DEPTH = SRCW * SRCH;
+
+    // Señales entre lógica de carga y memoria
+    logic        bramwe;
+    logic [15:0] bramaddr;
+    logic [7:0]  bramwrdata;
+    logic [7:0]  bramrddata;
+
+    // ================================================================
+    // MEMORIA SECUENCIAL
+    // ================================================================
+    ImageMemory #(
+        .IMGW (SRCW),
+        .IMGH (SRCH)
+    ) mem (
+        .clk    (clk),
+        .we     (bramwe),
+        .addr   (bramaddr),
+        .wrdata (bramwrdata),
+        .rddata (bramrddata)
+    );
+
+    // ================================================================
+    // Buffers 2D para el interpolador secuencial
+    // ================================================================
+    logic [7:0] imagein  [0:SRCH-1][0:SRCW-1];
+    logic [7:0] imageout [0:DSTH-1][0:DSTW-1];
+
+    // ================================================================
+    // DOWN SCALE SECUENCIAL (CORREGIDO: PUERTOS image_in / image_out)
+    // ================================================================
+    Downscale_Secuencial #(
+        .SRCH (SRCH),
+        .SRCW (SRCW),
+        .DSTH (DSTH),
+        .DSTW (DSTW)
+    ) useq (
+        .clk       (clk),
+        .rst       (rst),
+        .start     (startreq),
+        .image_in  (imagein),     // ← CORREGIDO
+        .done      (done),
+        .image_out (imageout)     // ← CORREGIDO
+    );
+
+    // ================================================================
+    // ESCRITURA A BRAM DESDE JTAG
+    // ================================================================
+    always_ff @(posedge clk) begin
+        bramwe     <= cfgwe;
+        bramaddr   <= cfgaddr;
+        bramwrdata <= cfgdata;
+    end
+
+    // ================================================================
+    // Cargar imagen 2D cuando cfgwe está activo
+    // ================================================================
+    always_ff @(posedge clk) begin
+        if (cfgwe) begin
+            int row = cfgaddr / SRCW;
+            int col = cfgaddr % SRCW;
+            if (row < SRCH && col < SRCW)
+                imagein[row][col] <= cfgdata;
+        end
+    end
+
+    // ================================================================
+    // DEBUG: pixel (0,0)
+    // ================================================================
+    assign dbgdata = imagein[0][0];
+
+endmodule

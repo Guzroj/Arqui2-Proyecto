@@ -1,65 +1,51 @@
-`timescale 1ns/1ps
+// ==============================================================
+// ImageMemory_SIMDPort.sv
+// Memoria para lectura SIMD (N lanes)
+// Escritura sincrónica, lectura combinacional por lane
+// ==============================================================
 
 module ImageMemory_SIMDPort #(
     parameter int WIDTH  = 32,
     parameter int HEIGHT = 32,
-    parameter int N      = 4          // Número de puertos de lectura SIMD
+    parameter int N      = 4
 )(
-    input  logic clk,
-    input  logic rst,
+    input  logic                          clk,
+    input  logic                          rst,
 
-    // Puerto de escritura (para carga desde PC/JTAG)
-    input  logic                           wr_en,
+    // Escritura lineal desde JTAG / CPU
+    input  logic                          wr_en,
     input  logic [$clog2(WIDTH*HEIGHT)-1:0] wr_addr,
-    input  logic [7:0]                     wr_data,
+    input  logic [7:0]                    wr_data,
 
-    // N puertos de lectura SIMD (request/valid handshake)
-    input  logic                           rd_req   [N],
+    // Lectura SIMD (N lanes)
+    input  logic        rd_req   [N],
     input  logic [$clog2(WIDTH*HEIGHT)-1:0] rd_addr  [N],
-    output logic                           rd_valid [N],
-    output logic [7:0]                     rd_data  [N]
+    output logic        rd_valid [N],
+    output logic [7:0]  rd_data  [N]
 );
 
-    // ===============================================
-    // Memoria interna
-    // ===============================================
-    localparam int MEM_SIZE = WIDTH * HEIGHT;
-    logic [7:0] memory [0:MEM_SIZE-1];
+    // Tamaño total de memoria
+    localparam int DEPTH = WIDTH * HEIGHT;
 
-    // ===============================================
-    // Puerto de escritura
-    // ===============================================
+    // Memoria interna lineal
+    logic [7:0] mem [0:DEPTH-1];
+
+    // --------------------------------------------------------------
+    // Escritura sincrónica
+    // --------------------------------------------------------------
     always_ff @(posedge clk) begin
-        if (wr_en && wr_addr < MEM_SIZE) begin
-            memory[wr_addr] <= wr_data;
-        end
+        if (wr_en)
+            mem[wr_addr] <= wr_data;
     end
 
-    // ===============================================
-    // N puertos de lectura SIMD
-    // ===============================================
-    genvar i;
-    generate
-        for (i = 0; i < N; i++) begin : gen_read_ports
-            always_ff @(posedge clk or posedge rst) begin
-                if (rst) begin
-                    rd_valid[i] <= 1'b0;
-                    rd_data[i]  <= 8'd0;
-                end else begin
-                    // Handshake: válido en el ciclo siguiente al request
-                    rd_valid[i] <= rd_req[i];
-                    
-                    if (rd_req[i]) begin
-                        // Leer dato (con protección de bounds)
-                        if (rd_addr[i] < MEM_SIZE)
-                            rd_data[i] <= memory[rd_addr[i]];
-                        else
-                            rd_data[i] <= 8'd0;  // Default si fuera de rango
-                    end
-                end
-            end
+    // --------------------------------------------------------------
+    // Lectura combinacional por lane
+    // --------------------------------------------------------------
+    always_comb begin
+        for (int i = 0; i < N; i++) begin
+            rd_data[i]  = mem[ rd_addr[i] ];   // lectura directa
+            rd_valid[i] = rd_req[i];           // valido = request
         end
-    endgenerate
-
+    end
 
 endmodule

@@ -1,121 +1,127 @@
-// =======================================================
-// TOP GENERAL DEL PROYECTO — Basado en GuiaJtag
-// Aqui se integran ambos modos: Secuencial y SIMD
-// =======================================================
-module Top_General #(
-    parameter IMG_W = 512,
-    parameter IMG_H = 512,
-    parameter N     = 4
-)(
-    input  logic clk,
-    input  logic rst,
+// ================================================================
+// Top_General.sv
+// TOP GENERAL DEL PROYECTO – Integración JTAG + Secuencial + SIMD
+// Basado en GuiaJtag
+// ================================================================
 
-    // Interfaz JTAG→Avalon-MM
-    input  logic avs_read,
-    input  logic avs_write,
-    input  logic [7:0] avs_address,
-    input  logic [31:0] avs_writedata,
-    output logic [31:0] avs_readdata
+module Top_General #(
+    parameter IMGW = 512,
+    parameter IMGH = 512,
+    parameter N    = 4
+)(
+    input  logic        clk,
+    input  logic        rst,
+
+    // Interfaz JTAG / Avalon-MM
+    input  logic        avsread,
+    input  logic        avswrite,
+    input  logic [7:0]  avsaddress,
+    input  logic [31:0] avswritedata,
+    output logic [31:0] avsreaddata
 );
 
-    // ---------------------------------------------------
-    // Señales desde JTAG Interface
-    // ---------------------------------------------------
-    logic start, step;
-    logic [31:0] xratio_reg, yratio_reg;
-    logic [31:0] wr_addr_reg, wr_data_reg;
-    logic mode_reg;  // Aqui se selecciona el modo: 0=Secuencial, 1=SIMD
+    // ------------------------------------------------------------
+    // Señales entre JTAGInterface y lógica de procesamiento
+    // ------------------------------------------------------------
+    logic        start;
+    logic        step;
+    logic        modereg;          // 0 Secuencial, 1 SIMD/Integración
+    logic [31:0] xratioreg;
+    logic [31:0] yratioreg;
+    logic [31:0] wraddrreg;
+    logic [31:0] wrdatareg;
+    logic [31:0] rddatareg;
+    logic [31:0] perfcounter;
+    logic        doneflag;
 
-    logic [31:0] rd_data_reg;
-    logic [31:0] perf_counter;
-    logic done_flag;
-
-    // ====================================================
-    // 1. Banco de Registros Accesible por JTAG
-    // ====================================================
-    JTAG_Interface jtag (
-        .clk(clk),
-        .rst(rst),
-
-        .start(start),
-        .step(step),
-        .mode(mode_reg),
-        .param_x_ratio(xratio_reg),
-        .param_y_ratio(yratio_reg),
-
-        .img_write_addr(wr_addr_reg),
-        .img_write_data(wr_data_reg),
-
-        .img_read_data(rd_data_reg),
-        .done_flag(done_flag),
-        .perf_counter(perf_counter),
-
-        .avs_read(avs_read),
-        .avs_write(avs_write),
-        .avs_address(avs_address),
-        .avs_writedata(avs_writedata),
-        .avs_readdata(avs_readdata)
+    // ------------------------------------------------------------
+    // Banco de registros JTAG / Avalon-MM
+    // ------------------------------------------------------------
+    JTAG_Interface u_jtag (
+        .clk          (clk),
+        .rst          (rst),
+        .start        (start),
+        .step         (step),
+        .mode         (modereg),
+        .paramxratio  (xratioreg),
+        .paramyratio  (yratioreg),
+        .imgwriteaddr (wraddrreg),
+        .imgwritedata (wrdatareg),
+        .imgreaddata  (rddatareg),
+        .doneflag     (doneflag),
+        .perfcounter  (perfcounter),
+        .avsread      (avsread),
+        .avswrite     (avswrite),
+        .avsaddress   (avsaddress),
+        .avswritedata (avswritedata),
+        .avsreaddata  (avsreaddata)
     );
 
-    // ====================================================
-    // 2. Top Downscale Secuencial
-    // ====================================================
-    logic done_seq;
-    logic [7:0] dbg_seq;
+    // ------------------------------------------------------------
+    // Top Secuencial
+    // ------------------------------------------------------------
+    logic        doneseq;
+    logic [7:0]  dbgseq;
 
     Top_Downscale_Secuencial #(
-        .SRC_W(IMG_W),
-        .SRC_H(IMG_H),
-        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
-        .DST_H(IMG_H/2)
+        .SRCW (IMGW),
+        .SRCH (IMGH),
+        .DSTW (IMGW/2),
+        .DSTH (IMGH/2)
     ) u_top_seq (
         .clk      (clk),
         .rst      (rst),
-        .cfg_we   (avs_write && !mode_reg),  // Aqui se escribe solo si modo secuencial
-        .cfg_addr (wr_addr_reg[15:0]),
-        .cfg_data (wr_data_reg[7:0]),
-        .start_req(start && !mode_reg),      // Aqui se inicia solo si modo secuencial
-        .done     (done_seq),
-        .dbg_data (dbg_seq)
+        .cfgwe    (avswrite & (modereg == 1'b0)),
+        .cfgaddr  (wraddrreg[15:0]),
+        .cfgdata  (wrdatareg[7:0]),
+        .startreq (start & (modereg == 1'b0)),
+        .done     (doneseq),
+        .dbgdata  (dbgseq)
     );
 
-    // ====================================================
-    // 3. Top Downscale SIMD
-    // ====================================================
-    logic done_simd;
-    logic [7:0] dbg_simd;
+    // ------------------------------------------------------------
+    // Top Integración SIMD
+    // ------------------------------------------------------------
+    logic        doneint;
+    logic [7:0]  dbginteg;
 
-    Top_Downscale_SIMD #(
-        .SRC_W(IMG_W),
-        .SRC_H(IMG_H),
-        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
-        .DST_H(IMG_H/2),
-        .N(N)
-    ) u_top_simd (
+    // Imagen de salida calculada por el modo SIMD
+    logic [7:0] imgout_int [0:(IMGH/2)-1][0:(IMGW/2)-1];
+
+    Top_Downscale_Integration #(
+        .SRCH (IMGH),
+        .SRCW (IMGW),
+        .DSTH (IMGH/2),
+        .DSTW (IMGW/2),
+        .N    (N)
+    ) u_top_integ (
         .clk      (clk),
         .rst      (rst),
-        .cfg_we   (avs_write && mode_reg),  // Aqui se escribe solo si modo SIMD
-        .cfg_addr (wr_addr_reg[15:0]),
-        .cfg_data (wr_data_reg[7:0]),
-        .start_req(start && mode_reg),      // Aqui se inicia solo si modo SIMD
-        .done     (done_simd),
-        .dbg_data (dbg_simd)
+        .start    (start & (modereg == 1'b1)),
+        .done     (doneint),
+        .wren     (avswrite & (modereg == 1'b1)),
+        .wraddr   (wraddrreg[16:0]),
+        .wrdata   (wrdatareg[7:0]),
+        .imageout (imgout_int),
+        .dbgdata  (dbginteg)
     );
 
-    // ====================================================
-    // 4. Multiplexado de señales de salida
-    // ====================================================
-    assign done_flag = mode_reg ? done_simd : done_seq;
+    // ------------------------------------------------------------
+    // Multiplexado global de estado y debug hacia JTAGInterface
+    // ------------------------------------------------------------
+    assign doneflag  = (modereg == 1'b1) ? doneint : doneseq;
 
-    // Aqui se multiplexa el dato de debug segun el modo
-    assign rd_data_reg = {24'd0, (mode_reg ? dbg_simd : dbg_seq)};
+    // Se regresa un byte de debug empaquetado
+    assign rddatareg = {24'd0, (modereg == 1'b1 ? dbginteg : dbgseq)};
 
-    // Aqui se cuenta el performance counter
+    // ------------------------------------------------------------
+    // Performance Counter
+    // ------------------------------------------------------------
     always_ff @(posedge clk or posedge rst) begin
-        if (rst || start)
-            perf_counter <= 0;
+        if (rst)
+            perfcounter <= 32'd0;
         else
-            perf_counter <= perf_counter + 1;
+            perfcounter <= perfcounter + 32'd1;
     end
 
 endmodule
