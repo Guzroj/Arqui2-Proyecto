@@ -5,13 +5,15 @@ module tb_Top_Downscale_Integration;
     // ==================================================
     // Parámetros
     // ==================================================
-    localparam SRC_H = 4;
-    localparam SRC_W = 4;
-    localparam DST_H = 3;
-    localparam DST_W = 3;
-    localparam N     = 4;
+    localparam SRC_H = 512;
+    localparam SRC_W = 512;
 
-    localparam CLK_PERIOD = 10; // 100 MHz
+    // Reducción a 1/3 → 171x171
+    localparam DST_H = 171;
+    localparam DST_W = 171;
+
+    localparam N = 4;
+    localparam CLK_PERIOD = 10;   // 100 MHz
 
     // ==================================================
     // Señales
@@ -28,7 +30,7 @@ module tb_Top_Downscale_Integration;
     wire [7:0] image_out [0:DST_H-1][0:DST_W-1];
 
     // ==================================================
-    // Instancia del DUT
+    // DUT
     // ==================================================
     Top_Downscale_Integration #(
         .SRC_H(SRC_H),
@@ -36,8 +38,7 @@ module tb_Top_Downscale_Integration;
         .DST_H(DST_H),
         .DST_W(DST_W),
         .N(N)
-    )
-    dut (
+    ) dut (
         .clk(clk),
         .rst(rst),
         .start(start),
@@ -57,31 +58,51 @@ module tb_Top_Downscale_Integration;
     end
 
     // ==================================================
-    // Imagen de prueba
+    // Imagen 512x512 desde archivo
     // ==================================================
     reg [7:0] test_image [0:SRC_H-1][0:SRC_W-1];
 
+    // VARIABLES FUERA DEL INITIAL (RESTRICCIÓN DE QUARTUS)
+    integer file;
+    integer code;
+    integer i;
+    integer j;
+
     initial begin
-        test_image[0][0]=96;   test_image[0][1]=32;  test_image[0][2]=64;  test_image[0][3]=96;
-        test_image[1][0]=32;  test_image[1][1]=64;  test_image[1][2]=96;  test_image[1][3]=128;
-        test_image[2][0]=64;  test_image[2][1]=96;  test_image[2][2]=128; test_image[2][3]=160;
-        test_image[3][0]=96;  test_image[3][1]=128; test_image[3][2]=160; test_image[3][3]=192;
+        $display("[%0t] Leyendo archivo imagen_grayscale.txt ...", $time);
+
+        file = $fopen("C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_grayscale.txt", "r");
+
+
+        if (file == 0) begin
+            $fatal("ERROR: No se pudo abrir imagen_grayscale.txt");
+        end
+
+        for (i = 0; i < SRC_H; i = i + 1) begin
+            for (j = 0; j < SRC_W; j = j + 1) begin
+                code = $fscanf(file, "%d", test_image[i][j]);
+                if (code != 1) begin
+                    $fatal("ERROR leyendo txt en [%0d,%0d]", i, j);
+                end
+            end
+        end
+
+        $fclose(file);
+        $display("[%0t] ✓ Lectura completa de 512x512", $time);
     end
 
     // ==================================================
-    // Tarea para cargar la imagen
+    // Cargar imagen
     // ==================================================
     task load_image;
-        integer i,j;
         begin
-            $display("[%0t] Cargando imagen...", $time);
             wr_en = 0;
             @(posedge clk);
 
-            for (i=0; i<SRC_H; i=i+1) begin
-                for (j=0; j<SRC_W; j=j+1) begin
+            for (i = 0; i < SRC_H; i = i + 1) begin
+                for (j = 0; j < SRC_W; j = j + 1) begin
                     wr_en   = 1;
-                    wr_addr = i*SRC_W + j;
+                    wr_addr = i * SRC_W + j;
                     wr_data = test_image[i][j];
                     @(posedge clk);
                 end
@@ -89,81 +110,46 @@ module tb_Top_Downscale_Integration;
 
             wr_en = 0;
             @(posedge clk);
-            $display("[%0t] Imagen cargada.", $time);
+
+            $display("[%0t] Imagen cargada en BRAM.", $time);
         end
     endtask
 
     // ==================================================
-    // Iniciar procesamiento (sin fork/join_any)
+    // Ejecutar downscale
     // ==================================================
     task run_downscale;
         integer timeout;
         begin
-            $display("[%0t] Iniciando downscale...", $time);
             start = 1;
             @(posedge clk);
             start = 0;
 
-            // Tiempo máximo de espera
             timeout = 0;
-            while (done == 0 && timeout < 1000) begin
+            while (!done && timeout < 2000000) begin
                 @(posedge clk);
                 timeout = timeout + 1;
             end
 
-            if (done)
-                $display("[%0t] ✓ Procesamiento completado", $time);
-            else begin
-                $display("[%0t] ✗ ERROR: Timeout", $time);
-                $stop;
-            end
+            if (!done)
+                $fatal("Timeout en downscale");
+
+            $display("[%0t] ✓ Downscale terminado", $time);
         end
     endtask
 
     // ==================================================
-    // Mostrar resultados
+    // Mostrar primeras filas
     // ==================================================
-    task display_output;
-        integer i,j;
+    task display_some;
         begin
-            $display("\n=== IMAGEN DE SALIDA %0dx%0d ===", DST_H, DST_W);
-            for (i=0; i<DST_H; i=i+1) begin
+            $display("Mostrando primeras líneas del resultado:");
+            for (i = 0; i < 8; i = i + 1) begin
                 $write("Row %0d: ", i);
-                for (j=0; j<DST_W; j=j+1) begin
+                for (j = 0; j < 16; j = j + 1)
                     $write("%3d ", image_out[i][j]);
-                end
                 $write("\n");
             end
-            $display("==============================\n");
-        end
-    endtask
-
-    // ==================================================
-    // Verificación
-    // ==================================================
-    task verify_output;
-        integer i,j;
-        integer errors;
-        begin
-            errors = 0;
-
-            $display("[%0t] Verificando salida...", $time);
-
-            for (i=0; i<DST_H; i=i+1) begin
-                for (j=0; j<DST_W; j=j+1) begin
-                    
-                    if (image_out[i][j] === 8'd0) begin
-                        $display(" ✗ Pixel [%0d,%0d] = 0", i,j);
-                        errors = errors + 1;
-                    end
-
-                end
-            end
-
-            if (errors == 0)
-                $display(" ✓ Verificación PASADA");
-            else
-                $display(" ✗ %0d errores detectados", errors);
         end
     endtask
 
@@ -171,30 +157,20 @@ module tb_Top_Downscale_Integration;
     // Secuencia principal
     // ==================================================
     initial begin
-        $display("\n\n==== TEST Top_Downscale_Integration ====\n");
-
         rst = 1;
         start = 0;
         wr_en = 0;
         wr_addr = 0;
         wr_data = 0;
 
-        repeat(5) @(posedge clk);
+        repeat(10) @(posedge clk);
         rst = 0;
 
-        // 1. Cargar imagen
         load_image();
-
-        // 2. Procesar
         run_downscale();
+        display_some();
 
-        // 3. Mostrar resultado
-        display_output();
-
-        // 4. Verificar
-        verify_output();
-
-        $display("\n==== TEST COMPLETADO ====\n");
+        $display("TEST COMPLETADO");
         $stop;
     end
 

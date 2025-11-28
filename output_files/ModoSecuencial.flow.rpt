@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Fri Nov 28 01:02:23 2025
+Fri Nov 28 12:19:49 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Fri Nov 28 01:02:23 2025       ;
+; Flow Status                 ; Successful - Fri Nov 28 12:19:49 2025       ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; ModoSecuencial                              ;
 ; Top-level Entity Name       ; Top_Downscale_Integration                   ;
@@ -63,7 +63,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/28/2025 01:02:15 ;
+; Start date & time ; 11/28/2025 12:19:41 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
@@ -74,7 +74,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+----------------------------------------+----------------+---------------------------+---------------------------------+
 ; Assignment Name                      ; Value                                  ; Default Value  ; Entity Name               ; Section Id                      ;
 +--------------------------------------+----------------------------------------+----------------+---------------------------+---------------------------------+
-; COMPILER_SIGNATURE_ID                ; 1097428162052.176431333507300          ; --             ; --                        ; --                              ;
+; COMPILER_SIGNATURE_ID                ; 91767657478.176435398102108            ; --             ; --                        ; --                              ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                        ; tb_downscale_SIMD_Proceso       ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                        ; tb_Downscale_Secuencial         ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --             ; --                        ; tb_Top_Downscale_Secuencial     ;
