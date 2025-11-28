@@ -1,5 +1,6 @@
 // =======================================================
 // TOP GENERAL DEL PROYECTO — Basado en GuiaJtag
+// Aqui se integran ambos modos: Secuencial y SIMD
 // =======================================================
 module Top_General #(
     parameter IMG_W = 512,
@@ -23,6 +24,7 @@ module Top_General #(
     logic start, step;
     logic [31:0] xratio_reg, yratio_reg;
     logic [31:0] wr_addr_reg, wr_data_reg;
+    logic mode_reg;  // Aqui se selecciona el modo: 0=Secuencial, 1=SIMD
 
     logic [31:0] rd_data_reg;
     logic [31:0] perf_counter;
@@ -37,6 +39,7 @@ module Top_General #(
 
         .start(start),
         .step(step),
+        .mode(mode_reg),
         .param_x_ratio(xratio_reg),
         .param_y_ratio(yratio_reg),
 
@@ -55,83 +58,59 @@ module Top_General #(
     );
 
     // ====================================================
-    // 2. Memoria BRAM única
+    // 2. Top Downscale Secuencial
     // ====================================================
-    logic [$clog2(IMG_W*IMG_H)-1:0] bram_addr;
-    logic [7:0] bram_rd_data;
-    logic [7:0] bram_wr_data;
-    logic       bram_we;
+    logic done_seq;
+    logic [7:0] dbg_seq;
 
-    ImageMemory #(.IMG_W(IMG_W), .IMG_H(IMG_H)) mem (
-        .clk(clk),
-        .we(bram_we),
-        .addr(bram_addr),
-        .wr_data(bram_wr_data),
-        .rd_data(bram_rd_data)
+    Top_Downscale_Secuencial #(
+        .SRC_W(IMG_W),
+        .SRC_H(IMG_H),
+        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
+        .DST_H(IMG_H/2)
+    ) u_top_seq (
+        .clk      (clk),
+        .rst      (rst),
+        .cfg_we   (avs_write && !mode_reg),  // Aqui se escribe solo si modo secuencial
+        .cfg_addr (wr_addr_reg[15:0]),
+        .cfg_data (wr_data_reg[7:0]),
+        .start_req(start && !mode_reg),      // Aqui se inicia solo si modo secuencial
+        .done     (done_seq),
+        .dbg_data (dbg_seq)
     );
 
     // ====================================================
-    // 3. Downscale (Secuencial o SIMD)
+    // 3. Top Downscale SIMD
     // ====================================================
-    logic fsm_mem_we;
-    logic [$clog2(IMG_W*IMG_H)-1:0] fsm_mem_addr;
-    logic [7:0] fsm_mem_wdata;
-    logic start_fsm;
-    logic done_fsm;
+    logic done_simd;
+    logic [7:0] dbg_simd;
 
-    Downscale_Secuencial u_down (
-        .clk(clk),
-        .rst(rst),
-
-        .start(start),
-        .done(done_fsm),
-
-        .x_ratio(xratio_reg),
-        .y_ratio(yratio_reg),
-
-        .mem_read_data(bram_rd_data),
-        .mem_read_addr(fsm_mem_addr),
-
-        .mem_write_addr(fsm_mem_addr),
-        .mem_write_data(fsm_mem_wdata),
-        .mem_write_en(fsm_mem_we)
+    Top_Downscale_SIMD #(
+        .SRC_W(IMG_W),
+        .SRC_H(IMG_H),
+        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
+        .DST_H(IMG_H/2),
+        .N(N)
+    ) u_top_simd (
+        .clk      (clk),
+        .rst      (rst),
+        .cfg_we   (avs_write && mode_reg),  // Aqui se escribe solo si modo SIMD
+        .cfg_addr (wr_addr_reg[15:0]),
+        .cfg_data (wr_data_reg[7:0]),
+        .start_req(start && mode_reg),      // Aqui se inicia solo si modo SIMD
+        .done     (done_simd),
+        .dbg_data (dbg_simd)
     );
 
-    assign done_flag = done_fsm;
-
     // ====================================================
-    // 4. Multiplexor BRAM según prioridad
+    // 4. Multiplexado de señales de salida
     // ====================================================
-    always_comb begin
+    assign done_flag = mode_reg ? done_simd : done_seq;
 
-        // Default
-        bram_we      = 1'b0;
-        bram_wr_data = 8'd0;
-        bram_addr    = 0;
+    // Aqui se multiplexa el dato de debug segun el modo
+    assign rd_data_reg = {24'd0, (mode_reg ? dbg_simd : dbg_seq)};
 
-        if (avs_write) begin
-            // JTAG escribe memoria
-            bram_we      = 1'b1;
-            bram_addr    = wr_addr_reg[$clog2(IMG_W*IMG_H)-1:0];
-            bram_wr_data = wr_data_reg[7:0];  
-        
-        end else if (fsm_mem_we) begin
-            // FSM escribe pixel procesado
-            bram_we      = 1'b1;
-            bram_addr    = fsm_mem_addr;
-            bram_wr_data = fsm_mem_wdata;
-
-        end else begin
-            // FSM lee pixel
-            bram_we      = 1'b0;
-            bram_addr    = fsm_mem_addr;
-        end
-    end
-
-    // Dato disponible para lectura JTAG
-    assign rd_data_reg = {24'd0, bram_rd_data};
-
-    // Counter de performance
+    // Aqui se cuenta el performance counter
     always_ff @(posedge clk or posedge rst) begin
         if (rst || start)
             perf_counter <= 0;
