@@ -43,6 +43,45 @@ module tb_Top_Downscale_Integration;
     end
 
     // ==================================================
+    // Mostrar parámetros del diseño
+    // ==================================================
+    initial begin
+        #1;
+        $display("\n=== PARÁMETROS DEL DISEÑO ===");
+        $display("SRC_H = %0d, SRC_W = %0d", SRC_H, SRC_W);
+        $display("DST_H = %0d, DST_W = %0d", DST_H, DST_W);
+        $display("TOT_PIX = %0d", dut.u_downscale.TOT_PIX);
+        $display("X_RATIO_FP = %0d (0x%h)", dut.u_downscale.X_RATIO_FP, dut.u_downscale.X_RATIO_FP);
+        $display("Y_RATIO_FP = %0d (0x%h)", dut.u_downscale.Y_RATIO_FP, dut.u_downscale.Y_RATIO_FP);
+        $display("FRAC = %0d", dut.u_downscale.FRAC);
+        $display("================================\n");
+    end
+
+    // ==================================================
+    // Monitorear primeros batches
+    // ==================================================
+    initial begin
+        @(negedge rst);
+        @(posedge start);
+        
+        // Monitorear primeros batches
+        for (int watch = 0; watch < 5; watch++) begin
+            @(posedge clk);
+            if (dut.u_downscale.state == dut.u_downscale.S_CALC_COORDS) begin
+                $display("\n--- BATCH base_idx=%0d ---", dut.u_downscale.base_idx);
+                for (int k = 0; k < N; k++) begin
+                    $display("  Lane %0d: idx=%0d → i_dst=%0d, j_dst=%0d (valid=%b)",
+                             k,
+                             dut.u_downscale.idx[k],
+                             dut.u_downscale.i_dst[k],
+                             dut.u_downscale.j_dst[k],
+                             dut.u_downscale.valid_lane[k]);
+                end
+            end
+        end
+    end
+
+    // ==================================================
     // Imagen 512x512
     // ==================================================
     reg [7:0] test_image [0:SRC_H-1][0:SRC_W-1];
@@ -77,6 +116,88 @@ module tb_Top_Downscale_Integration;
         for (j = 0; j < 8; j = j + 1)
             $display("  test_image[0][%0d] = %0d", j, test_image[0][j]);
     end
+	 
+			 // Agregar este bloque al testbench
+		integer coord_log;
+
+		initial begin
+			 coord_log = $fopen("coordinate_trace.txt", "w");
+			 
+			 @(negedge rst);
+			 @(posedge start);
+			 
+			 // Monitorear primeros 100 píxeles
+			 for (int watch = 0; watch < 100; watch++) begin
+				  @(posedge clk);
+				  if (dut.u_downscale.state == dut.u_downscale.S_CALC_COORDS) begin
+						$fwrite(coord_log, "\n=== BATCH base_idx=%0d ===\n", dut.u_downscale.base_idx);
+						for (int k = 0; k < N; k++) begin
+							 if (dut.u_downscale.valid_lane[k]) begin
+								  $fwrite(coord_log, "Lane %0d: idx=%5d → DST[%3d,%3d] reads SRC x_l=%3d, y_l=%3d, x_h=%3d, y_h=%3d\n",
+											 k,
+											 dut.u_downscale.idx[k],
+											 dut.u_downscale.i_dst[k],
+											 dut.u_downscale.j_dst[k],
+											 dut.u_downscale.x_l[k],
+											 dut.u_downscale.y_l[k],
+											 dut.u_downscale.x_h[k],
+											 dut.u_downscale.y_h[k]);
+							 end
+						end
+				  end
+			 end
+			 
+			 $fclose(coord_log);
+		end
+		
+					// Agregar este bloque al testbench para ver las coordenadas de lectura
+			initial begin
+				 @(negedge rst);
+				 @(posedge start);
+				 
+				 // Esperar al primer batch que escribe [128,128]
+				 forever begin
+					  @(posedge clk);
+					  if (dut.u_downscale.state == dut.u_downscale.S_CALC_COORDS) begin
+							for (int k = 0; k < N; k++) begin
+								 // Buscar cuando estamos calculando el píxel [128,128]
+								 if (dut.u_downscale.i_dst[k] == 128 && dut.u_downscale.j_dst[k] == 128) begin
+									  $display("\n🎯 ENCONTRADO PÍXEL DE SALIDA [128,128]:");
+									  $display("  idx = %0d", dut.u_downscale.idx[k]);
+									  $display("  i_dst = %0d, j_dst = %0d", dut.u_downscale.i_dst[k], dut.u_downscale.j_dst[k]);
+									  $display("  x_src_fp = %0d (0x%h)", dut.u_downscale.x_src_fp[k], dut.u_downscale.x_src_fp[k]);
+									  $display("  y_src_fp = %0d (0x%h)", dut.u_downscale.y_src_fp[k], dut.u_downscale.y_src_fp[k]);
+									  $display("  x_l = %0d, y_l = %0d", dut.u_downscale.x_l[k], dut.u_downscale.y_l[k]);
+									  $display("  x_h = %0d, y_h = %0d", dut.u_downscale.x_h[k], dut.u_downscale.y_h[k]);
+									  $display("  Memoria entrada [%0d,%0d] = %0d", 
+												  dut.u_downscale.y_l[k], 
+												  dut.u_downscale.x_l[k],
+												  dut.u_image_memory.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
+									  $display("  ESPERADO: debería leer de [256,256] = %0d", 
+												  dut.u_image_memory.memory[256 * 512 + 256]);
+								 end
+								 
+								 // También mostrar el píxel [0,128]
+								 if (dut.u_downscale.i_dst[k] == 0 && dut.u_downscale.j_dst[k] == 128) begin
+									  $display("\n🎯 ENCONTRADO PÍXEL DE SALIDA [0,128]:");
+									  $display("  idx = %0d", dut.u_downscale.idx[k]);
+									  $display("  i_dst = %0d, j_dst = %0d", dut.u_downscale.i_dst[k], dut.u_downscale.j_dst[k]);
+									  $display("  x_src_fp = %0d (0x%h)", dut.u_downscale.x_src_fp[k], dut.u_downscale.x_src_fp[k]);
+									  $display("  y_src_fp = %0d (0x%h)", dut.u_downscale.y_src_fp[k], dut.u_downscale.y_src_fp[k]);
+									  $display("  x_l = %0d, y_l = %0d", dut.u_downscale.x_l[k], dut.u_downscale.y_l[k]);
+									  $display("  x_h = %0d, y_h = %0d", dut.u_downscale.x_h[k], dut.u_downscale.y_h[k]);
+									  $display("  Memoria entrada [%0d,%0d] = %0d", 
+												  dut.u_downscale.y_l[k], 
+												  dut.u_downscale.x_l[k],
+												  dut.u_image_memory.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
+									  $display("  ESPERADO: debería leer de [0,256] = %0d", 
+												  dut.u_image_memory.memory[0 * 512 + 256]);
+								 end
+							end
+					  end
+				 end
+			end
+
 
     // ==================================================
     // Verificar memoria después de cargar
@@ -97,6 +218,35 @@ module tb_Top_Downscale_Integration;
                 $display("  ✗ ERROR: Memoria contiene valores indefinidos!");
             end else begin
                 $display("  ✓ Memoria inicializada correctamente");
+            end
+        end
+    endtask
+
+    // ==================================================
+    // Verificar imagen de entrada
+    // ==================================================
+    task verify_input_image;
+        begin
+            $display("\n=== VERIFICANDO IMAGEN DE ENTRADA ===");
+            
+            // Verificar esquinas y centro
+            $display("Esquina superior izquierda [0,0] = %0d", 
+                     dut.u_image_memory.memory[0]);
+            $display("Esquina superior derecha [0,511] = %0d", 
+                     dut.u_image_memory.memory[511]);
+            $display("Centro [256,256] = %0d", 
+                     dut.u_image_memory.memory[256*512 + 256]);
+            $display("Esquina inferior izquierda [511,0] = %0d", 
+                     dut.u_image_memory.memory[511*512]);
+            $display("Esquina inferior derecha [511,511] = %0d", 
+                     dut.u_image_memory.memory[512*512-1]);
+            
+            // Verificar que no son todos iguales
+            if (dut.u_image_memory.memory[0] == dut.u_image_memory.memory[511] &&
+                dut.u_image_memory.memory[0] == dut.u_image_memory.memory[256*512 + 256]) begin
+                $display("⚠ WARNING: Primeros valores son iguales, posible problema de carga");
+            end else begin
+                $display("✓ Valores diferentes en distintas posiciones");
             end
         end
     endtask
@@ -181,6 +331,68 @@ module tb_Top_Downscale_Integration;
             $display("[%0t] ✓ Downscale completado en %0d ciclos", $time, timeout);
         end
     endtask
+	 
+	 
+
+    // ==================================================
+    // Verificar mapeo de píxeles
+    // ==================================================
+    task verify_pixel_mapping;
+        integer errors;
+        integer expected_i, expected_j;
+        integer pix, ii, jj;
+        begin
+            $display("\n=== VERIFICACIÓN DE MAPEO DE PÍXELES ===");
+            errors = 0;
+            
+            // Verificar primeros 20 píxeles
+            $display("\n--- Primeros 20 píxeles ---");
+            for (pix = 0; pix < 20; pix = pix + 1) begin
+                expected_i = pix / DST_W;
+                expected_j = pix % DST_W;
+                $display("pix=%3d → esperado[%3d,%3d], valor=%3d", 
+                         pix, expected_i, expected_j, image_out[expected_i][expected_j]);
+            end
+            
+            // Verificar píxeles clave
+            $display("\n--- Píxeles clave ---");
+            $display("[0,0]     = %3d", image_out[0][0]);
+            $display("[0,128]   = %3d", image_out[0][128]);
+            $display("[128,0]   = %3d", image_out[128][0]);
+            $display("[128,128] = %3d", image_out[128][128]);
+            $display("[255,255] = %3d", image_out[255][255]);
+            
+            // Verificar patrón repetido
+            $display("\n--- Detección de repetición ---");
+            if (image_out[0][0] == image_out[0][128] &&
+                image_out[0][0] == image_out[128][0] &&
+                image_out[0][0] == image_out[128][128]) begin
+                $display("⚠ PATRÓN REPETIDO DETECTADO en esquinas de cuadrantes");
+                errors = errors + 1;
+            end
+            
+            // Comparar cuadrante 1 vs cuadrante 2
+            for (ii = 0; ii < 10; ii = ii + 1) begin
+                for (jj = 0; jj < 10; jj = jj + 1) begin
+                    if (image_out[ii][jj] != image_out[ii][jj+128]) begin
+                        // OK, son diferentes
+                    end else begin
+                        errors = errors + 1;
+                        if (errors < 5) // Mostrar solo primeros errores
+                            $display("Repetición: [%0d,%0d]==[%0d,%0d] = %0d", 
+                                     ii, jj, ii, jj+128, image_out[ii][jj]);
+                    end
+                end
+            end
+            
+            if (errors > 50)
+                $display("\n⚠ PROBLEMA CRÍTICO: %0d píxeles repetidos detectados", errors);
+            else if (errors > 0)
+                $display("\n⚠ %0d píxeles repetidos (puede ser normal en bordes)", errors);
+            else
+                $display("\n✓ No se detectó patrón repetido");
+        end
+    endtask
 
     // ==================================================
     // Verificar salida
@@ -258,7 +470,7 @@ module tb_Top_Downscale_Integration;
                 return;
             end
             
-            // Escribir dimensiones como encabezado (opcional)
+            // Escribir dimensiones como encabezado
             $fwrite(outfile, "%0d %0d\n", DST_H, DST_W);
             
             // Escribir todos los píxeles
@@ -299,15 +511,16 @@ module tb_Top_Downscale_Integration;
         repeat(5) @(posedge clk);
 
         load_image();
+        verify_input_image();
         repeat(10) @(posedge clk);
         
         run_downscale();
         repeat(10) @(posedge clk);
         
         verify_output();
+        verify_pixel_mapping();
         display_sample();
         
-        // Guardar resultado
         save_output_image();
 
         $display("\n=== TEST COMPLETADO ===\n");
@@ -318,7 +531,7 @@ module tb_Top_Downscale_Integration;
     // Timeout global
     // ==================================================
     initial begin
-        #(CLK_PERIOD * 20000000);  // 200ms
+        #(CLK_PERIOD * 20000000);
         $display("\n✗ TIMEOUT GLOBAL");
         $finish;
     end

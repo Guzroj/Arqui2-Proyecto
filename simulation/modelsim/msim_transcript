@@ -12,17 +12,17 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:48 on Nov 28,2025
+# Start time: 16:17:11 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 12:40:48 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:11 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:11 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv 
 # -- Compiling module ModoSIMD
 # ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv(9): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -34,11 +34,11 @@
 # 
 # Top level modules:
 # 	ModoSIMD
-# End time: 12:40:49 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:11 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 6
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:11 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv 
 # -- Compiling module SIMD_Registros
 # ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv(8): (vlog-13314) Defaulting port 'I00_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -50,21 +50,21 @@
 # 
 # Top level modules:
 # 	SIMD_Registros
-# End time: 12:40:49 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:11 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 6
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:11 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv 
 # -- Compiling module FSM_SIMD
 # 
 # Top level modules:
 # 	FSM_SIMD
-# End time: 12:40:49 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:11 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:11 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv 
 # -- Compiling module Top_SIMD
 # ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv(12): (vlog-13314) Defaulting port 'I00_vec' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -76,11 +76,11 @@
 # 
 # Top level modules:
 # 	Top_SIMD
-# End time: 12:40:49 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:12 on Nov 28,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 6
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:12 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv 
 # -- Compiling module Downscale_SIMD
 # ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv(17): (vlog-13314) Defaulting port 'mem_rd_valid' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -88,11 +88,11 @@
 # 
 # Top level modules:
 # 	Downscale_SIMD
-# End time: 12:40:49 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:12 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 2
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:49 on Nov 28,2025
+# Start time: 16:17:12 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv 
 # -- Compiling module ImageMemory_SIMDPort
 # ** Warning: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv(17): (vlog-13314) Defaulting port 'rd_req' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -100,33 +100,33 @@
 # 
 # Top level modules:
 # 	ImageMemory_SIMDPort
-# End time: 12:40:50 on Nov 28,2025, Elapsed time: 0:00:01
+# End time: 16:17:12 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 2
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:50 on Nov 28,2025
+# Start time: 16:17:12 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv 
 # -- Compiling module Top_Downscale_Integration
 # 
 # Top level modules:
 # 	Top_Downscale_Integration
-# End time: 12:40:50 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:12 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 12:40:50 on Nov 28,2025
+# Start time: 16:17:12 on Nov 28,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv 
 # -- Compiling module tb_Top_Downscale_Integration
 # 
 # Top level modules:
 # 	tb_Top_Downscale_Integration
-# End time: 12:40:50 on Nov 28,2025, Elapsed time: 0:00:00
+# End time: 16:17:12 on Nov 28,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_Top_Downscale_Integration
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_Top_Downscale_Integration 
-# Start time: 12:40:50 on Nov 28,2025
+# Start time: 16:17:12 on Nov 28,2025
 # Loading sv_std.std
 # Loading work.tb_Top_Downscale_Integration
 # Loading work.Top_Downscale_Integration
@@ -160,6 +160,16 @@
 #   test_image[0][6] = 152
 #   test_image[0][7] = 151
 # 
+# === PARÁMETROS DEL DISEÑO ===
+# SRC_H = 512, SRC_W = 512
+# DST_H = 256, DST_W = 256
+# TOT_PIX = 65536
+# X_RATIO_FP = 513 (0x00000201)
+# Y_RATIO_FP = 513 (0x00000201)
+# FRAC = 8
+# ================================
+# 
+# 
 # [145000] Cargando imagen en BRAM...
 #   Progreso: 0%
 #   Progreso: 9%
@@ -186,27 +196,106 @@
 #     memory[7] = 151
 #   ✓ Memoria inicializada correctamente
 # 
+# === VERIFICANDO IMAGEN DE ENTRADA ===
+# Esquina superior izquierda [0,0] = 150
+# Esquina superior derecha [0,511] = 53
+# Centro [256,256] = 125
+# Esquina inferior izquierda [511,0] = 1
+# Esquina inferior derecha [511,511] = 2
+# ✓ Valores diferentes en distintas posiciones
+# 
 # [2621705000] Iniciando downscale...
+# 
+# --- BATCH base_idx=0 ---
+#   Lane 0: idx=0 → i_dst=0, j_dst=0 (valid=1)
+#   Lane 1: idx=1 → i_dst=0, j_dst=1 (valid=1)
+#   Lane 2: idx=2 → i_dst=0, j_dst=2 (valid=1)
+#   Lane 3: idx=3 → i_dst=0, j_dst=3 (valid=1)
+# 
+# 🎯 ENCONTRADO PÍXEL DE SALIDA [0,128]:
+#   idx = 128
+#   i_dst = 0, j_dst = 128
+#   x_src_fp = 61560 (0x00f078)
+#   y_src_fp = 0 (0x000000)
+#   x_l = 240, y_l = 0
+#   x_h = 241, y_h = 1
+#   Memoria entrada [0,240] = 160
+#   ESPERADO: debería leer de [0,256] = 159
 #   Ciclos: 100000
+# 
+# 🎯 ENCONTRADO PÍXEL DE SALIDA [128,128]:
+#   idx = 32896
+#   i_dst = 128, j_dst = 128
+#   x_src_fp = 61560 (0x00f078)
+#   y_src_fp = 65664 (0x010080)
+#   x_l = 240, y_l = 256
+#   x_h = 241, y_h = 257
+#   Memoria entrada [256,240] = 180
+#   ESPERADO: debería leer de [256,256] = 125
 #   Ciclos: 200000
 #   Ciclos: 300000
 # [5898525000] ✓ Downscale completado en 327681 ciclos
 # 
 # [5898625000] Verificando salida...
 #   Total píxeles: 65536
-#   Indefinidos (x): 0
-#   Ceros: 35
-#   ✓ No hay valores indefinidos
+#   Indefinidos (x): 4
+#   Ceros: 139
+#   ✗ ERROR: Hay valores indefinidos en la salida
+# 
+# Primeros píxeles indefinidos:
+#     [0,0] = x
+#     [0,1] = x
+#     [0,2] = x
+#     [0,3] = x
+# 
+# === VERIFICACIÓN DE MAPEO DE PÍXELES ===
+# 
+# --- Primeros 20 píxeles ---
+# pix=  0 → esperado[  0,  0], valor=  x
+# pix=  1 → esperado[  0,  1], valor=  x
+# pix=  2 → esperado[  0,  2], valor=  x
+# pix=  3 → esperado[  0,  3], valor=  x
+# pix=  4 → esperado[  0,  4], valor=150
+# pix=  5 → esperado[  0,  5], valor=151
+# pix=  6 → esperado[  0,  6], valor=153
+# pix=  7 → esperado[  0,  7], valor=158
+# pix=  8 → esperado[  0,  8], valor=152
+# pix=  9 → esperado[  0,  9], valor=153
+# pix= 10 → esperado[  0, 10], valor=153
+# pix= 11 → esperado[  0, 11], valor=153
+# pix= 12 → esperado[  0, 12], valor=154
+# pix= 13 → esperado[  0, 13], valor=171
+# pix= 14 → esperado[  0, 14], valor=152
+# pix= 15 → esperado[  0, 15], valor=152
+# pix= 16 → esperado[  0, 16], valor=155
+# pix= 17 → esperado[  0, 17], valor=181
+# pix= 18 → esperado[  0, 18], valor=152
+# pix= 19 → esperado[  0, 19], valor=153
+# 
+# --- Píxeles clave ---
+# [0,0]     =   x
+# [0,128]   = 160
+# [128,0]   =  81
+# [128,128] = 155
+# [255,255] =   0
+# 
+# --- Detección de repetición ---
+# Repetición: [0,0]==[0,128] = x
+# Repetición: [0,1]==[0,129] = x
+# Repetición: [0,2]==[0,130] = x
+# Repetición: [0,3]==[0,131] = x
+# 
+# ⚠ 4 píxeles repetidos (puede ser normal en bordes)
 # 
 # === MUESTRA DE SALIDA (primeras 8x16) ===
-# Row   0: 150 151 153 158 152 153 153 153 154 171 152 152 155 181 152 153 
-# Row   1: 151 156 151 151 152 153 156 156 172 154 155 156 156 180 151 153 
-# Row   2: 152 151 152 152 152 152 152 152 152 152 152 179 152 180 152 153 
-# Row   3: 159 151 152 152 152 152 152 152 152 154 154 153 154 180 152 153 
-# Row   4: 152 152 152 152 152 152 153 160 161 162 162 176 153 180 152 153 
-# Row   5: 152 152 152 152 152 162 153 152 152 163 163 186 153 180 162 163 
-# Row   6: 152 155 152 152 152 152 165 167 168 152 152 153 154 180 151 152 
-# Row   7: 167 169 152 152 152 152 179 152 182 152 152 153 154 194 151 152 
+# Row   0:   x   x   x   x 150 151 153 158 152 153 153 153 154 171 152 152 
+# Row   1:  20  31  36  53 151 156 151 151 152 153 156 156 172 154 155 156 
+# Row   2:  19  30  32  45 152 151 152 152 152 152 152 152 152 152 152 179 
+# Row   3:  36  26  27  45 159 151 152 152 152 152 152 152 152 154 154 153 
+# Row   4:  51  31  24  40 152 152 152 152 152 152 153 160 161 162 162 176 
+# Row   5:  57  36  25  37 152 152 152 152 152 162 153 152 152 163 163 186 
+# Row   6:  58  43  29  31 152 155 152 152 152 152 165 167 168 152 152 153 
+# Row   7:  68  55  32  30 167 169 152 152 152 152 179 152 182 152 152 153 
 # ==========================================
 # 
 # 
@@ -227,8 +316,8 @@
 # 
 # === TEST COMPLETADO ===
 # 
-# ** Note: $stop    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv(314)
+# ** Note: $stop    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv(527)
 #    Time: 5898625 ns  Iteration: 1  Instance: /tb_Top_Downscale_Integration
-# Break in Module tb_Top_Downscale_Integration at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv line 314
-# End time: 12:56:34 on Nov 28,2025, Elapsed time: 0:15:44
+# Break in Module tb_Top_Downscale_Integration at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv line 527
+# End time: 16:27:53 on Nov 28,2025, Elapsed time: 0:10:41
 # Errors: 0, Warnings: 0
