@@ -1,0 +1,231 @@
+`timescale 1ns/1ps
+
+module tb_Top_Downscale_Integration;
+
+    // ===============================================
+    // Parámetros del test
+    // ===============================================
+    localparam int SRC_H = 4;
+    localparam int SRC_W = 4;
+    localparam int DST_H = 3;
+    localparam int DST_W = 3;
+    localparam int N     = 4;
+    
+    localparam int CLK_PERIOD = 10;  // 100 MHz
+
+    // ===============================================
+    // Señales del DUT
+    // ===============================================
+    logic clk;
+    logic rst;
+    logic start;
+    logic done;
+    
+    logic        wr_en;
+    logic [15:0] wr_addr;
+    logic [7:0]  wr_data;
+    
+    logic [7:0] image_out [0:DST_H-1][0:DST_W-1];
+
+    // ===============================================
+    // Instancia del DUT
+    // ===============================================
+    Top_Downscale_Integration #(
+        .SRC_H (SRC_H),
+        .SRC_W (SRC_W),
+        .DST_H (DST_H),
+        .DST_W (DST_W),
+        .N     (N)
+    ) dut (
+        .clk       (clk),
+        .rst       (rst),
+        .start     (start),
+        .done      (done),
+        .wr_en     (wr_en),
+        .wr_addr   (wr_addr),
+        .wr_data   (wr_data),
+        .image_out (image_out)
+    );
+
+    // ===============================================
+    // Generación de reloj
+    // ===============================================
+    initial begin
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
+    end
+
+    // ===============================================
+    // Imagen de prueba 4x4
+    // ===============================================
+    logic [7:0] test_image [0:SRC_H-1][0:SRC_W-1] = '{
+        '{  0,  32,  64,  96},
+        '{ 32,  64,  96, 128},
+        '{ 64,  96, 128, 160},
+        '{ 96, 128, 160, 192}
+    };
+
+    // ===============================================
+    // Tarea: Cargar imagen en memoria
+    // ===============================================
+    task load_image();
+        $display("[%0t] Cargando imagen en memoria...", $time);
+        wr_en = 1'b0;
+        @(posedge clk);
+        
+        for (int i = 0; i < SRC_H; i++) begin
+            for (int j = 0; j < SRC_W; j++) begin
+                wr_en   = 1'b1;
+                wr_addr = i * SRC_W + j;
+                wr_data = test_image[i][j];
+                @(posedge clk);
+            end
+        end
+        
+        wr_en = 1'b0;
+        @(posedge clk);
+        $display("[%0t] Imagen cargada (16 píxeles)", $time);
+    endtask
+
+    // ===============================================
+    // Tarea: Iniciar procesamiento
+    // ===============================================
+    task run_downscale();
+        $display("[%0t] Iniciando downscaling...", $time);
+        start = 1'b1;
+        @(posedge clk);
+        start = 1'b0;
+        
+        // Esperar done (timeout 1000 ciclos)
+        fork
+            begin
+                wait(done == 1'b1);
+                $display("[%0t] ✓ Procesamiento completado", $time);
+            end
+            begin
+                repeat(1000) @(posedge clk);
+                $display("[%0t] ✗ ERROR: Timeout esperando done", $time);
+                $fatal(1, "Timeout");
+            end
+        join_any
+        disable fork;
+        
+        @(posedge clk);
+    endtask
+
+    // ===============================================
+    // Tarea: Mostrar imagen de salida
+    // ===============================================
+    task display_output();
+        $display("\n=== IMAGEN DE SALIDA %0dx%0d ===", DST_H, DST_W);
+        for (int i = 0; i < DST_H; i++) begin
+            $write("Row %0d: ", i);
+            for (int j = 0; j < DST_W; j++) begin
+                $write("%3d ", image_out[i][j]);
+            end
+            $write("\n");
+        end
+        $display("================================\n");
+    endtask
+
+    // ===============================================
+    // Tarea: Verificación básica
+    // ===============================================
+    task verify_output();
+        automatic int errors = 0;
+        
+        $display("[%0t] Verificando resultado...", $time);
+        
+        // Verificar que no haya ceros (píxeles válidos)
+        for (int i = 0; i < DST_H; i++) begin
+            for (int j = 0; j < DST_W; j++) begin
+                if (image_out[i][j] == 8'd0) begin
+                    $display("  ✗ Error en [%0d][%0d]: valor = 0", i, j);
+                    errors++;
+                end
+            end
+        end
+        
+        // Verificar rangos razonables (0-255)
+        for (int i = 0; i < DST_H; i++) begin
+            for (int j = 0; j < DST_W; j++) begin
+                if (image_out[i][j] > 8'd255) begin
+                    $display("  ✗ Error en [%0d][%0d]: valor fuera de rango", i, j);
+                    errors++;
+                end
+            end
+        end
+        
+        if (errors == 0) begin
+            $display("  ✓ Verificación básica PASADA");
+        end else begin
+            $display("  ✗ Se encontraron %0d errores", errors);
+        end
+    endtask
+
+    // ===============================================
+    // Secuencia principal de prueba
+    // ===============================================
+    initial begin
+        $display("\n========================================");
+        $display("TESTBENCH: Top_Downscale_Integration");
+        $display("========================================");
+        $display("Parámetros:");
+        $display("  Entrada:  %0dx%0d", SRC_H, SRC_W);
+        $display("  Salida:   %0dx%0d", DST_H, DST_W);
+        $display("  SIMD:     N=%0d", N);
+        $display("========================================\n");
+
+        // Inicialización
+        rst     = 1'b1;
+        start   = 1'b0;
+        wr_en   = 1'b0;
+        wr_addr = '0;
+        wr_data = '0;
+
+        // Reset
+        repeat(5) @(posedge clk);
+        rst = 1'b0;
+        repeat(2) @(posedge clk);
+
+        // 1. Cargar imagen
+        load_image();
+        repeat(5) @(posedge clk);
+
+        // 2. Ejecutar downscaling
+        run_downscale();
+        repeat(5) @(posedge clk);
+
+        // 3. Mostrar resultado
+        display_output();
+
+        // 4. Verificar
+        verify_output();
+
+        // Finalizar
+        $display("\n========================================");
+        $display("TEST COMPLETADO");
+        $display("========================================\n");
+        
+        repeat(10) @(posedge clk);
+        $finish;
+    end
+
+    // ===============================================
+    // Timeout global
+    // ===============================================
+    initial begin
+        #(CLK_PERIOD * 5000);
+        $display("\n✗ TIMEOUT GLOBAL - Test demoró demasiado");
+        $fatal(1, "Global timeout");
+    end
+
+    // ===============================================
+    // Dump de formas de onda (opcional)
+    // ===============================================
+    initial begin
+        $dumpfile("dump.vcd");
+        $dumpvars(0, tb_Top_Downscale_Integration);
+    end
+
+endmodule
