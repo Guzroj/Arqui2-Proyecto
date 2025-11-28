@@ -11,18 +11,15 @@ module Downscale_SIMD #(
     input  logic rst,
     input  logic start,
 
-    // INTERFAZ DE MEMORIA
     output logic                           mem_rd_req   [N],
     output logic [$clog2(SRC_W*SRC_H)-1:0] mem_rd_addr  [N],
     input  logic                           mem_rd_valid [N],
     input  logic [7:0]                     mem_rd_data  [N],
 
-    // SALIDA
     output logic        done,
     output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
 );
 
-    // CONSTANTES
     localparam int FRAC       = 8;
     localparam int X_RATIO_FP = ((SRC_W - 1) << FRAC) / (DST_W - 1);
     localparam int Y_RATIO_FP = ((SRC_H - 1) << FRAC) / (DST_H - 1);
@@ -33,7 +30,6 @@ module Downscale_SIMD #(
     localparam int DST_W_BITS = $clog2(DST_W) + 1;
     localparam int DST_H_BITS = $clog2(DST_H) + 1;
 
-    // Senales SIMD
     logic [7:0] I00_vec   [N];
     logic [7:0] I10_vec   [N];
     logic [7:0] I01_vec   [N];
@@ -45,7 +41,6 @@ module Downscale_SIMD #(
     logic top_start;
     logic top_done;
 
-    // Instancia del TOP SIMD
     Top_SIMD #(.N(N)) u_top_simd (
         .clk          (clk),
         .rst          (rst),
@@ -60,10 +55,10 @@ module Downscale_SIMD #(
         .pixel_out_vec(pixel_out_vec)
     );
 
-    // FSM
     typedef enum logic [3:0] {
         S_IDLE,
         S_CALC_COORDS,
+        S_CALC_SRC,
         S_REQ_I00,
         S_WAIT_I00,
         S_REQ_I10,
@@ -80,39 +75,21 @@ module Downscale_SIMD #(
 
     state_t state;
 
-    // REGISTROS DE COORDENADAS
     logic [IDX_BITS-1:0]      base_idx;
     logic [IDX_BITS-1:0]      idx       [N];
     logic [DST_H_BITS-1:0]    i_dst     [N];
     logic [DST_W_BITS-1:0]    j_dst     [N];
-    
-    // FIX: 24 bits para evitar overflow
     logic [23:0]              x_src_fp  [N];
     logic [23:0]              y_src_fp  [N];
-    
     logic [COORD_BITS-1:0]    x_l       [N];
     logic [COORD_BITS-1:0]    y_l       [N];
     logic [COORD_BITS-1:0]    x_h       [N];
     logic [COORD_BITS-1:0]    y_h       [N];
     logic                     valid_lane[N];
 
-    // Variables auxiliares
     logic all_valid;
     integer kk;
-    
-    // Variables intermedias para calculo combinacional
-    logic [23:0] x_src_fp_temp [N];
-    logic [23:0] y_src_fp_temp [N];
 
-    // CALCULO COMBINACIONAL DE COORDENADAS
-    always_comb begin
-        for (int k = 0; k < N; k++) begin
-            x_src_fp_temp[k] = 24'(j_dst[k]) * 24'(X_RATIO_FP);
-            y_src_fp_temp[k] = 24'(i_dst[k]) * 24'(Y_RATIO_FP);
-        end
-    end
-
-    // FSM PRINCIPAL
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             state     <= S_IDLE;
@@ -129,6 +106,8 @@ module Downscale_SIMD #(
                 mem_rd_addr[k] <= '0;
                 valid_lane[k]  <= 1'b0;
                 idx[k]         <= '0;
+                i_dst[k]       <= '0;
+                j_dst[k]       <= '0;
                 x_src_fp[k]    <= '0;
                 y_src_fp[k]    <= '0;
                 x_l[k]         <= '0;
@@ -161,39 +140,22 @@ module Downscale_SIMD #(
 
             S_CALC_COORDS: begin
                 for (int k = 0; k < N; k++) begin
-                    idx[k] = base_idx + k;
-                    valid_lane[k] = (idx[k] < TOT_PIX);
+                    idx[k] <= base_idx + k;
+                    valid_lane[k] <= (base_idx + k < TOT_PIX);
 
+                    if (base_idx + k < TOT_PIX) begin
+                        i_dst[k] <= DST_H_BITS'((base_idx + k) / DST_W);
+                        j_dst[k] <= DST_W_BITS'((base_idx + k) % DST_W);
+                    end
+                end
+                state <= S_CALC_SRC;
+            end
+
+            S_CALC_SRC: begin
+                for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
-                        i_dst[k] = DST_H_BITS'(idx[k] / DST_W);
-                        j_dst[k] = DST_W_BITS'(idx[k] % DST_W);
-
-                        x_src_fp[k] <= x_src_fp_temp[k];
-                        y_src_fp[k] <= y_src_fp_temp[k];
-
-                        x_l[k] <= x_src_fp_temp[k][23:FRAC];
-                        y_l[k] <= y_src_fp_temp[k][23:FRAC];
-
-                        x_h[k] <= (x_src_fp_temp[k][23:FRAC] < SRC_W-1) ? 
-                                  (x_src_fp_temp[k][23:FRAC] + 1) : 
-                                  x_src_fp_temp[k][23:FRAC];
-                        y_h[k] <= (y_src_fp_temp[k][23:FRAC] < SRC_H-1) ? 
-                                  (y_src_fp_temp[k][23:FRAC] + 1) : 
-                                  y_src_fp_temp[k][23:FRAC];
-
-                        alpha_vec[k] <= x_src_fp_temp[k][FRAC-1:0];
-                        beta_vec[k]  <= y_src_fp_temp[k][FRAC-1:0];
-                    end else begin
-                        i_dst[k]     <= '0;
-                        j_dst[k]     <= '0;
-                        x_src_fp[k]  <= '0;
-                        y_src_fp[k]  <= '0;
-                        x_l[k]       <= '0;
-                        y_l[k]       <= '0;
-                        x_h[k]       <= '0;
-                        y_h[k]       <= '0;
-                        alpha_vec[k] <= 8'd0;
-                        beta_vec[k]  <= 8'd0;
+                        x_src_fp[k] <= 24'(j_dst[k]) * 24'(X_RATIO_FP);
+                        y_src_fp[k] <= 24'(i_dst[k]) * 24'(Y_RATIO_FP);
                     end
                 end
                 state <= S_REQ_I00;
@@ -202,8 +164,21 @@ module Downscale_SIMD #(
             S_REQ_I00: begin
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
+                        x_l[k] <= x_src_fp[k][23:FRAC];
+                        y_l[k] <= y_src_fp[k][23:FRAC];
+
+                        x_h[k] <= (x_src_fp[k][23:FRAC] < SRC_W-1) ? 
+                                  (x_src_fp[k][23:FRAC] + 1) : 
+                                  x_src_fp[k][23:FRAC];
+                        y_h[k] <= (y_src_fp[k][23:FRAC] < SRC_H-1) ? 
+                                  (y_src_fp[k][23:FRAC] + 1) : 
+                                  y_src_fp[k][23:FRAC];
+
+                        alpha_vec[k] <= x_src_fp[k][FRAC-1:0];
+                        beta_vec[k]  <= y_src_fp[k][FRAC-1:0];
+
                         mem_rd_req[k]  <= 1'b1;
-                        mem_rd_addr[k] <= y_l[k] * SRC_W + x_l[k];
+                        mem_rd_addr[k] <= y_src_fp[k][23:FRAC] * SRC_W + x_src_fp[k][23:FRAC];
                     end else begin
                         mem_rd_req[k] <= 1'b0;
                     end
