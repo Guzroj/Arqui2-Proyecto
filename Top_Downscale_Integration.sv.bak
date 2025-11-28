@@ -16,7 +16,7 @@ module Top_Downscale_Integration #(
     
     // Interfaz de carga de imagen (desde PC/JTAG)
     input  logic        wr_en,
-    input  logic [17:0] wr_addr,    // Dirección lineal para escritura
+    input  logic [15:0] wr_addr,    // Dirección lineal para escritura
     input  logic [7:0]  wr_data,
     
     // Salida de imagen reducida
