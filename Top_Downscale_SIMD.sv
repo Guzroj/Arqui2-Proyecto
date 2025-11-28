@@ -103,7 +103,6 @@ module Top_Downscale_SIMD #(
     logic [$clog2(DST_H):0] write_row;
     logic [$clog2(DST_W):0] write_col;
 
-
     // ==================================================
     // FSM principal
     // ==================================================
@@ -153,80 +152,83 @@ module Top_Downscale_SIMD #(
                         state <= S_LOAD_IMAGE;
                 end
 
-							S_LOAD_IMAGE: begin
-								 $display("[TOP][%0t] Estado LOAD_IMAGE, load_addr=%0d", $time, load_addr);
-								 
-								 // Solicitar lectura de hasta N pixeles
-								 for (int k = 0; k < N; k++) begin
-									  if (load_addr + k < SRC_DEPTH) begin
-											mem_rd_req[k]  <= 1'b1;
-											mem_rd_addr[k] <= load_addr + k;
-									  end else begin
-											mem_rd_req[k] <= 1'b0;
-									  end
-								 end
-								 
-								 wait_counter <= 0;  // ← NUEVO contador
-								 state <= S_WAIT_LOAD;
-							end
+                // ==================================
+                // LOAD_IMAGE: Solicitar lectura de N pixeles
+                // ==================================
+                S_LOAD_IMAGE: begin
+                    // Solicitar lectura de hasta N pixeles
+                    for (int k = 0; k < N; k++) begin
+                        if (load_addr + k < SRC_DEPTH) begin
+                            mem_rd_req[k]  <= 1'b1;
+                            mem_rd_addr[k] <= load_addr + k;
+                        end else begin
+                            mem_rd_req[k] <= 1'b0;
+                        end
+                    end
+                    state <= S_WAIT_LOAD;
+                end
 
-							S_WAIT_LOAD: begin
-								 $display("[TOP][%0t] Estado WAIT_LOAD, load_addr=%0d, wait_counter=%0d", 
-											 $time, load_addr, wait_counter);
-								 
-								 // Bajar requests después del primer ciclo
-								 if (wait_counter == 0) begin
-									  for (int k = 0; k < N; k++)
-											mem_rd_req[k] <= 1'b0;
-								 end
-								 
-								 wait_counter <= wait_counter + 1;
-								 
-								 // DEBUG: Mostrar valids
-								 $display("[TOP][%0t]   Valids: [0]=%b [1]=%b [2]=%b [3]=%b", 
-											 $time, mem_rd_valid[0], mem_rd_valid[1], mem_rd_valid[2], mem_rd_valid[3]);
+                // ==================================
+                // WAIT_LOAD: Esperar datos y almacenar
+                // ==================================
+					S_WAIT_LOAD: begin
+						 $display("[TOP][%0t] Estado WAIT_LOAD, load_addr=%0d", $time, load_addr);
+						 
+						 // Bajar requests
+						 for (int k = 0; k < N; k++)
+							  mem_rd_req[k] <= 1'b0;
 
-								 // Chequear si ALGÚN valid llegó
-								 logic any_valid;
-								 any_valid = 1'b0;
-								 for (int k = 0; k < N; k++) begin
-									  if (mem_rd_valid[k])
-											any_valid = 1'b1;
-								 end
-								 
-								 if (any_valid) begin
-									  $display("[TOP][%0t]   ✓ Recibiendo datos...", $time);
-									  
-									  // Almacenar datos
-									  for (int k = 0; k < N; k++) begin
-											if (mem_rd_valid[k]) begin
-												 logic [$clog2(SRC_H):0] row;
-												 logic [$clog2(SRC_W):0] col;
-												 row = (load_addr + k) / SRC_W;
-												 col = (load_addr + k) % SRC_W;
-												 image_in[row][col] <= mem_rd_data[k];
-												 
-												 $display("[TOP][%0t]     image_in[%0d][%0d] = 0x%02h", 
-															 $time, row, col, mem_rd_data[k]);
-											end
-									  end
-									  
-									  // Avanzar
-									  load_addr <= load_addr + N;
-									  
-									  if (load_addr + N >= SRC_DEPTH) begin
-											$display("[TOP][%0t]   ✓✓✓ CARGA COMPLETA", $time);
-											state <= S_START_DOWNSCALE;
-									  end else begin
-											state <= S_LOAD_IMAGE;
-									  end
-									  
-								 end else if (wait_counter > 20) begin
-									  // Timeout después de 20 ciclos
-									  $display("[TOP][%0t]   ✗✗✗ TIMEOUT esperando datos!", $time);
-									  $finish;
-								 end
-							end
+						 // DEBUG: Mostrar qué valids llegaron
+						 $display("[TOP][%0t]   Valids: [0]=%b [1]=%b [2]=%b [3]=%b", 
+									 $time, mem_rd_valid[0], mem_rd_valid[1], mem_rd_valid[2], mem_rd_valid[3]);
+
+						 // Verificar si todos los datos validos llegaron
+						 if (mem_rd_valid[0] || (load_addr >= SRC_DEPTH)) begin
+							  logic all_ready;
+							  all_ready = 1'b1;
+							  for (int k = 0; k < N; k++) begin
+									if ((load_addr + k < SRC_DEPTH) && !mem_rd_valid[k])
+										 all_ready = 1'b0;
+							  end
+
+							  $display("[TOP][%0t]   all_ready = %b", $time, all_ready);
+
+							  if (all_ready) begin
+									$display("[TOP][%0t]   ✓ Almacenando datos...", $time);
+									
+									// Almacenar datos en arreglo 2D
+									for (int k = 0; k < N; k++) begin
+										 if (load_addr + k < SRC_DEPTH) begin
+											  logic [$clog2(SRC_H):0] row;
+											  logic [$clog2(SRC_W):0] col;
+											  row = (load_addr + k) / SRC_W;
+											  col = (load_addr + k) % SRC_W;
+											  image_in[row][col] <= mem_rd_data[k];
+											  
+											  $display("[TOP][%0t]     image_in[%0d][%0d] = 0x%02h", 
+														  $time, row, col, mem_rd_data[k]);
+										 end
+									end
+
+									// Avanzar contador
+									load_addr <= load_addr + N;
+									$display("[TOP][%0t]   Nuevo load_addr = %0d", $time, load_addr + N);
+
+									// Verificar si terminamos de cargar
+									if (load_addr + N >= SRC_DEPTH) begin
+										 $display("[TOP][%0t]   ✓✓✓ CARGA COMPLETA, ir a START_DOWNSCALE", $time);
+										 state <= S_START_DOWNSCALE;
+									end else begin
+										 $display("[TOP][%0t]   → Siguiente batch LOAD_IMAGE", $time);
+										 state <= S_LOAD_IMAGE;
+									end
+							  end else begin
+									$display("[TOP][%0t]   ⚠️ Esperando más valids...", $time);
+							  end
+						 end else begin
+							  $display("[TOP][%0t]   ⚠️ mem_rd_valid[0]=0 y load_addr < SRC_DEPTH", $time);
+						 end
+					end
 
                 // ==================================
                 // START_DOWNSCALE: Iniciar Downscale_SIMD
