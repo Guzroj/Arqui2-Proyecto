@@ -1,21 +1,24 @@
 // =======================================================
 // TOP GENERAL DEL PROYECTO — Basado en GuiaJtag
 // Aqui se integran ambos modos: Secuencial y SIMD
+// Compatible con Quartus 20.1
 // =======================================================
 module Top_General #(
-    parameter IMG_W = 512,
-    parameter IMG_H = 512,
-    parameter N     = 4
+    // Tamaño MAXIMO de imagen (para asignacion de memoria)
+    // Reducido a 128x128 para pruebas
+    parameter int MAX_IMGW = 128,
+    parameter int MAX_IMGH = 128,
+    parameter int N        = 4
 )(
     input  logic clk,
     input  logic rst,
 
-    // Interfaz JTAG→Avalon-MM
-    input  logic avs_read,
-    input  logic avs_write,
-    input  logic [7:0] avs_address,
-    input  logic [31:0] avs_writedata,
-    output logic [31:0] avs_readdata
+    // Interfaz JTAG→Avalon-MM (desde connect.sv)
+    input  logic        avsread,
+    input  logic        avswrite,
+    input  logic [7:0]  avsaddress,
+    input  logic [31:0] avswritedata,
+    output logic [31:0] avsreaddata
 );
 
     // ---------------------------------------------------
@@ -26,9 +29,17 @@ module Top_General #(
     logic [31:0] wr_addr_reg, wr_data_reg;
     logic mode_reg;  // Aqui se selecciona el modo: 0=Secuencial, 1=SIMD
 
+    // Dimensiones de imagen configurables via JTAG
+    logic [31:0] img_width_reg;
+    logic [31:0] img_height_reg;
+
     logic [31:0] rd_data_reg;
     logic [31:0] perf_counter;
     logic done_flag;
+    
+    // Señales para control de escritura a memoria (32 bits para soportar imagenes grandes)
+    logic [31:0] img_addr;
+    logic [7:0]  img_data;
 
     // ====================================================
     // 1. Banco de Registros Accesible por JTAG
@@ -40,82 +51,123 @@ module Top_General #(
         .start(start),
         .step(step),
         .mode(mode_reg),
-        .param_x_ratio(xratio_reg),
-        .param_y_ratio(yratio_reg),
+        .paramxratio(xratio_reg),
+        .paramyratio(yratio_reg),
 
-        .img_write_addr(wr_addr_reg),
-        .img_write_data(wr_data_reg),
+        .imgwidth(img_width_reg),
+        .imgheight(img_height_reg),
 
-        .img_read_data(rd_data_reg),
-        .done_flag(done_flag),
-        .perf_counter(perf_counter),
+        .imgwriteaddr(wr_addr_reg),
+        .imgwritedata(wr_data_reg),
 
-        .avs_read(avs_read),
-        .avs_write(avs_write),
-        .avs_address(avs_address),
-        .avs_writedata(avs_writedata),
-        .avs_readdata(avs_readdata)
+        .imgreaddata(rd_data_reg),
+        .doneflag(done_flag),
+        .perfcounter(perf_counter),
+
+        .avsread(avsread),
+        .avswrite(avswrite),
+        .avsaddress(avsaddress),
+        .avswritedata(avswritedata),
+        .avsreaddata(avsreaddata)
     );
 
     // ====================================================
-    // 2. Top Downscale Secuencial
+    // 2. Detección de escritura a memoria de imagen
+    //    Se detecta cuando se escribe a la direccion 0x04 (WRITEDATA)
+    // ====================================================
+    logic prev_avswrite;
+    logic write_to_imgdata;
+    
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst)
+            prev_avswrite <= 1'b0;
+        else
+            prev_avswrite <= avswrite;
+    end
+    
+    // Pulso cuando se escribe en el registro de datos de imagen
+    assign write_to_imgdata = avswrite && !prev_avswrite && (avsaddress == 8'h04);
+    
+    // Direccion y dato para la memoria (32 bits)
+    assign img_addr = wr_addr_reg;
+    assign img_data = wr_data_reg[7:0];
+
+    // ====================================================
+    // 3. Top Downscale Secuencial
+    //    Usa tamaño MAXIMO para asignacion de memoria
+    //    El tamaño real se puede configurar via registros
     // ====================================================
     logic done_seq;
     logic [7:0] dbg_seq;
 
     Top_Downscale_Secuencial #(
-        .SRC_W(IMG_W),
-        .SRC_H(IMG_H),
-        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
-        .DST_H(IMG_H/2)
+        .SRC_W(MAX_IMGW),
+        .SRC_H(MAX_IMGH),
+        .DST_W(MAX_IMGW/2),
+        .DST_H(MAX_IMGH/2)
     ) u_top_seq (
         .clk      (clk),
         .rst      (rst),
-        .cfg_we   (avs_write && !mode_reg),  // Aqui se escribe solo si modo secuencial
-        .cfg_addr (wr_addr_reg[15:0]),
-        .cfg_data (wr_data_reg[7:0]),
-        .start_req(start && !mode_reg),      // Aqui se inicia solo si modo secuencial
+        .cfg_we   (write_to_imgdata && !mode_reg),
+        .cfg_addr (img_addr),
+        .cfg_data (img_data),
+        .start_req(start && !mode_reg),
         .done     (done_seq),
         .dbg_data (dbg_seq)
     );
 
     // ====================================================
-    // 3. Top Downscale SIMD
+    // 4. Top Downscale SIMD
+    //    Usa tamaño MAXIMO para asignacion de memoria
+    //    El tamaño real se puede configurar via registros
     // ====================================================
     logic done_simd;
     logic [7:0] dbg_simd;
 
     Top_Downscale_SIMD #(
-        .SRC_W(IMG_W),
-        .SRC_H(IMG_H),
-        .DST_W(IMG_W/2),  // Factor de escala fijo para simplificar
-        .DST_H(IMG_H/2),
+        .SRC_W(MAX_IMGW),
+        .SRC_H(MAX_IMGH),
+        .DST_W(MAX_IMGW/2),
+        .DST_H(MAX_IMGH/2),
         .N(N)
     ) u_top_simd (
         .clk      (clk),
         .rst      (rst),
-        .cfg_we   (avs_write && mode_reg),  // Aqui se escribe solo si modo SIMD
-        .cfg_addr (wr_addr_reg[15:0]),
-        .cfg_data (wr_data_reg[7:0]),
-        .start_req(start && mode_reg),      // Aqui se inicia solo si modo SIMD
+        .cfg_we   (write_to_imgdata && mode_reg),
+        .cfg_addr (img_addr),
+        .cfg_data (img_data),
+        .start_req(start && mode_reg),
         .done     (done_simd),
         .dbg_data (dbg_simd)
     );
 
     // ====================================================
-    // 4. Multiplexado de señales de salida
+    // 5. Multiplexado de señales de salida
     // ====================================================
     assign done_flag = mode_reg ? done_simd : done_seq;
 
     // Aqui se multiplexa el dato de debug segun el modo
     assign rd_data_reg = {24'd0, (mode_reg ? dbg_simd : dbg_seq)};
 
-    // Aqui se cuenta el performance counter
+    // ====================================================
+    // 6. Performance Counter
+    // ====================================================
+    logic counting;
+    
     always_ff @(posedge clk or posedge rst) begin
-        if (rst || start)
-            perf_counter <= 0;
-        else
-            perf_counter <= perf_counter + 1;
+        if (rst) begin
+            perf_counter <= 32'd0;
+            counting <= 1'b0;
+        end else begin
+            if (start && !counting) begin
+                perf_counter <= 32'd0;
+                counting <= 1'b1;
+            end else if (done_flag && counting) begin
+                counting <= 1'b0;
+            end else if (counting) begin
+                perf_counter <= perf_counter + 32'd1;
+            end
+        end
     end
 
 endmodule

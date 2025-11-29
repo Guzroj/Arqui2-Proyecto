@@ -1,0 +1,33 @@
+
+State Machine - |Top_VJTAG|Top_General:u_top_general|Top_Downscale_SIMD:u_top_simd|Downscale_SIMD:u_downscale|state
+Name state.S_DONE state.S_WRITE_BATCH state.S_WAIT_TOP state.S_START_TOP state.S_WAIT_I11 state.S_REQ_I11 state.S_WAIT_I01 state.S_REQ_I01 state.S_WAIT_I10 state.S_REQ_I10 state.S_WAIT_I00 state.S_REQ_I00 state.S_CALC_SRC state.S_CALC_COORDS state.S_IDLE 
+state.S_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.S_CALC_COORDS 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.S_CALC_SRC 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.S_REQ_I00 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.S_WAIT_I00 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.S_REQ_I10 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.S_WAIT_I10 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.S_REQ_I01 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.S_WAIT_I01 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.S_REQ_I11 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_I11 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.S_START_TOP 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_TOP 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WRITE_BATCH 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_DONE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |Top_VJTAG|Top_General:u_top_general|Top_Downscale_SIMD:u_top_simd|Downscale_SIMD:u_downscale|Top_SIMD:u_top_simd|FSM_SIMD:fsm_inst|state
+Name state.S_WAIT state.S_RUN state.S_LOAD state.S_IDLE state.S_WRITE 
+state.S_IDLE 0 0 0 0 0 
+state.S_LOAD 0 0 1 1 0 
+state.S_RUN 0 1 0 1 0 
+state.S_WAIT 1 0 0 1 0 
+state.S_WRITE 0 0 0 1 1 
+
+State Machine - |Top_VJTAG|Top_General:u_top_general|Top_Downscale_Secuencial:u_top_seq|Downscale_Secuencial:u_seq|state
+Name state.S_DONE state.S_WAIT_RESULT state.S_SETUP state.S_IDLE 
+state.S_IDLE 0 0 0 0 
+state.S_SETUP 0 0 1 1 
+state.S_WAIT_RESULT 0 1 0 1 
+state.S_DONE 1 0 0 1 

@@ -14,7 +14,7 @@ module Top_Downscale_Secuencial #(
 
     // ======== interfaz tipo JTAG (simulada) ========
     input  logic        cfg_we,      // escribir en BRAM
-    input  logic [15:0] cfg_addr,
+    input  logic [31:0] cfg_addr,    // Aumentado a 32 bits
     input  logic [7:0]  cfg_data,
 
     input  logic        start_req,   // iniciar procesamiento
@@ -24,13 +24,14 @@ module Top_Downscale_Secuencial #(
 );
 
     localparam int DEPTH = SRC_W * SRC_H;
+    localparam int ADDR_BITS = $clog2(DEPTH);
 
     // ==================================================
     // Memoria BRAM
     // ==================================================
     logic bram_we;
     logic [7:0] bram_wr_data;
-    logic [15:0] bram_addr;
+    logic [ADDR_BITS-1:0] bram_addr;
     logic [7:0] bram_rd_data;
 
     ImageMemory #(
@@ -67,10 +68,11 @@ module Top_Downscale_Secuencial #(
     // ==================================================
     always_ff @(posedge clk) begin
         bram_we      <= cfg_we;
-        bram_addr    <= cfg_addr;
+        bram_addr    <= cfg_addr[ADDR_BITS-1:0];
         bram_wr_data <= cfg_data;
     end
 
-    assign dbg_data = bram_rd_data;
+    // Debug: usar primer pixel de salida
+    assign dbg_data = image_out[0][0];
 
 endmodule
