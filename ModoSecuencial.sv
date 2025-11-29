@@ -1,115 +1,91 @@
+`timescale 1ns/1ps
+
 module ModoSecuencial (
-    input  logic              clk,
-    input  logic              rst,
-    input  logic              valid_in,
-    input  logic [7:0]        I00, I10, I01, I11,  // píxeles 8 bits [0-255]
-    input  logic [7:0]        alpha, beta,         // Q0.8: 0x00=0.0, 0xFF≈0.996
-    output logic              valid_out,
-    output logic [7:0]        pixel_out            // píxel resultante [0-255]
+    input  logic       clk,
+    input  logic       rst,
+    input  logic       valid_in,
+    input  logic [7:0] I00, I10, I01, I11,  // Píxeles vecinos [0-255]
+    input  logic [7:0] alpha, beta,         // Pesos Q0.8 [0-255]
+    output logic       valid_out,
+    output logic [7:0] pixel_out
 );
-    // =========================
-    // ETAPA 1: Extensión a Q8.8
-    // =========================
-    logic [15:0] I00_q, I10_q, I01_q, I11_q;  // Sin signo para píxeles
-    logic [15:0] alpha_q, beta_q;              // Sin signo para coeficientes
-    
+
+    // ===============================================
+    // Fórmula bilinear:
+    // result = I00*(1-α)*(1-β) + I10*α*(1-β) + I01*(1-α)*β + I11*α*β
+    // ===============================================
+
+    // Calcular complementos (1 - alpha) y (1 - beta) en Q0.8
+    logic [8:0] one_minus_alpha;  // 9 bits para 256
+    logic [8:0] one_minus_beta;
+
     always_comb begin
-        // Píxeles: entero 8 bits → Q8.8 (shift left 8)
-        I00_q = {I00, 8'h00};
-        I10_q = {I10, 8'h00};
-        I01_q = {I01, 8'h00};
-        I11_q = {I11, 8'h00};
-        
-        // Alpha/Beta: Q0.8 → Q8.8 (parte entera = 0)
-        alpha_q = {8'h00, alpha};
-        beta_q  = {8'h00, beta};
+        one_minus_alpha = 9'd256 - {1'b0, alpha};
+        one_minus_beta  = 9'd256 - {1'b0, beta};
     end
+
+    // ===============================================
+    // Calcular 4 términos
+    // Cada término: pixel * coef1 * coef2
+    // Resultado en Q0.16 (necesitamos >> 16 al final)
+    // ===============================================
     
-    // =========================
-    // ETAPA 2: Interpolación horizontal
-    //    a = I00 + alpha * (I10 - I00)
-    //    b = I01 + alpha * (I11 - I01)
-    // =========================
-    logic signed [16:0] diff_x0, diff_x1;     // 17 bits con signo para diferencias
-    logic [31:0]        mult_ax, mult_bx;     // 32 bits sin signo para productos
-    logic [15:0]        term_ax, term_bx;     // 16 bits sin signo
-    logic [15:0]        a_q, b_q;             // 16 bits sin signo
+    logic [31:0] term1, term2, term3, term4;
     
     always_comb begin
-        // Diferencias (pueden ser negativas)
-        diff_x0 = $signed({1'b0, I10_q}) - $signed({1'b0, I00_q});
-        diff_x1 = $signed({1'b0, I11_q}) - $signed({1'b0, I01_q});
+        // term1 = I00 * (1-α) * (1-β)
+        // I00 es uint8, (1-α) y (1-β) son uint9
+        // Producto: 8 * 9 * 9 = necesita 26 bits, usamos 32 para seguridad
+        term1 = 32'(I00) * 32'(one_minus_alpha[7:0]) * 32'(one_minus_beta[7:0]);
         
-        // Multiplicación: Q8.8 * Q8.8 = Q16.16
-        // Manejar signo correctamente
-        if (diff_x0 < 0) begin
-            mult_ax = (-diff_x0) * alpha_q;
-            term_ax = mult_ax[23:8];
-            a_q = I00_q - term_ax;
-        end else begin
-            mult_ax = diff_x0 * alpha_q;
-            term_ax = mult_ax[23:8];
-            a_q = I00_q + term_ax;
-        end
+        // term2 = I10 * α * (1-β)
+        term2 = 32'(I10) * 32'(alpha) * 32'(one_minus_beta[7:0]);
         
-        if (diff_x1 < 0) begin
-            mult_bx = (-diff_x1) * alpha_q;
-            term_bx = mult_bx[23:8];
-            b_q = I01_q - term_bx;
-        end else begin
-            mult_bx = diff_x1 * alpha_q;
-            term_bx = mult_bx[23:8];
-            b_q = I01_q + term_bx;
-        end
+        // term3 = I01 * (1-α) * β
+        term3 = 32'(I01) * 32'(one_minus_alpha[7:0]) * 32'(beta);
+        
+        // term4 = I11 * α * β
+        term4 = 32'(I11) * 32'(alpha) * 32'(beta);
     end
+
+    // ===============================================
+    // Sumar los 4 términos
+    // ===============================================
     
-    // =========================
-    // ETAPA 3: Interpolación vertical
-    //    v = a + beta * (b - a)
-    // =========================
-    logic signed [16:0] diff_y;               // 17 bits con signo
-    logic [31:0]        mult_by;              // 32 bits sin signo
-    logic [15:0]        term_by;              // 16 bits sin signo
-    logic [15:0]        v_q;                  // 16 bits sin signo
+    logic [33:0] sum;  // 34 bits para evitar overflow en suma
     
     always_comb begin
-        diff_y = $signed({1'b0, b_q}) - $signed({1'b0, a_q});
-        
-        if (diff_y < 0) begin
-            mult_by = (-diff_y) * beta_q;
-            term_by = mult_by[23:8];
-            v_q = a_q - term_by;
-        end else begin
-            mult_by = diff_y * beta_q;
-            term_by = mult_by[23:8];
-            v_q = a_q + term_by;
-        end
+        sum = 34'(term1) + 34'(term2) + 34'(term3) + 34'(term4);
     end
+
+    // ===============================================
+    // Convertir Q0.16 → uint8 con redondeo
+    // Dividir por 65536 (shift >> 16) con redondeo
+    // ===============================================
     
-    // =========================
-    // ETAPA 4: Redondeo y conversión a 8 bits
-    // =========================
-    logic [16:0] v_rounded;                   // 17 bits para sumar 0.5
-    logic [8:0]  pixel_int;                   // 9 bits para detectar overflow
-    logic [7:0]  pixel_clamped;
+    logic [33:0] sum_rounded;
+    logic [17:0] result_shifted;
+    logic [7:0]  result_clamped;
     
     always_comb begin
-        // Sumar 0.5 en Q8.8 → 0x0080 (128 decimal)
-        v_rounded = {1'b0, v_q} + 17'h0080;
+        // Redondeo: sumar 0.5 antes de truncar
+        // En Q0.16, 0.5 = 32768 (0x8000)
+        sum_rounded = sum + 34'd32768;
         
-        // Extraer parte entera (shift right 8)
-        pixel_int = v_rounded[16:8];
+        // Shift de 16 bits a la derecha
+        result_shifted = sum_rounded[33:16];
         
-        // Saturación a [0, 255]
-        if (pixel_int > 9'd255)
-            pixel_clamped = 8'd255;
+        // Saturar a rango [0, 255]
+        if (result_shifted > 18'd255)
+            result_clamped = 8'd255;
         else
-            pixel_clamped = pixel_int[7:0];
+            result_clamped = result_shifted[7:0];
     end
+
+    // ===============================================
+    // Registro de salida (pipeline de 1 ciclo)
+    // ===============================================
     
-    // =========================
-    // ETAPA 5: Registro de salida
-    // =========================
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             valid_out <= 1'b0;
@@ -117,7 +93,7 @@ module ModoSecuencial (
         end else begin
             valid_out <= valid_in;
             if (valid_in) begin
-                pixel_out <= pixel_clamped;
+                pixel_out <= result_clamped;
             end
         end
     end

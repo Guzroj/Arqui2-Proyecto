@@ -172,9 +172,10 @@ module tb_Top_Downscale_Secuencial;
                 @(posedge clk);
                 timeout = timeout + 1;
                 
+                // ⭐ CAMBIO: pixel_idx en vez de fetch_cnt
                 if (timeout % 100000 == 0) begin
-                    $display("  Ciclos: %0d, state=%0d, fetch_cnt=%0d", 
-                             timeout, dut.u_seq.state, dut.u_seq.fetch_cnt);
+                    $display("  Ciclos: %0d, state=%0d, pixel_idx=%0d", 
+                             timeout, dut.u_seq.state, dut.u_seq.pixel_idx);
                     $display("    mem_rd_req=%0b, mem_rd_valid=%0b, i_dst=%0d, j_dst=%0d",
                              dut.mem_rd_req, dut.mem_rd_valid, dut.u_seq.i_dst, dut.u_seq.j_dst);
                 end
@@ -182,7 +183,7 @@ module tb_Top_Downscale_Secuencial;
 
             if (!done) begin
                 $display("[%0t] ✗ TIMEOUT después de %0d ciclos", $time, timeout);
-                $display("  state=%0d, fetch_cnt=%0d", dut.u_seq.state, dut.u_seq.fetch_cnt);
+                $display("  state=%0d, pixel_idx=%0d", dut.u_seq.state, dut.u_seq.pixel_idx);
                 $display("  mem_rd_req=%0b, mem_rd_valid=%0b", dut.mem_rd_req, dut.mem_rd_valid);
                 $finish;
             end
@@ -274,6 +275,9 @@ module tb_Top_Downscale_Secuencial;
                 $display("  ✗ ERROR: No se pudo crear archivo");
                 return;
             end
+            
+            // Escribir dimensiones primero
+            $fwrite(outfile, "%0d %0d\n", DST_H, DST_W);
             
             for (i = 0; i < DST_H; i = i + 1) begin
                 for (j = 0; j < DST_W; j = j + 1) begin

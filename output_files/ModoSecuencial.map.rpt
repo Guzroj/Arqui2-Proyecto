@@ -1,5 +1,5 @@
 Analysis & Elaboration report for ModoSecuencial
-Sat Nov 29 00:22:51 2025
+Sat Nov 29 12:44:44 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -57,7 +57,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                              ;
 +-------------------------------+---------------------------------------------+
-; Analysis & Elaboration Status ; Successful - Sat Nov 29 00:22:51 2025       ;
+; Analysis & Elaboration Status ; Successful - Sat Nov 29 12:44:44 2025       ;
 ; Quartus Prime Version         ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                 ; ModoSecuencial                              ;
 ; Top-level Entity Name         ; Top_Downscale_Integration                   ;
@@ -620,7 +620,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Sat Nov 29 00:22:36 2025
+    Info: Processing started: Sat Nov 29 12:44:36 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ModoSecuencial -c ModoSecuencial --analysis_and_elaboration
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -641,7 +641,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file top_dow
 Info (12021): Found 1 design units, including 1 entities, in source file tb_top_downscale_secuencial.sv
     Info (12023): Found entity 1: tb_Top_Downscale_Secuencial File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Secuencial.sv Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file modosecuencial.sv
-    Info (12023): Found entity 1: ModoSecuencial File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv Line: 1
+    Info (12023): Found entity 1: ModoSecuencial File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file modosimd.sv
     Info (12023): Found entity 1: ModoSIMD File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file simd_registros.sv
@@ -670,71 +670,6 @@ Info (12127): Elaborating entity "Top_Downscale_Integration" for the top level h
 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "image_out" into its bus
 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "image_out" into its bus
 Info (12128): Elaborating entity "ImageMemory_SIMDPort" for hierarchy "ImageMemory_SIMDPort:u_image_memory" File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv Line: 61
-Warning (276027): Inferred dual-clock RAM node "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__1" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
-Warning (276027): Inferred dual-clock RAM node "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__2" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
-Warning (276027): Inferred dual-clock RAM node "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__3" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
-Warning (276027): Inferred dual-clock RAM node "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__4" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
-Info (19000): Inferred 4 megafunctions from design logic
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__1" 
-        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
-        Info (286033): Parameter WIDTH_A set to 8
-        Info (286033): Parameter WIDTHAD_A set to 10
-        Info (286033): Parameter NUMWORDS_A set to 1024
-        Info (286033): Parameter WIDTH_B set to 8
-        Info (286033): Parameter WIDTHAD_B set to 10
-        Info (286033): Parameter NUMWORDS_B set to 1024
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
-        Info (286033): Parameter ADDRESS_REG_B set to CLOCK1
-        Info (286033): Parameter INDATA_ACLR_A set to NONE
-        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__2" 
-        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
-        Info (286033): Parameter WIDTH_A set to 8
-        Info (286033): Parameter WIDTHAD_A set to 10
-        Info (286033): Parameter NUMWORDS_A set to 1024
-        Info (286033): Parameter WIDTH_B set to 8
-        Info (286033): Parameter WIDTHAD_B set to 10
-        Info (286033): Parameter NUMWORDS_B set to 1024
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
-        Info (286033): Parameter ADDRESS_REG_B set to CLOCK1
-        Info (286033): Parameter INDATA_ACLR_A set to NONE
-        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__3" 
-        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
-        Info (286033): Parameter WIDTH_A set to 8
-        Info (286033): Parameter WIDTHAD_A set to 10
-        Info (286033): Parameter NUMWORDS_A set to 1024
-        Info (286033): Parameter WIDTH_B set to 8
-        Info (286033): Parameter WIDTHAD_B set to 10
-        Info (286033): Parameter NUMWORDS_B set to 1024
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
-        Info (286033): Parameter ADDRESS_REG_B set to CLOCK1
-        Info (286033): Parameter INDATA_ACLR_A set to NONE
-        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__4" 
-        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
-        Info (286033): Parameter WIDTH_A set to 8
-        Info (286033): Parameter WIDTHAD_A set to 10
-        Info (286033): Parameter NUMWORDS_A set to 1024
-        Info (286033): Parameter WIDTH_B set to 8
-        Info (286033): Parameter WIDTHAD_B set to 10
-        Info (286033): Parameter NUMWORDS_B set to 1024
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
-        Info (286033): Parameter ADDRESS_REG_B set to CLOCK1
-        Info (286033): Parameter INDATA_ACLR_A set to NONE
-        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
 Info (12128): Elaborating entity "altsyncram" for hierarchy "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__1"
 Info (12130): Elaborated megafunction instantiation "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__1"
 Info (12133): Instantiated megafunction "ImageMemory_SIMDPort:u_image_memory|altsyncram:memory[0][7]__1" with the following parameter:
@@ -775,11 +710,11 @@ Info (12128): Elaborating entity "SIMD_Registros" for hierarchy "Downscale_SIMD:
 Info (12128): Elaborating entity "ModoSIMD" for hierarchy "Downscale_SIMD:u_downscale|Top_SIMD:u_top_simd|ModoSIMD:simd_inst" File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv Line: 85
 Info (12128): Elaborating entity "ModoSecuencial" for hierarchy "Downscale_SIMD:u_downscale|Top_SIMD:u_top_simd|ModoSIMD:simd_inst|ModoSecuencial:SIMD_CORES[0].core" File: C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv Line: 37
 Info (144001): Generated suppressed messages file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/output_files/ModoSecuencial.map.smsg
-Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 16 warnings
-    Info: Peak virtual memory: 4854 megabytes
-    Info: Processing ended: Sat Nov 29 00:22:51 2025
-    Info: Elapsed time: 00:00:15
-    Info: Total CPU time (on all processors): 00:00:31
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 12 warnings
+    Info: Peak virtual memory: 4833 megabytes
+    Info: Processing ended: Sat Nov 29 12:44:44 2025
+    Info: Elapsed time: 00:00:08
+    Info: Total CPU time (on all processors): 00:00:17
 
 
 +--------------------------------------------+
