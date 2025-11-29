@@ -8,11 +8,11 @@
 
 module Top_VJTAG #(
     // Tamaño de imagen fuente
-    parameter int IMG_W = 512,
-    parameter int IMG_H = 512,
+    parameter int IMG_W = 128,
+    parameter int IMG_H = 128,
     // Tamaño de imagen destino
-    parameter int DST_W = 256,
-    parameter int DST_H = 256,
+    parameter int DST_W = 64,
+    parameter int DST_H = 64,
     // SIMD lanes
     parameter int N     = 4
 )(
@@ -72,7 +72,7 @@ module Top_VJTAG #(
         .virtual_state_cir  (),                // No usado
         .virtual_state_uir  ()                 // No usado
     );
-    
+  
     // ============================================================
     // Controlador JTAG (connect.sv)
     // ============================================================
