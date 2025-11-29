@@ -1,55 +1,57 @@
-// ======================================================
-// Top_Downscale_Secuencial.sv
-//  · Incluye: memoria + downscale secuencial + control
-// ======================================================
-
 module Top_Downscale_Secuencial #(
-    parameter int SRC_W = 32,
-    parameter int SRC_H = 32,
-    parameter int DST_W = 16,
-    parameter int DST_H = 16
+    parameter int SRC_W = 512,
+    parameter int SRC_H = 512,
+    parameter int DST_W = 256,
+    parameter int DST_H = 256
 )(
     input  logic clk,
     input  logic rst,
-
-    // ======== interfaz tipo JTAG (simulada) ========
-    input  logic        cfg_we,      // escribir en BRAM
-    input  logic [15:0] cfg_addr,
+    
+    input  logic        cfg_we,
+    input  logic [17:0] cfg_addr,
     input  logic [7:0]  cfg_data,
-
-    input  logic        start_req,   // iniciar procesamiento
-
+    
+    input  logic        start_req,
     output logic        done,
+    
     output logic [7:0]  dbg_data
 );
-
-    localparam int DEPTH = SRC_W * SRC_H;
-
-    // ==================================================
-    // Memoria BRAM
-    // ==================================================
-    logic bram_we;
-    logic [7:0] bram_wr_data;
-    logic [15:0] bram_addr;
-    logic [7:0] bram_rd_data;
-
-    ImageMemory #(
-        .IMG_W(SRC_W),
-        .IMG_H(SRC_H)
+    
+    // Señales de lectura
+    logic                           mem_rd_req;
+    logic [$clog2(SRC_W*SRC_H)-1:0] mem_rd_addr;
+    logic                           mem_rd_valid;
+    logic [7:0]                     mem_rd_data;
+    
+    // Memoria de entrada con handshake
+    ImageMemory_SeqPort #(
+        .WIDTH(SRC_W),
+        .HEIGHT(SRC_H)
     ) mem (
         .clk(clk),
-        .we(bram_we),
-        .addr(bram_addr),
-        .wr_data(bram_wr_data),
-        .rd_data(bram_rd_data)
+        .rst(rst),
+        .wr_en(cfg_we),
+        .wr_addr(cfg_addr),
+        .wr_data(cfg_data),
+        .rd_req(mem_rd_req),
+        .rd_addr(mem_rd_addr),
+        .rd_valid(mem_rd_valid),
+        .rd_data(mem_rd_data)
     );
-
-    // ==================================================
-    // FSM secuencial
-    // ==================================================
-    logic [7:0] image_in  [0:SRC_H-1][0:SRC_W-1];
-    logic [7:0] image_out [0:DST_H-1][0:DST_W-1];
-
+    
+    // Memoria BRAM de salida
+    logic                           out_mem_we;
+    logic [$clog2(DST_W*DST_H)-1:0] out_mem_addr;
+    logic [7:0]                     out_mem_data;
+    
+    logic [7:0] output_memory [0:DST_H*DST_W-1];
+    
+    always_ff @(posedge clk) begin
+        if (out_mem_we)
+            output_memory[out_mem_addr] <= out_mem_data;
+    end
+    
+    // Downscale
     Downscale_Secuencial #(
         .SRC_W(SRC_W), .SRC_H(SRC_H),
         .DST_W(DST_W), .DST_H(DST_H)
@@ -57,20 +59,16 @@ module Top_Downscale_Secuencial #(
         .clk(clk),
         .rst(rst),
         .start(start_req),
-        .image_in(image_in),
-        .image_out(image_out),
+        .mem_rd_req(mem_rd_req),
+        .mem_rd_addr(mem_rd_addr),
+        .mem_rd_valid(mem_rd_valid),
+        .mem_rd_data(mem_rd_data),
+        .out_mem_we(out_mem_we),
+        .out_mem_addr(out_mem_addr),
+        .out_mem_data(out_mem_data),
         .done(done)
     );
+    
+    assign dbg_data = mem_rd_data;
 
-    // ==================================================
-    // Cargar BRAM desde cfg_we
-    // ==================================================
-    always_ff @(posedge clk) begin
-        bram_we      <= cfg_we;
-        bram_addr    <= cfg_addr;
-        bram_wr_data <= cfg_data;
-    end
-
-    assign dbg_data = bram_rd_data;
-
-endmodule
+endmodule 

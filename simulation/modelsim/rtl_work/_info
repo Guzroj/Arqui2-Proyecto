@@ -9,90 +9,63 @@ z2
 !i10f 100
 cModel Technology
 Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/simulation/modelsim
-vDownscale_SIMD
+vDownscale_Secuencial
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1764369205
+Z2 !s110 1764393399
 !i10b 1
-!s100 C1igJ4@FVE;e[liR31F[?2
+!s100 P7U4Z5>a<PV[2:AQ2`>UL0
 Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
-IRPRHZW4>IHXA@@]Uk2XRg2
+IJc9oGAGgVDP^C7:mMF0=W2
 Z4 VDg1SIo80bB@j0V0VzS_@n1
 S1
 R0
-w1764369178
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv
-!i122 5
-L0 3 332
+w1764393120
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv
+!i122 2
+L0 3 200
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1764369204.000000
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_SIMD.sv|
+Z6 !s108 1764393399.000000
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Downscale_Secuencial.sv|
 !i113 1
 Z7 o-sv -work work
 Z8 !s92 -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
 Z9 tCvgOpt 0
-n@downscale_@s@i@m@d
-vFSM_SIMD
+n@downscale_@secuencial
+vImageMemory_SeqPort
 R1
-Z10 !s110 1764369204
+R2
 !i10b 1
-!s100 Mn6PHRJlPjg5>E9ZVgOJ11
+!s100 KA[zjf_BNSH]jC5=>i@2:1
 R3
-I;4bW`<T;hCD6NZjV?LnO;3
+I`ggTA=7FfEbZBai`6KYLI0
 R4
 S1
 R0
-Z11 w1764274576
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv
+w1764393167
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SeqPort.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SeqPort.sv
 !i122 3
-L0 3 75
+L0 3 50
 R5
 r1
 !s85 0
 31
 R6
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/FSM_SIMD.sv|
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SeqPort.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SeqPort.sv|
 !i113 1
 R7
 R8
 R9
-n@f@s@m_@s@i@m@d
-vImageMemory_SIMDPort
-R1
-R2
-!i10b 1
-!s100 40l=Xaj43V3Xe`:ZKX@[:1
-R3
-IQ1YzkON=`^Cz=IogJFMo<2
-R4
-S1
-R0
-w1764312435
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv
-!i122 6
-L0 3 63
-R5
-r1
-!s85 0
-31
-Z12 !s108 1764369205.000000
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ImageMemory_SIMDPort.sv|
-!i113 1
-R7
-R8
-R9
-n@image@memory_@s@i@m@d@port
+n@image@memory_@seq@port
 vModoSecuencial
 R1
-R10
+R2
 !i10b 1
 !s100 k<6TlRMKnc_^V`]H>Reb<0
 R3
@@ -100,16 +73,16 @@ I`nAC8oSa?lc;76iOHZFzh2
 R4
 S1
 R0
-R11
+w1764274576
 8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv
 FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv
-!i122 0
+!i122 1
 L0 1 125
 R5
 r1
 !s85 0
 31
-!s108 1764369203.000000
+Z10 !s108 1764393398.000000
 !s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSecuencial.sv|
 !i113 1
@@ -117,138 +90,57 @@ R7
 R8
 R9
 n@modo@secuencial
-vModoSIMD
-R1
-R10
-!i10b 1
-!s100 h8@SOM4[Vna@FX`PimzJS0
-R3
-IIEnNfdSYf[M@=Ne@U15_n3
-R4
-S1
-R0
-R11
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv
-!i122 1
-L0 1 44
-R5
-r1
-!s85 0
-31
-R6
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/ModoSIMD.sv|
-!i113 1
-R7
-R8
-R9
-n@modo@s@i@m@d
-vSIMD_Registros
-R1
-R10
-!i10b 1
-!s100 =GSLDm4WA9_8]zXV]ULFf1
-R3
-IU]YIOFOB<LK^83BSN420Q2
-R4
-S1
-R0
-w1764311318
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv
-!i122 2
-L0 1 51
-R5
-r1
-!s85 0
-31
-R6
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/SIMD_Registros.sv|
-!i113 1
-R7
-R8
-R9
-n@s@i@m@d_@registros
-vtb_Top_Downscale_Integration
+vtb_Top_Downscale_Secuencial
 R1
 R2
 !i10b 1
-!s100 0^9N<B@;85]>LlG6f?_`c2
+!s100 <OE41aMIN`LjI6=:MKFP=2
 R3
-IkTBE;8B]`4bc4mC7S5LcU0
+I<0l1anT]f<=Ib86EBg8cK0
 R4
 S1
 R0
-w1764362837
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv
-!i122 8
-L0 3 537
-R5
-r1
-!s85 0
-31
-R12
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Integration.sv|
-!i113 1
-R7
-R8
-R9
-ntb_@top_@downscale_@integration
-vTop_Downscale_Integration
-R1
-R2
-!i10b 1
-!s100 nTkaACXMcTHoWeXAg`gF40
-R3
-I7?118ZidL]M_M8TImJT972
-R4
-S1
-R0
-w1764369123
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv
-!i122 7
-L0 3 86
-R5
-r1
-!s85 0
-31
-R12
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Integration.sv|
-!i113 1
-R7
-R8
-R9
-n@top_@downscale_@integration
-vTop_SIMD
-R1
-R10
-!i10b 1
-!s100 :>::k2HF]@jWi8;GfaJ110
-R3
-I^9zO=AVI8NTeO5AN3Q77e3
-R4
-S1
-R0
-R11
-8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv
-FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv
+w1764393375
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Secuencial.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Secuencial.sv
 !i122 4
-L0 4 84
+L0 3 331
 R5
 r1
 !s85 0
 31
 R6
-!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_SIMD.sv|
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Secuencial.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/tb_Top_Downscale_Secuencial.sv|
 !i113 1
 R7
 R8
 R9
-n@top_@s@i@m@d
+ntb_@top_@downscale_@secuencial
+vTop_Downscale_Secuencial
+R1
+!s110 1764393398
+!i10b 1
+!s100 ;Sg_6kkAkO=TfBGSAo9en0
+R3
+I7go5;lWGloi[Vf^;e0IBB1
+R4
+S1
+R0
+w1764393231
+8C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Secuencial.sv
+FC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Secuencial.sv
+!i122 0
+L0 1 74
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Secuencial.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto|C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/Top_Downscale_Secuencial.sv|
+!i113 1
+R7
+R8
+R9
+n@top_@downscale_@secuencial

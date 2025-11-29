@@ -1,172 +1,200 @@
 `timescale 1ns/1ps
 
 module Downscale_Secuencial #(
-    parameter int SRC_H = 4,
-    parameter int SRC_W = 4,
-    parameter int DST_H = 3,
-    parameter int DST_W = 3
+    parameter int SRC_H = 512,
+    parameter int SRC_W = 512,
+    parameter int DST_H = 256,
+    parameter int DST_W = 256
 )(
     input  logic clk,
     input  logic rst,
     input  logic start,
 
-    // Imagen de entrada HxW
-    input  logic [7:0] image_in  [0:SRC_H-1][0:SRC_W-1],
+    output logic                           mem_rd_req,
+    output logic [$clog2(SRC_W*SRC_H)-1:0] mem_rd_addr,
+    input  logic                           mem_rd_valid,
+    input  logic [7:0]                     mem_rd_data,
 
-    // Señal de fin y salida de imagen reducida
-    output logic        done,
-    output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
+    output logic                           out_mem_we,
+    output logic [$clog2(DST_W*DST_H)-1:0] out_mem_addr,
+    output logic [7:0]                     out_mem_data,
+
+    output logic        done
 );
 
-	 //Formato q8.8
     localparam int FRAC       = 8;
-    localparam int ONE_FP     = 1 << FRAC;
-    
-    // Ratios en punto fijo Q8.8
-    // x_ratio = (SRC_W-1) / (DST_W-1)
     localparam int X_RATIO_FP = ((SRC_W - 1) << FRAC) / (DST_W - 1);
     localparam int Y_RATIO_FP = ((SRC_H - 1) << FRAC) / (DST_H - 1);
 
-    // Anchos de bits necesarios
     localparam int COORD_BITS = $clog2(SRC_W > SRC_H ? SRC_W : SRC_H) + 1;
-    localparam int DST_I_BITS = $clog2(DST_H);
-    localparam int DST_J_BITS = $clog2(DST_W);
+    localparam int DST_I_BITS = $clog2(DST_H) + 1;
+    localparam int DST_J_BITS = $clog2(DST_W) + 1;
 
-	 //Señales modo secuencial
     logic        valid_in;
     logic [7:0]  I00, I10, I01, I11;
     logic [7:0]  alpha, beta;
     logic        valid_out;
     logic [7:0]  pixel_out;
 
-    // Instancia del interpolador
     ModoSecuencial u_secuencial (
-        .clk       (clk),
-        .rst       (rst),
-        .valid_in  (valid_in),
-        .I00       (I00),
-        .I10       (I10),
-        .I01       (I01),
-        .I11       (I11),
-        .alpha     (alpha),
-        .beta      (beta),
-        .valid_out (valid_out),
-        .pixel_out (pixel_out)
+        .clk(clk), .rst(rst),
+        .valid_in(valid_in),
+        .I00(I00), .I10(I10), .I01(I01), .I11(I11),
+        .alpha(alpha), .beta(beta),
+        .valid_out(valid_out),
+        .pixel_out(pixel_out)
     );
 
-	 //FSM
-    typedef enum logic [1:0] {
+    typedef enum logic [2:0] {
         S_IDLE,
-        S_SETUP,
-        S_WAIT_RESULT,
+        S_FETCH,
+        S_INTERP,
         S_DONE
     } state_t;
 
-    state_t state, next_state;
+    state_t state;
 
-    // Coordenadas destino (registradas)
-    logic [DST_I_BITS:0] i_dst;
-    logic [DST_J_BITS:0] j_dst;
-
-    // Señales combinacionales para calculo de coordenadas fuente
-    logic [15:0] x_src_fp, y_src_fp;  // Q8.8
+    logic [DST_I_BITS-1:0] i_dst;
+    logic [DST_J_BITS-1:0] j_dst;
+    logic [23:0] x_src_fp, y_src_fp;
     logic [COORD_BITS-1:0] x_l, x_h, y_l, y_h;
-	 
-    //Calculo de coordenadas
-    always_comb begin
-        // Posición fuente en Q8.8
-        x_src_fp = j_dst * X_RATIO_FP;
-        y_src_fp = i_dst * Y_RATIO_FP;
+    logic [2:0] fetch_cnt;
 
-        // Floor (parte entera)
-        x_l = x_src_fp[15:FRAC];
-        y_l = y_src_fp[15:FRAC];
-
-        // Ceil (floor + 1 si no estamos en el borde)
-        x_h = (x_l < (SRC_W-1)) ? (x_l + 1) : x_l;
-        y_h = (y_l < (SRC_H-1)) ? (y_l + 1) : y_l;
-    end
-
-
-    // FSM secuencial
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
-            state    <= S_IDLE;
-            valid_in <= 1'b0;
-            done     <= 1'b0;
-            i_dst    <= 0;
-            j_dst    <= 0;
-            
-            // Limpiar imagen de salida
-            for (int i = 0; i < DST_H; i++)
-                for (int j = 0; j < DST_W; j++)
-                    image_out[i][j] <= 8'd0;
+            state       <= S_IDLE;
+            done        <= 1'b0;
+            valid_in    <= 1'b0;
+            mem_rd_req  <= 1'b0;
+            out_mem_we  <= 1'b0;
+            i_dst       <= 0;
+            j_dst       <= 0;
+            fetch_cnt   <= 0;
                     
         end else begin
+            out_mem_we <= 1'b0;  // Default
+            
             case (state)
-				
-                // IDLE: Esperar start
+                
                 S_IDLE: begin
-                    done     <= 1'b0;
-                    valid_in <= 1'b0;
+                    done       <= 1'b0;
+                    valid_in   <= 1'b0;
+                    mem_rd_req <= 1'b0;
+                    
                     if (start) begin
-                        i_dst <= 0;
-                        j_dst <= 0;
-                        state <= S_SETUP;
+                        i_dst     <= 0;
+                        j_dst     <= 0;
+                        x_src_fp  <= 0;
+                        y_src_fp  <= 0;
+                        x_l       <= 0;
+                        y_l       <= 0;
+                        x_h       <= 1;
+                        y_h       <= 1;
+                        alpha     <= 0;
+                        beta      <= 0;
+                        fetch_cnt <= 0;
+                        state     <= S_FETCH;
                     end
                 end
 
-                // SETUP: Calcular coordenadas y vecinos
-                S_SETUP: begin
-                    // Asignar píxeles vecinos desde la imagen de entrada
-                    I00 <= image_in[y_l][x_l];
-                    I10 <= image_in[y_l][x_h];
-                    I01 <= image_in[y_h][x_l];
-                    I11 <= image_in[y_h][x_h];
-
-                    // Pesos fraccionales (solo parte fraccional de x_src_fp, y_src_fp)
-                    alpha <= x_src_fp[FRAC-1:0];  // Q0.8
-                    beta  <= y_src_fp[FRAC-1:0];  // Q0.8
-
-                    // Activar interpolador
-                    valid_in <= 1'b1;
-                    state    <= S_WAIT_RESULT;
+                S_FETCH: begin
+                    case (fetch_cnt)
+                        0: begin
+                            mem_rd_req  <= 1'b1;
+                            mem_rd_addr <= y_l * SRC_W + x_l;
+                            fetch_cnt   <= 1;
+                        end
+                        1: begin
+                            if (mem_rd_valid) begin
+                                I00         <= mem_rd_data;
+                                mem_rd_req  <= 1'b1;
+                                mem_rd_addr <= y_l * SRC_W + x_h;
+                                fetch_cnt   <= 2;
+                            end
+                        end
+                        2: begin
+                            if (mem_rd_valid) begin
+                                I10         <= mem_rd_data;
+                                mem_rd_req  <= 1'b1;
+                                mem_rd_addr <= y_h * SRC_W + x_l;
+                                fetch_cnt   <= 3;
+                            end
+                        end
+                        3: begin
+                            if (mem_rd_valid) begin
+                                I01         <= mem_rd_data;
+                                mem_rd_req  <= 1'b1;
+                                mem_rd_addr <= y_h * SRC_W + x_h;
+                                fetch_cnt   <= 4;
+                            end
+                        end
+                        4: begin
+                            if (mem_rd_valid) begin
+                                I11        <= mem_rd_data;
+                                mem_rd_req <= 1'b0;
+                                valid_in   <= 1'b1;
+                                state      <= S_INTERP;
+                            end
+                        end
+                    endcase
                 end
-					 
 
-                // WAIT: Esperar resultado del interpolador
-                S_WAIT_RESULT: begin
-                    // Desactivar valid_in después de 1 ciclo
+                S_INTERP: begin
                     valid_in <= 1'b0;
-
+                    
                     if (valid_out) begin
-                        // Guardar píxel en imagen de salida
-                        image_out[i_dst][j_dst] <= pixel_out;
+                        out_mem_we   <= 1'b1;
+                        out_mem_addr <= i_dst * DST_W + j_dst;
+                        out_mem_data <= pixel_out;
 
-                        // Verificar si es ultimo pixel
                         if ((i_dst == (DST_H-1)) && (j_dst == (DST_W-1))) begin
                             done  <= 1'b1;
                             state <= S_DONE;
                         end else begin
-                            // Avanzar al siguiente píxel
                             if (j_dst == (DST_W-1)) begin
                                 j_dst <= 0;
                                 i_dst <= i_dst + 1;
                             end else begin
                                 j_dst <= j_dst + 1;
                             end
-                            state <= S_SETUP;
+                            
+                            if (j_dst == (DST_W-1)) begin
+                                x_src_fp <= 0;
+                                y_src_fp <= 24'(i_dst + 1) * 24'(Y_RATIO_FP);
+                                x_l      <= 0;
+                                y_l      <= (24'(i_dst + 1) * 24'(Y_RATIO_FP)) >> FRAC;
+                                x_h      <= 1;
+                                
+                                if (((24'(i_dst + 1) * 24'(Y_RATIO_FP)) >> FRAC) >= (SRC_H-1))
+                                    y_h <= (24'(i_dst + 1) * 24'(Y_RATIO_FP)) >> FRAC;
+                                else
+                                    y_h <= ((24'(i_dst + 1) * 24'(Y_RATIO_FP)) >> FRAC) + 1;
+                                
+                                alpha <= 0;
+                                beta  <= (24'(i_dst + 1) * 24'(Y_RATIO_FP)) & 8'hFF;
+                            end else begin
+                                x_src_fp <= 24'(j_dst + 1) * 24'(X_RATIO_FP);
+                                x_l      <= (24'(j_dst + 1) * 24'(X_RATIO_FP)) >> FRAC;
+                                
+                                if (((24'(j_dst + 1) * 24'(X_RATIO_FP)) >> FRAC) >= (SRC_W-1))
+                                    x_h <= (24'(j_dst + 1) * 24'(X_RATIO_FP)) >> FRAC;
+                                else
+                                    x_h <= ((24'(j_dst + 1) * 24'(X_RATIO_FP)) >> FRAC) + 1;
+                                
+                                alpha <= (24'(j_dst + 1) * 24'(X_RATIO_FP)) & 8'hFF;
+                            end
+                            
+                            fetch_cnt <= 0;
+                            state     <= S_FETCH;
                         end
                     end
                 end
 
-                // DONE: Mantener señal done hasta que start baje
                 S_DONE: begin
                     if (!start)
                         state <= S_IDLE;
                 end
 
-                default: state <= S_IDLE;
             endcase
         end
     end
