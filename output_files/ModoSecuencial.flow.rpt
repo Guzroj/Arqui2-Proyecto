@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Sun Nov 30 12:30:37 2025
+Sun Nov 30 13:22:23 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Flow Failed - Sun Nov 30 12:30:36 2025      ;
+; Flow Status                     ; Flow Failed - Sun Nov 30 13:22:21 2025      ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; ModoSecuencial                              ;
 ; Top-level Entity Name           ; dsa_system_wrapper                          ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/30/2025 12:14:31 ;
+; Start date & time ; 11/30/2025 13:06:34 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------+---------------------------------+
 ; Assignment Name                      ; Value                                                        ; Default Value  ; Entity Name        ; Section Id                      ;
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------+---------------------------------+
-; COMPILER_SIGNATURE_ID                ; 91759315386.176452647131948                                  ; --             ; --                 ; --                              ;
+; COMPILER_SIGNATURE_ID                ; 91759315386.176452959417552                                  ; --             ; --                 ; --                              ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_downscale_SIMD_Proceso       ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_Downscale_Secuencial         ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_Top_Downscale_Secuencial     ;
@@ -137,9 +137,9 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:10:36     ; 4.4                     ; 8201 MB             ; 00:17:08                           ;
-; Fitter               ; 00:04:41     ; 1.0                     ; 9337 MB             ; 00:05:06                           ;
-; Total                ; 00:15:17     ; --                      ; --                  ; 00:22:14                           ;
+; Analysis & Synthesis ; 00:10:18     ; 4.8                     ; 8355 MB             ; 00:16:45                           ;
+; Fitter               ; 00:04:44     ; 1.0                     ; 9357 MB             ; 00:05:11                           ;
+; Total                ; 00:15:02     ; --                      ; --                  ; 00:21:56                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

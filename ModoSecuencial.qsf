@@ -92,16 +92,9 @@ set_global_assignment -name QIP_FILE qsys/dsa_system/synthesis/dsa_system.qip
 set_global_assignment -name SOURCE_FILE constraints/pin_assignments_de1soc.qsf
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Test_Phase1.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_SIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_General.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Downscale_Secuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Downscale_Integration.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/SIMD_Registros.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/ModoSIMD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/ModoSecuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SIMDPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SequentialPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SeqPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/FSM_SIMD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Downscale_SIMD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Downscale_Secuencial.sv

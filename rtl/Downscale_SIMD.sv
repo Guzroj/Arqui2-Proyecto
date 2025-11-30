@@ -16,8 +16,12 @@ module Downscale_SIMD #(
     input  logic                           mem_rd_valid [N],
     input  logic [7:0]                     mem_rd_data  [N],
 
-    output logic        done,
-    output logic [7:0]  image_out[0:DST_H-1][0:DST_W-1]
+    // ========== CAMBIO: Escritura directa (sin array) ==========
+    output logic        out_mem_we,
+    output logic [31:0] out_mem_addr,
+    output logic [7:0]  out_mem_data,
+    
+    output logic        done
 );
 
     localparam int FRAC       = 8;
@@ -89,6 +93,9 @@ module Downscale_SIMD #(
 
     logic all_valid;
     integer kk;
+    
+    // ========== CAMBIO: Contador para serializar escrituras ==========
+    logic [2:0] write_lane_idx;  // [0..N-1]
 
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -96,10 +103,12 @@ module Downscale_SIMD #(
             base_idx  <= '0;
             done      <= 1'b0;
             top_start <= 1'b0;
-
-            for (int i = 0; i < DST_H; i++)
-                for (int j = 0; j < DST_W; j++)
-                    image_out[i][j] <= 8'd0;
+            
+            // ========== CAMBIO: Inicializar señales de escritura ==========
+            out_mem_we   <= 1'b0;
+            out_mem_addr <= '0;
+            out_mem_data <= 8'd0;
+            write_lane_idx <= '0;
 
             for (int k = 0; k < N; k++) begin
                 mem_rd_req[k]  <= 1'b0;
@@ -123,6 +132,9 @@ module Downscale_SIMD #(
             end
 
         end else begin
+            
+            // ========== Default: escritura OFF ==========
+            out_mem_we <= 1'b0;
 
             case (state)
 
@@ -303,22 +315,35 @@ module Downscale_SIMD #(
 
             S_WAIT_TOP: begin
                 top_start <= 1'b0;
-                if (top_done)
+                if (top_done) begin
+                    write_lane_idx <= '0;  // Resetear contador
                     state <= S_WRITE_BATCH;
+                end
             end
 
+            // ========== CAMBIO: Serializar escrituras de N píxeles ==========
             S_WRITE_BATCH: begin
-                for (int k = 0; k < N; k++)
-                    if (valid_lane[k])
-                        image_out[i_dst[k]][j_dst[k]] <= pixel_out_vec[k];
-
-                base_idx <= base_idx + N;
-                
-                if (base_idx + N >= TOT_PIX) begin
-                    done  <= 1'b1;
-                    state <= S_DONE;
+                if (write_lane_idx < N) begin
+                    if (valid_lane[write_lane_idx]) begin
+                        // Escribir píxel actual
+                        out_mem_we   <= 1'b1;
+                        out_mem_addr <= i_dst[write_lane_idx] * DST_W + j_dst[write_lane_idx];
+                        out_mem_data <= pixel_out_vec[write_lane_idx];
+                    end
+                    
+                    // Avanzar al siguiente lane
+                    write_lane_idx <= write_lane_idx + 1;
+                    
                 end else begin
-                    state <= S_CALC_COORDS;
+                    // Todas las escrituras completadas
+                    base_idx <= base_idx + N;
+                    
+                    if (base_idx + N >= TOT_PIX) begin
+                        done  <= 1'b1;
+                        state <= S_DONE;
+                    end else begin
+                        state <= S_CALC_COORDS;
+                    end
                 end
             end
 
@@ -331,4 +356,4 @@ module Downscale_SIMD #(
         end
     end
 
-endmodule
+endmodule 
