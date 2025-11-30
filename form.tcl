@@ -4,8 +4,39 @@
 # Script TCL para comunicación JTAG con el proyecto Downscale
 # Basado en: https://github.com/Abner2111/GuiaJtag
 # 
-# Ejecutar con: quartus_stp -t form.tcl
+# IMPORTANTE: Ejecutar SOLO con: quartus_stp -t form.tcl
+# NO ejecutar con tclsh, wish, o cualquier otro intérprete
 # ================================================================
+
+# Verificar que estamos en Quartus System Console ANTES de cargar Tk
+if {[catch {get_hardware_names} err]} {
+    puts "============================================================"
+    puts "ERROR: Este script debe ejecutarse con quartus_stp"
+    puts "============================================================"
+    puts ""
+    puts "El comando 'get_hardware_names' no esta disponible."
+    puts "Esto significa que no estas ejecutando el script en el"
+    puts "entorno correcto de Quartus."
+    puts ""
+    puts "SOLUCION:"
+    puts "  1. Abre una terminal/consola (PowerShell o CMD)"
+    puts "  2. Navega a la carpeta del proyecto:"
+    puts "     cd \"C:\\Users\\sebas\\OneDrive\\Escritorio\\Arqui2-Proyecto1\""
+    puts "  3. Ejecuta:"
+    puts "     quartus_stp -t form.tcl"
+    puts ""
+    puts "O desde Quartus:"
+    puts "  Tools -> Tcl Scripts -> Selecciona form.tcl -> Run"
+    puts ""
+    puts "NO uses: tclsh form.tcl  o  wish form.tcl"
+    puts "============================================================"
+    # Intentar abrir un diálogo si Tk está disponible
+    catch {
+        package require Tk
+        tk_messageBox -icon error -title "Error" -message "Este script debe ejecutarse con quartus_stp\n\nEjecuta: quartus_stp -t form.tcl"
+    }
+    exit 1
+}
 
 package require Tk
 
@@ -48,10 +79,49 @@ set loaded_image_file ""
 proc conectar {} {
     global hardware_name device_name connected
     
+    # Verificar si ya está conectado
+    if {$connected} {
+        puts "Ya esta conectado"
+        return 1
+    }
+    
+    # Forzar actualización de GUI para mostrar mensajes
+    update idletasks
+    
+    puts "Paso 1: Buscando hardware JTAG..."
+    update idletasks
+    
+    # Buscar hardware JTAG con manejo de errores y timeout
+    set hardware_list ""
+    if {[catch {
+        set hardware_list [get_hardware_names]
+    } err]} {
+        puts "ERROR: No se pudo obtener lista de hardware JTAG"
+        puts "Detalle: $err"
+        return 0
+    }
+    
+    puts "Hardware encontrado: [llength $hardware_list] dispositivo(s)"
+    update idletasks
+    
+    if {[llength $hardware_list] == 0} {
+        puts "ERROR: No se encontro hardware JTAG"
+        puts "Verifica que:"
+        puts "  1. El cable USB-Blaster esta conectado"
+        puts "  2. Los drivers estan instalados correctamente"
+        puts "  3. El dispositivo aparece en Device Manager"
+        update idletasks
+        return 0
+    }
+    
     # Buscar hardware JTAG
-    foreach hardware [get_hardware_names] {
+    set hardware_name ""
+    foreach hardware $hardware_list {
+        puts "  - $hardware"
+        update idletasks
         if {[string match "USB-Blaster*" $hardware] || 
             [string match "*DE-10*" $hardware] ||
+            [string match "*DE-SoC*" $hardware] ||
             [string match "*USB*" $hardware]} {
             set hardware_name $hardware
             break
@@ -59,114 +129,316 @@ proc conectar {} {
     }
     
     if {$hardware_name == ""} {
-        set hardware_name [lindex [get_hardware_names] 0]
+        set hardware_name [lindex $hardware_list 0]
     }
     
     if {$hardware_name == ""} {
-        puts "ERROR: No se encontro hardware JTAG"
+        puts "ERROR: No se encontro hardware JTAG valido"
+        update idletasks
         return 0
     }
     
-    puts "Hardware: $hardware_name"
+    puts "Paso 2: Hardware seleccionado: $hardware_name"
+    update idletasks
     
-    # Buscar dispositivo
-    foreach device [get_device_names -hardware_name $hardware_name] {
-        if {[string match "@1*" $device] || [string match "*5C*" $device]} {
+    # Buscar dispositivo con manejo de errores
+    puts "Paso 3: Buscando dispositivos en $hardware_name..."
+    update idletasks
+    
+    set device_list ""
+    if {[catch {
+        set device_list [get_device_names -hardware_name $hardware_name]
+    } err]} {
+        puts "ERROR: No se pudo obtener lista de dispositivos"
+        puts "Detalle: $err"
+        update idletasks
+        return 0
+    }
+    
+    puts "Dispositivos encontrados: [llength $device_list]"
+    update idletasks
+    
+    if {[llength $device_list] == 0} {
+        puts "ERROR: No se encontraron dispositivos en $hardware_name"
+        puts "Verifica que la FPGA este encendida y conectada"
+        update idletasks
+        return 0
+    }
+    
+    # Buscar dispositivo FPGA (NO el HPS)
+    # En DE-SoC: @1 es HPS, @2 es FPGA (donde está el Virtual JTAG)
+    set device_name ""
+    
+    puts "Buscando dispositivo FPGA (Virtual JTAG esta en el FPGA, no en HPS)..."
+    update idletasks
+    
+    foreach device $device_list {
+        puts "  - $device"
+        update idletasks
+        
+        # Prioridad 1: Buscar @2 (FPGA en DE-SoC)
+        if {[string match "@2*" $device]} {
             set device_name $device
+            puts "  >>> Seleccionado (FPGA @2): $device"
             break
+        }
+        
+        # Prioridad 2: Buscar dispositivos FPGA (5CSEMA5) que NO sean HPS
+        if {([string match "*5C*" $device] || [string match "*5CSEMA5*" $device]) && 
+            ![string match "*SOCVHPS*" $device] && 
+            ![string match "*HPS*" $device] &&
+            ![string match "@1*" $device]} {
+            if {$device_name == ""} {
+                set device_name $device
+                puts "  >>> Candidato FPGA: $device"
+            }
+        }
+    }
+    
+    # Si no encontramos @2, usar el candidato FPGA encontrado
+    if {$device_name == ""} {
+        # Último recurso: buscar cualquier dispositivo que no sea HPS
+        foreach device $device_list {
+            if {![string match "*SOCVHPS*" $device] && 
+                ![string match "*HPS*" $device] &&
+                ![string match "@1*" $device]} {
+                set device_name $device
+                puts "  >>> Seleccionado (no HPS): $device"
+                break
+            }
+        }
+    }
+    
+    # Si aún no hay dispositivo, usar @2 si existe, sino el último de la lista
+    if {$device_name == ""} {
+        # Buscar @2 específicamente
+        foreach device $device_list {
+            if {[string match "@2*" $device]} {
+                set device_name $device
+                break
+            }
+        }
+        # Si no hay @2, usar el último (que debería ser el FPGA)
+        if {$device_name == ""} {
+            set device_name [lindex $device_list end]
+            puts "  >>> Usando ultimo dispositivo de la lista: $device_name"
         }
     }
     
     if {$device_name == ""} {
-        set device_name [lindex [get_device_names -hardware_name $hardware_name] 0]
-    }
-    
-    puts "Dispositivo: $device_name"
-    
-    # Abrir dispositivo
-    open_device -hardware_name $hardware_name -device_name $device_name
-    
-    # Bloquear el dispositivo para uso exclusivo
-    device_lock -timeout 5000
-    puts "Dispositivo bloqueado"
-    
-    # Esperar a que el JTAG se estabilice
-    after 500
-    
-    # Verificar si hay instancias Virtual JTAG
-    puts "Buscando instancias Virtual JTAG..."
-    
-    # Intentar acceder a la instancia 0
-    if {[catch {device_virtual_ir_shift -instance_index 0 -ir_value 0 -no_captured_ir_value} err]} {
-        puts "ERROR: No se encontro instancia Virtual JTAG"
-        puts "Detalle: $err"
-        puts ""
-        puts "Verifica que:"
-        puts "  1. Programaste la FPGA con el .sof correcto"
-        puts "  2. El diseno tiene Top_VJTAG como top-level"
-        puts "  3. No hay errores de compilacion"
-        device_unlock
-        close_device
+        puts "ERROR: No se encontro dispositivo FPGA valido"
+        puts "Dispositivos disponibles:"
+        foreach device $device_list {
+            puts "  - $device"
+        }
+        update idletasks
         return 0
     }
     
-    puts "Virtual JTAG encontrado en instancia 0"
-    puts "Conexion exitosa!"
+    puts "Paso 4: Dispositivo seleccionado: $device_name"
+    update idletasks
+    
+    # Cerrar cualquier conexión previa (por si acaso)
+    catch {device_unlock}
+    catch {close_device}
+    after 200
+    update idletasks
+    
+    # Abrir dispositivo con manejo de errores
+    puts "Paso 5: Abriendo dispositivo..."
+    update idletasks
+    
+    if {[catch {
+        open_device -hardware_name $hardware_name -device_name $device_name
+    } err]} {
+        puts "ERROR: No se pudo abrir el dispositivo"
+        puts "Detalle: $err"
+        puts ""
+        puts "SOLUCIONES:"
+        puts "  1. Cierra Quartus Programmer si esta abierto"
+        puts "  2. Cierra cualquier otro programa que use JTAG"
+        puts "  3. Desconecta y reconecta el cable USB"
+        puts "  4. Reinicia la FPGA (apaga y enciende)"
+        update idletasks
+        return 0
+    }
+    
+    puts "Dispositivo abierto correctamente"
+    update idletasks
+    
+    # Bloquear el dispositivo para uso exclusivo con timeout más corto
+    puts "Paso 6: Bloqueando dispositivo (timeout 3 seg)..."
+    update idletasks
+    
+    if {[catch {
+        device_lock -timeout 3000
+    } err]} {
+        puts "ERROR: No se pudo bloquear el dispositivo"
+        puts "Detalle: $err"
+        puts "El dispositivo puede estar siendo usado por otro programa"
+        catch {close_device}
+        update idletasks
+        return 0
+    }
+    
+    puts "Dispositivo bloqueado"
+    update idletasks
+    
+    # Esperar a que el JTAG se estabilice
+    puts "Paso 7: Esperando estabilizacion JTAG..."
+    after 300
+    update idletasks
+    
+    # Verificar si hay instancias Virtual JTAG
+    puts "Paso 8: Buscando instancias Virtual JTAG..."
+    update idletasks
+    
+    # Intentar acceder a la instancia 0 con manejo de errores
+    if {[catch {
+        device_virtual_ir_shift -instance_index 0 -ir_value 0 -no_captured_ir_value
+    } err]} {
+        puts "ERROR: No se encontro instancia Virtual JTAG"
+        puts "Detalle: $err"
+        puts ""
+        puts "VERIFICA:"
+        puts "  1. Programaste la FPGA con ModoSecuencial.sof"
+        puts "  2. El top-level es Top_VJTAG"
+        puts "  3. El diseno compilo sin errores"
+        puts "  4. El .sof incluye el Virtual JTAG"
+        catch {device_unlock}
+        catch {close_device}
+        set hardware_name ""
+        set device_name ""
+        update idletasks
+        return 0
+    }
+    
+    puts "Paso 9: Virtual JTAG encontrado en instancia 0"
+    puts "========================================="
+    puts "CONEXION EXITOSA!"
+    puts "========================================="
+    update idletasks
     
     set connected 1
     return 1
 }
 
 proc desconectar {} {
-    global connected
-    catch {device_unlock}
-    catch {close_device}
+    global connected hardware_name device_name
+    
+    if {!$connected} {
+        puts "No esta conectado"
+        return
+    }
+    
+    puts "Desconectando..."
+    update
+    
+    # Intentar desbloquear y cerrar dispositivo
+    catch {device_unlock} err1
+    catch {close_device} err2
+    
+    if {$err1 != ""} {
+        puts "Advertencia al desbloquear: $err1"
+    }
+    if {$err2 != ""} {
+        puts "Advertencia al cerrar: $err2"
+    }
+    
     set connected 0
+    set hardware_name ""
+    set device_name ""
     puts "Desconectado"
+    update
 }
 
 # Establecer dirección de registro
 proc set_addr {addr} {
-    global IR_SET_ADDR
+    global IR_SET_ADDR connected
+    
+    if {!$connected} {
+        puts "ERROR: No esta conectado. Click 'Conectar' primero."
+        return
+    }
     
     # Cambiar a instrucción SET_ADDR
-    device_virtual_ir_shift -instance_index 0 -ir_value $IR_SET_ADDR -no_captured_ir_value
+    if {[catch {
+        device_virtual_ir_shift -instance_index 0 -ir_value $IR_SET_ADDR -no_captured_ir_value
+    } err]} {
+        puts "ERROR en set_addr (IR): $err"
+        return
+    }
     
     # Enviar dirección (8 bits)
     set addr_hex [format "%02X" $addr]
-    device_virtual_dr_shift -instance_index 0 -length 8 -dr_value $addr_hex -value_in_hex -no_captured_dr_value
+    if {[catch {
+        device_virtual_dr_shift -instance_index 0 -length 8 -dr_value $addr_hex -value_in_hex -no_captured_dr_value
+    } err]} {
+        puts "ERROR en set_addr (DR): $err"
+        return
+    }
 }
 
 # Escribir a un registro
 proc write_reg {addr data} {
-    global IR_WRITE_REG
+    global IR_WRITE_REG connected
+    
+    if {!$connected} {
+        puts "ERROR: No esta conectado. Click 'Conectar' primero."
+        return
+    }
     
     # Primero establecer dirección
     set_addr $addr
     
     # Cambiar a instrucción WRITE_REG
-    device_virtual_ir_shift -instance_index 0 -ir_value $IR_WRITE_REG -no_captured_ir_value
+    if {[catch {
+        device_virtual_ir_shift -instance_index 0 -ir_value $IR_WRITE_REG -no_captured_ir_value
+    } err]} {
+        puts "ERROR en write_reg (IR): $err"
+        return
+    }
     
     # Enviar datos (32 bits)
     set data_hex [format "%08X" $data]
-    device_virtual_dr_shift -instance_index 0 -length 32 -dr_value $data_hex -value_in_hex -no_captured_dr_value
+    if {[catch {
+        device_virtual_dr_shift -instance_index 0 -length 32 -dr_value $data_hex -value_in_hex -no_captured_dr_value
+    } err]} {
+        puts "ERROR en write_reg (DR): $err"
+        return
+    }
     
     puts "WRITE: addr=0x[format %02X $addr] data=0x[format %08X $data]"
 }
 
 # Leer de un registro
 proc read_reg {addr} {
-    global IR_READ_REG
+    global IR_READ_REG connected
+    
+    if {!$connected} {
+        puts "ERROR: No esta conectado. Click 'Conectar' primero."
+        return 0
+    }
     
     # Primero establecer dirección
     set_addr $addr
     
     # Cambiar a instrucción READ_REG
-    device_virtual_ir_shift -instance_index 0 -ir_value $IR_READ_REG -no_captured_ir_value
+    if {[catch {
+        device_virtual_ir_shift -instance_index 0 -ir_value $IR_READ_REG -no_captured_ir_value
+    } err]} {
+        puts "ERROR en read_reg (IR): $err"
+        return 0
+    }
     
     # Leer datos (32 bits)
-    set result [device_virtual_dr_shift -instance_index 0 -length 32 -value_in_hex]
-    set data [expr 0x$result]
+    if {[catch {
+        set result [device_virtual_dr_shift -instance_index 0 -length 32 -value_in_hex]
+        set data [expr 0x$result]
+    } err]} {
+        puts "ERROR en read_reg (DR): $err"
+        return 0
+    }
     
     puts "READ:  addr=0x[format %02X $addr] data=0x[format %08X $data]"
     return $data
@@ -429,11 +701,33 @@ proc crear_gui {} {
     pack .conn -fill x -padx 10 -pady 5
     
     button .conn.conectar -text "Conectar" -command {
-        if {[conectar]} {
+        # Deshabilitar botón inmediatamente
+        .conn.conectar configure -state disabled
+        .conn.status configure -text "Conectando..." -fg orange
+        update idletasks
+        
+        # Forzar que los mensajes se muestren
+        puts ">>> Iniciando conexion..."
+        update idletasks
+        
+        # Ejecutar conexión
+        set resultado [catch {conectar} err]
+        
+        if {$resultado == 0 && $err == 1} {
             .conn.status configure -text "Conectado" -fg green
+            puts ">>> Conexion exitosa!"
         } else {
-            .conn.status configure -text "Error" -fg red
+            .conn.status configure -text "Error - Ver consola" -fg red
+            if {$resultado != 0} {
+                puts ">>> ERROR en conexion: $err"
+            } else {
+                puts ">>> Conexion fallida (ver mensajes arriba)"
+            }
         }
+        
+        # Rehabilitar botón
+        .conn.conectar configure -state normal
+        update idletasks
     }
     button .conn.desconectar -text "Desconectar" -command {
         desconectar
@@ -564,7 +858,8 @@ proc puts {args} {
         if {[winfo exists .console.text]} {
             .console.text insert end "$msg\n"
             .console.text see end
-            update
+            # Forzar actualización inmediata de la consola
+            update idletasks
         }
     } else {
         eval original_puts $args
