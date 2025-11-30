@@ -47,12 +47,12 @@ module dsa_system_mm_interconnect_0_router_default_decode
      parameter DEFAULT_CHANNEL = 0,
                DEFAULT_WR_CHANNEL = -1,
                DEFAULT_RD_CHANNEL = -1,
-               DEFAULT_DESTID = 0 
+               DEFAULT_DESTID = 1 
    )
   (output [90 - 89 : 0] default_destination_id,
-   output [3-1 : 0] default_wr_channel,
-   output [3-1 : 0] default_rd_channel,
-   output [3-1 : 0] default_src_channel
+   output [4-1 : 0] default_wr_channel,
+   output [4-1 : 0] default_rd_channel,
+   output [4-1 : 0] default_src_channel
   );
 
   assign default_destination_id = 
@@ -63,7 +63,7 @@ module dsa_system_mm_interconnect_0_router_default_decode
       assign default_src_channel = '0;
     end
     else begin : default_channel_assignment
-      assign default_src_channel = 3'b1 << DEFAULT_CHANNEL;
+      assign default_src_channel = 4'b1 << DEFAULT_CHANNEL;
     end
   endgenerate
 
@@ -73,8 +73,8 @@ module dsa_system_mm_interconnect_0_router_default_decode
       assign default_rd_channel = '0;
     end
     else begin : default_rw_channel_assignment
-      assign default_wr_channel = 3'b1 << DEFAULT_WR_CHANNEL;
-      assign default_rd_channel = 3'b1 << DEFAULT_RD_CHANNEL;
+      assign default_wr_channel = 4'b1 << DEFAULT_WR_CHANNEL;
+      assign default_rd_channel = 4'b1 << DEFAULT_RD_CHANNEL;
     end
   endgenerate
 
@@ -103,7 +103,7 @@ module dsa_system_mm_interconnect_0_router
     // -------------------
     output                          src_valid,
     output reg [104-1    : 0] src_data,
-    output reg [3-1 : 0] src_channel,
+    output reg [4-1 : 0] src_channel,
     output                          src_startofpacket,
     output                          src_endofpacket,
     input                           src_ready
@@ -119,7 +119,7 @@ module dsa_system_mm_interconnect_0_router
     localparam PKT_PROTECTION_H = 94;
     localparam PKT_PROTECTION_L = 92;
     localparam ST_DATA_W = 104;
-    localparam ST_CHANNEL_W = 3;
+    localparam ST_CHANNEL_W = 4;
     localparam DECODER_TYPE = 0;
 
     localparam PKT_TRANS_WRITE = 70;
@@ -136,13 +136,12 @@ module dsa_system_mm_interconnect_0_router
     // -------------------------------------------------------
     localparam PAD0 = log2ceil(64'h40000 - 64'h0); 
     localparam PAD1 = log2ceil(64'h50000 - 64'h40000); 
-    localparam PAD2 = log2ceil(64'h50010 - 64'h50000); 
     // -------------------------------------------------------
     // Work out which address bits are significant based on the
     // address range of the slaves. If the required width is too
     // large or too small, we use the address field width instead.
     // -------------------------------------------------------
-    localparam ADDR_RANGE = 64'h50010;
+    localparam ADDR_RANGE = 64'h50000;
     localparam RANGE_ADDR_WIDTH = log2ceil(ADDR_RANGE);
     localparam OPTIMIZED_ADDR_H = (RANGE_ADDR_WIDTH > PKT_ADDR_W) ||
                                   (RANGE_ADDR_WIDTH == 0) ?
@@ -166,7 +165,7 @@ module dsa_system_mm_interconnect_0_router
     assign src_startofpacket = sink_startofpacket;
     assign src_endofpacket   = sink_endofpacket;
     wire [PKT_DEST_ID_W-1:0] default_destid;
-    wire [3-1 : 0] default_src_channel;
+    wire [4-1 : 0] default_src_channel;
 
 
 
@@ -192,19 +191,13 @@ module dsa_system_mm_interconnect_0_router
 
     // ( 0x0 .. 0x40000 )
     if ( {address[RG:PAD0],{PAD0{1'b0}}} == 19'h0   ) begin
-            src_channel = 3'b001;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 0;
+            src_channel = 4'b01;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 1;
     end
 
     // ( 0x40000 .. 0x50000 )
     if ( {address[RG:PAD1],{PAD1{1'b0}}} == 19'h40000   ) begin
-            src_channel = 3'b010;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 1;
-    end
-
-    // ( 0x50000 .. 0x50010 )
-    if ( {address[RG:PAD2],{PAD2{1'b0}}} == 19'h50000   ) begin
-            src_channel = 3'b100;
+            src_channel = 4'b10;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 2;
     end
 

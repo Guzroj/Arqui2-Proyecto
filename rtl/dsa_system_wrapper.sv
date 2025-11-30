@@ -1,15 +1,15 @@
 `timescale 1ns/1ps
 
 //==============================================================================
-// DSA System Wrapper for DE10-Lite
+// DSA System Wrapper for DE1-SoC
 // Wraps the Qsys-generated system with FPGA pin connections
 //==============================================================================
 
 module dsa_system_wrapper (
-    // ====== DE10-Lite Clock Input ======
+    // ====== DE1-SoC Clock Input (50 MHz) ======
     input  logic       clk,
     
-    // ====== DE10-Lite LED Output ======
+    // ====== DE1-SoC LED Output (10 LEDs) ======
     output logic [9:0] LEDR
 );
 

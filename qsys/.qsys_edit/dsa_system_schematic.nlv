@@ -17,10 +17,11 @@ preplace inst dsa_system.pio_leds -pg 1 -lvl 4 -y 190
 preplace inst dsa_system.reset_bridge -pg 1 -lvl 2 -y 120
 preplace inst dsa_system.jtag_master.b2p -pg 1
 preplace inst dsa_system -pg 1 -lvl 1 -y 40 -regy -20
-preplace netloc FAN_OUT<net_container>dsa_system</net_container>(MASTER)jtag_master.master,(SLAVE)input_memory.s1,(SLAVE)pio_leds.s1,(SLAVE)output_memory.s1) 1 3 1 690
-preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)pio_leds.reset,(SLAVE)jtag_master.clk_reset,(SLAVE)output_memory.reset1,(MASTER)reset_bridge.out_reset,(SLAVE)input_memory.reset1,(SLAVE)clk_0.clk_in_reset) 1 0 4 60 110 NJ 110 410 160 670
-preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)clk_0.clk_in,(SLAVE)dsa_system.clk) 1 0 1 N
-preplace netloc POINT_TO_POINT<net_container>dsa_system</net_container>(MASTER)clk_0.clk_reset,(SLAVE)reset_bridge.in_reset) 1 1 1 N
-preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)jtag_master.clk,(MASTER)clk_0.clk,(SLAVE)output_memory.clk1,(SLAVE)input_memory.clk1,(SLAVE)reset_bridge.clk,(SLAVE)pio_leds.clk) 1 1 3 260 90 410 40 650
-levelinfo -pg 1 0 30 890
-levelinfo -hier dsa_system 40 90 290 490 730 880
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)input_memory.clk1,(SLAVE)pio_leds.clk,(SLAVE)jtag_master.clk,(MASTER)clk_0.clk,(SLAVE)reset_bridge.clk,(SLAVE)output_memory.clk1) 1 1 3 430 90 620 160 860
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.reset,(SLAVE)reset_bridge.in_reset) 1 0 2 NJ 210 NJ
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)input_memory.s1,(SLAVE)pio_leds.s1,(SLAVE)output_memory.s1,(MASTER)jtag_master.master) 1 3 1 900
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)pio_leds.external_connection,(SLAVE)dsa_system.pio_leds_external_connection) 1 0 4 NJ 230 NJ 220 NJ 220 NJ
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)output_memory.reset1,(SLAVE)input_memory.reset1,(MASTER)reset_bridge.out_reset,(SLAVE)jtag_master.clk_reset,(SLAVE)pio_leds.reset) 1 0 4 210 190 NJ 110 600 180 880
+levelinfo -pg 1 0 180 1100
+levelinfo -hier dsa_system 190 240 480 700 940 1090

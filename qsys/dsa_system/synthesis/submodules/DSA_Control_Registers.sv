@@ -1,0 +1,194 @@
+/**
+ * DSA_Control_Registers.sv
+ * 
+ * Módulo de registros de control y estado para el DSA Downscaler
+ * Interfaz: Avalon-MM Slave (32 bits)
+ * 
+ * Mapa de Registros (offset desde dirección base 0x00050010):
+ * 0x00 - CTRL          [R/W] - Control: [0]=start, [1]=reset_counters, [2]=mode
+ * 0x04 - STATUS        [R/O] - Estado: [0]=busy, [1]=done, [2]=error
+ * 0x08 - IMG_WIDTH_IN  [R/W] - Ancho imagen entrada (pixeles)
+ * 0x0C - IMG_HEIGHT_IN [R/W] - Alto imagen entrada (pixeles)
+ * 0x10 - IMG_WIDTH_OUT [R/W] - Ancho imagen salida (pixeles)
+ * 0x14 - IMG_HEIGHT_OUT[R/W] - Alto imagen salida (pixeles)
+ * 0x18 - INPUT_BASE   [R/W] - Dirección base memoria entrada
+ * 0x1C - OUTPUT_BASE  [R/W] - Dirección base memoria salida
+ * 0x20 - PERF_CYCLES  [R/O] - Contador de ciclos de reloj
+ * 0x24 - PERF_READS   [R/O] - Contador de lecturas de memoria
+ * 0x28 - PERF_WRITES  [R/O] - Contador de escrituras de memoria
+ * 0x2C - PERF_FLOPS   [R/O] - Contador de operaciones FP
+ */
+
+module DSA_Control_Registers (
+    // Clock y Reset
+    input  logic        clk,
+    input  logic        reset_n,
+    
+    // Interfaz Avalon-MM Slave
+    input  logic [3:0]  avs_address,        // Direcciones de 4 bits (16 registros x 4 bytes)
+    input  logic        avs_read,           // Señal de lectura
+    input  logic        avs_write,          // Señal de escritura
+    input  logic [31:0] avs_writedata,      // Datos a escribir
+    output logic [31:0] avs_readdata,       // Datos leídos
+    output logic        avs_waitrequest,    // Waitrequest (siempre 0 en este caso)
+    
+    // Señales de Control hacia DSA (outputs)
+    output logic        dsa_start,          // Pulso de inicio
+    output logic        dsa_reset_counters, // Reset de contadores de performance
+    output logic        dsa_mode,           // 0=Secuencial, 1=SIMD
+    output logic [31:0] dsa_img_width_in,   // Ancho entrada
+    output logic [31:0] dsa_img_height_in,  // Alto entrada
+    output logic [31:0] dsa_img_width_out,  // Ancho salida
+    output logic [31:0] dsa_img_height_out, // Alto salida
+    output logic [31:0] dsa_input_base,     // Dirección base entrada
+    output logic [31:0] dsa_output_base,    // Dirección base salida
+    
+    // Señales de Estado desde DSA (inputs)
+    input  logic        dsa_busy,           // DSA ocupado procesando
+    input  logic        dsa_done,           // DSA terminó operación
+    input  logic        dsa_error,          // Error en DSA
+    input  logic [31:0] dsa_perf_cycles,    // Ciclos totales
+    input  logic [31:0] dsa_perf_reads,     // Lecturas de memoria
+    input  logic [31:0] dsa_perf_writes,    // Escrituras de memoria
+    input  logic [31:0] dsa_perf_flops      // Operaciones de punto flotante
+);
+
+    // =========================================================================
+    // Definición de Direcciones de Registros
+    // =========================================================================
+    localparam ADDR_CTRL          = 4'h0;  // 0x00
+    localparam ADDR_STATUS        = 4'h1;  // 0x04
+    localparam ADDR_IMG_WIDTH_IN  = 4'h2;  // 0x08
+    localparam ADDR_IMG_HEIGHT_IN = 4'h3;  // 0x0C
+    localparam ADDR_IMG_WIDTH_OUT = 4'h4;  // 0x10
+    localparam ADDR_IMG_HEIGHT_OUT= 4'h5;  // 0x14
+    localparam ADDR_INPUT_BASE    = 4'h6;  // 0x18
+    localparam ADDR_OUTPUT_BASE   = 4'h7;  // 0x1C
+    localparam ADDR_PERF_CYCLES   = 4'h8;  // 0x20
+    localparam ADDR_PERF_READS    = 4'h9;  // 0x24
+    localparam ADDR_PERF_WRITES   = 4'hA;  // 0x28
+    localparam ADDR_PERF_FLOPS    = 4'hB;  // 0x2C
+
+    // =========================================================================
+    // Banco de Registros Internos (R/W)
+    // =========================================================================
+    logic [31:0] reg_ctrl;
+    logic [31:0] reg_img_width_in;
+    logic [31:0] reg_img_height_in;
+    logic [31:0] reg_img_width_out;
+    logic [31:0] reg_img_height_out;
+    logic [31:0] reg_input_base;
+    logic [31:0] reg_output_base;
+    
+    // Registro STATUS (construido desde señales DSA)
+    logic [31:0] reg_status;
+    
+    // Waitrequest siempre 0 (transacciones completas en 1 ciclo)
+    assign avs_waitrequest = 1'b0;
+
+    // =========================================================================
+    // Lógica de Escritura (Avalon-MM Write)
+    // =========================================================================
+    always_ff @(posedge clk or negedge reset_n) begin
+        if (!reset_n) begin
+            reg_ctrl           <= 32'h0;
+            reg_img_width_in   <= 32'd512;  // Defaults razonables
+            reg_img_height_in  <= 32'd512;
+            reg_img_width_out  <= 32'd256;
+            reg_img_height_out <= 32'd256;
+            reg_input_base     <= 32'h00000000;
+            reg_output_base    <= 32'h00040000;
+        end else begin
+            // Auto-clear del bit start después de 1 ciclo
+            if (reg_ctrl[0]) begin
+                reg_ctrl[0] <= 1'b0;
+            end
+            
+            // Auto-clear del bit reset_counters después de 1 ciclo
+            if (reg_ctrl[1]) begin
+                reg_ctrl[1] <= 1'b0;
+            end
+            
+            // Escritura de registros
+            if (avs_write) begin
+                case (avs_address)
+                    ADDR_CTRL: begin
+                        reg_ctrl <= avs_writedata;
+                    end
+                    ADDR_IMG_WIDTH_IN: begin
+                        reg_img_width_in <= avs_writedata;
+                    end
+                    ADDR_IMG_HEIGHT_IN: begin
+                        reg_img_height_in <= avs_writedata;
+                    end
+                    ADDR_IMG_WIDTH_OUT: begin
+                        reg_img_width_out <= avs_writedata;
+                    end
+                    ADDR_IMG_HEIGHT_OUT: begin
+                        reg_img_height_out <= avs_writedata;
+                    end
+                    ADDR_INPUT_BASE: begin
+                        reg_input_base <= avs_writedata;
+                    end
+                    ADDR_OUTPUT_BASE: begin
+                        reg_output_base <= avs_writedata;
+                    end
+                    // Registros de solo lectura ignorados
+                    default: begin
+                        // No hacer nada
+                    end
+                endcase
+            end
+        end
+    end
+
+    // =========================================================================
+    // Construcción del Registro STATUS (solo lectura)
+    // =========================================================================
+    always_comb begin
+        reg_status = 32'h0;
+        reg_status[0] = dsa_busy;   // Bit 0: busy
+        reg_status[1] = dsa_done;   // Bit 1: done
+        reg_status[2] = dsa_error;  // Bit 2: error
+    end
+
+    // =========================================================================
+    // Lógica de Lectura (Avalon-MM Read)
+    // =========================================================================
+    always_ff @(posedge clk or negedge reset_n) begin
+        if (!reset_n) begin
+            avs_readdata <= 32'h0;
+        end else if (avs_read) begin
+            case (avs_address)
+                ADDR_CTRL:           avs_readdata <= reg_ctrl;
+                ADDR_STATUS:         avs_readdata <= reg_status;
+                ADDR_IMG_WIDTH_IN:   avs_readdata <= reg_img_width_in;
+                ADDR_IMG_HEIGHT_IN:  avs_readdata <= reg_img_height_in;
+                ADDR_IMG_WIDTH_OUT:  avs_readdata <= reg_img_width_out;
+                ADDR_IMG_HEIGHT_OUT: avs_readdata <= reg_img_height_out;
+                ADDR_INPUT_BASE:     avs_readdata <= reg_input_base;
+                ADDR_OUTPUT_BASE:    avs_readdata <= reg_output_base;
+                ADDR_PERF_CYCLES:    avs_readdata <= dsa_perf_cycles;
+                ADDR_PERF_READS:     avs_readdata <= dsa_perf_reads;
+                ADDR_PERF_WRITES:    avs_readdata <= dsa_perf_writes;
+                ADDR_PERF_FLOPS:     avs_readdata <= dsa_perf_flops;
+                default:             avs_readdata <= 32'hDEADBEEF; // Debug
+            endcase
+        end
+    end
+
+    // =========================================================================
+    // Asignación de Señales de Salida hacia DSA
+    // =========================================================================
+    assign dsa_start          = reg_ctrl[0];  // Pulso de 1 ciclo
+    assign dsa_reset_counters = reg_ctrl[1];  // Pulso de 1 ciclo
+    assign dsa_mode           = reg_ctrl[2];  // 0=Secuencial, 1=SIMD
+    assign dsa_img_width_in   = reg_img_width_in;
+    assign dsa_img_height_in  = reg_img_height_in;
+    assign dsa_img_width_out  = reg_img_width_out;
+    assign dsa_img_height_out = reg_img_height_out;
+    assign dsa_input_base     = reg_input_base;
+    assign dsa_output_base    = reg_output_base;
+
+endmodule
+

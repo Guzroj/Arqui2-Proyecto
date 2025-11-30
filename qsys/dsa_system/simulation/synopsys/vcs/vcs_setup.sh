@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 20.1 720 win32 2025.11.30.02:55:59
+# ACDS 20.1 720 win32 2025.11.30.04:33:15
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 20.1 720 win32 2025.11.30.02:55:59
+# ACDS 20.1 720 win32 2025.11.30.04:33:15
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="dsa_system"
@@ -143,58 +143,6 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/cyclonev_hssi_atoms.v \
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/synopsys/cyclonev_pcie_hip_atoms_ncrypt.v \
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/cyclonev_pcie_hip_atoms.v \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_avalon_st_adapter_002_error_adapter_0.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_avalon_st_adapter_002.v \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_avalon_st_adapter.v \
-  $QSYS_SIMDIR/submodules/altera_merlin_width_adapter.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_rsp_mux.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_rsp_demux.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_cmd_mux.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_cmd_demux.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_adapter.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_uncmpr.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_13_1.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_new.sv \
-  $QSYS_SIMDIR/submodules/altera_incr_burst_converter.sv \
-  $QSYS_SIMDIR/submodules/altera_wrap_burst_converter.sv \
-  $QSYS_SIMDIR/submodules/altera_default_burst_converter.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_stage.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v \
-  $QSYS_SIMDIR/submodules/altera_merlin_traffic_limiter.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_router_003.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_router_001.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0_router.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_jtag_master_p2b_adapter.sv \
-  $QSYS_SIMDIR/submodules/dsa_system_jtag_master_b2p_adapter.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_packets_to_master.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_packets_to_bytes.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_bytes_to_packets.v \
-  $QSYS_SIMDIR/submodules/dsa_system_jtag_master_timing_adt.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_jtag_interface.v \
-  $QSYS_SIMDIR/submodules/altera_jtag_dc_streaming.v \
-  $QSYS_SIMDIR/submodules/altera_jtag_sld_node.v \
-  $QSYS_SIMDIR/submodules/altera_jtag_streaming.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v \
-  $QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_idle_remover.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_idle_inserter.v \
-  $QSYS_SIMDIR/submodules/altera_reset_controller.v \
-  $QSYS_SIMDIR/submodules/altera_reset_synchronizer.v \
-  $QSYS_SIMDIR/submodules/dsa_system_mm_interconnect_0.v \
-  $QSYS_SIMDIR/submodules/dsa_system_pio_leds.v \
-  $QSYS_SIMDIR/submodules/dsa_system_output_memory.v \
-  $QSYS_SIMDIR/submodules/dsa_system_jtag_master.v \
-  $QSYS_SIMDIR/submodules/dsa_system_input_memory.v \
   $QSYS_SIMDIR/dsa_system.v \
   -top $TOP_LEVEL_NAME
 # ----------------------------------------

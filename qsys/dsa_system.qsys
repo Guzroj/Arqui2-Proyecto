@@ -22,6 +22,14 @@
          type = "boolean";
       }
    }
+   element dsa_avalon_wrapper_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
    element input_memory
    {
       datum _sortIndex
@@ -95,6 +103,17 @@
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="dsa_avalon_wrapper_0"
+   kind="dsa_avalon_wrapper"
+   version="1.0"
+   enabled="1">
+  <parameter name="MAX_DST_H" value="512" />
+  <parameter name="MAX_DST_W" value="512" />
+  <parameter name="MAX_SRC_H" value="512" />
+  <parameter name="MAX_SRC_W" value="512" />
+  <parameter name="N" value="4" />
  </module>
  <module
    name="input_memory"
@@ -202,6 +221,33 @@
  <connection
    kind="avalon"
    version="20.1"
+   start="dsa_avalon_wrapper_0.avalon_master"
+   end="input_memory.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
+   start="dsa_avalon_wrapper_0.avalon_master"
+   end="output_memory.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00040000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
+   start="jtag_master.master"
+   end="dsa_avalon_wrapper_0.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00060000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
    start="jtag_master.master"
    end="input_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
@@ -236,6 +282,11 @@
    start="clk_0.clk"
    end="output_memory.clk1" />
  <connection
+   kind="clock"
+   version="20.1"
+   start="clk_0.clk"
+   end="dsa_avalon_wrapper_0.clock" />
+ <connection
    kind="reset"
    version="20.1"
    start="reset_bridge.out_reset"
@@ -250,6 +301,11 @@
    version="20.1"
    start="reset_bridge.out_reset"
    end="pio_leds.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="reset_bridge.out_reset"
+   end="dsa_avalon_wrapper_0.reset" />
  <connection
    kind="reset"
    version="20.1"

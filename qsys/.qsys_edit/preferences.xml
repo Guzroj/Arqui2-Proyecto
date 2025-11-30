@@ -3,11 +3,12 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="111" />
+   <connections preferredWidth="127" />
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
- <library expandedCategories="Project,Library" />
+ <library
+   expandedCategories="Project,Library,Library/DSA,Library/DSA/Image Processing" />
  <window width="1938" height="1038" x="-9" y="-9" />
- <generation simulation="VERILOG" />
+ <generation simulation="NONE" synthesis="NONE" />
 </preferences>
