@@ -4,14 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "DRAM_CLK",
-					"strict" : false
-				},
-				{
-					"name" : "DRAM_WE_N",
-					"strict" : false
-				},
-				{
 					"name" : "LEDR[0]",
 					"strict" : false
 				},
@@ -116,6 +108,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "DRAM_CLK",
+					"strict" : false
+				},
+				{
 					"name" : "DRAM_CS_N",
 					"strict" : false
 				},
@@ -129,6 +125,10 @@
 				},
 				{
 					"name" : "DRAM_UDQM",
+					"strict" : false
+				},
+				{
+					"name" : "DRAM_WE_N",
 					"strict" : false
 				},
 				{

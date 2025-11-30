@@ -26,8 +26,16 @@
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "5";
          type = "int";
+      }
+   }
+   element dsa_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
       }
    }
    element jtag_master
@@ -42,7 +50,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "4";
          type = "int";
       }
    }
@@ -106,10 +114,6 @@
    kind="dsa_avalon_wrapper"
    version="1.0"
    enabled="1">
-  <parameter name="MAX_DST_H" value="128" />
-  <parameter name="MAX_DST_W" value="128" />
-  <parameter name="MAX_SRC_H" value="512" />
-  <parameter name="MAX_SRC_W" value="512" />
   <parameter name="N" value="4" />
  </module>
  <module
@@ -186,7 +190,7 @@
    start="dsa_avalon_wrapper_0.avalon_master"
    end="dsa_avalon_wrapper_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x06000000" />
+  <parameter name="baseAddress" value="0x05000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -204,7 +208,7 @@
    start="dsa_avalon_wrapper_0.avalon_master"
    end="pio_leds.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x05000000" />
+  <parameter name="baseAddress" value="0x04000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -213,7 +217,7 @@
    start="jtag_master.master"
    end="dsa_avalon_wrapper_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x06000000" />
+  <parameter name="baseAddress" value="0x05000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -222,7 +226,7 @@
    start="jtag_master.master"
    end="pio_leds.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x05000000" />
+  <parameter name="baseAddress" value="0x04000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -266,12 +270,12 @@
    kind="reset"
    version="20.1"
    start="reset_bridge.out_reset"
-   end="dsa_avalon_wrapper_0.reset" />
+   end="new_sdram_controller_0.reset" />
  <connection
    kind="reset"
    version="20.1"
    start="reset_bridge.out_reset"
-   end="new_sdram_controller_0.reset" />
+   end="dsa_avalon_wrapper_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

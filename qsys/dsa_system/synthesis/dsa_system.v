@@ -56,11 +56,7 @@ module dsa_system (
 	wire  [31:0] mm_interconnect_0_pio_leds_s1_writedata;                         // mm_interconnect_0:pio_leds_s1_writedata -> pio_leds:writedata
 
 	DSA_Avalon_Wrapper #(
-		.N         (4),
-		.MAX_SRC_W (512),
-		.MAX_SRC_H (512),
-		.MAX_DST_W (128),
-		.MAX_DST_H (128)
+		.N (4)
 	) dsa_avalon_wrapper_0 (
 		.clk                   (clk_clk),                                                         //         clock.clk
 		.reset_n               (~reset_reset),                                                    //         reset.reset_n

@@ -1,22 +1,24 @@
 `timescale 1ns/1ps
 
 module Downscale_SIMD #(
-    parameter int SRC_H = 512,
-    parameter int SRC_W = 512,
-    parameter int DST_H = 256,
-    parameter int DST_W = 256,
-    parameter int N     = 4
+    parameter int N = 4
 )(
     input  logic clk,
     input  logic rst,
     input  logic start,
+    
+    // ========== Dimensiones dinámicas ==========
+    input  logic [31:0] img_width_in,   // SRC_W
+    input  logic [31:0] img_height_in,  // SRC_H
+    input  logic [31:0] img_width_out,  // DST_W
+    input  logic [31:0] img_height_out, // DST_H
 
-    output logic                           mem_rd_req   [N],
-    output logic [$clog2(SRC_W*SRC_H)-1:0] mem_rd_addr  [N],
-    input  logic                           mem_rd_valid [N],
-    input  logic [7:0]                     mem_rd_data  [N],
+    // ========== Interfaz de memoria (32 bits) ==========
+    output logic        mem_rd_req   [N],
+    output logic [31:0] mem_rd_addr  [N],
+    input  logic        mem_rd_valid [N],
+    input  logic [7:0]  mem_rd_data  [N],
 
-    // ========== CAMBIO: Escritura directa (sin array) ==========
     output logic        out_mem_we,
     output logic [31:0] out_mem_addr,
     output logic [7:0]  out_mem_data,
@@ -24,15 +26,19 @@ module Downscale_SIMD #(
     output logic        done
 );
 
-    localparam int FRAC       = 8;
-    localparam int X_RATIO_FP = ((SRC_W - 1) << FRAC) / (DST_W - 1);
-    localparam int Y_RATIO_FP = ((SRC_H - 1) << FRAC) / (DST_H - 1);
+    localparam int FRAC = 8;
 
-    localparam int TOT_PIX    = DST_H * DST_W;
-    localparam int IDX_BITS   = $clog2(TOT_PIX) + 1;
-    localparam int COORD_BITS = $clog2((SRC_W > SRC_H)? SRC_W : SRC_H) + 1;
-    localparam int DST_W_BITS = $clog2(DST_W) + 1;
-    localparam int DST_H_BITS = $clog2(DST_H) + 1;
+    // ========== Ratios calculados dinámicamente ==========
+    logic [31:0] x_ratio_fp;  // ((SRC_W - 1) << FRAC) / (DST_W - 1)
+    logic [31:0] y_ratio_fp;  // ((SRC_H - 1) << FRAC) / (DST_H - 1)
+    logic [31:0] total_pixels;  // DST_H * DST_W
+    
+    always_comb begin
+        // Calcular ratios de escala en punto fijo Q0.8
+        x_ratio_fp = ((img_width_in - 1) << FRAC) / (img_width_out - 1);
+        y_ratio_fp = ((img_height_in - 1) << FRAC) / (img_height_out - 1);
+        total_pixels = img_width_out * img_height_out;
+    end
 
     logic [7:0] I00_vec   [N];
     logic [7:0] I10_vec   [N];
@@ -79,22 +85,22 @@ module Downscale_SIMD #(
 
     state_t state;
 
-    logic [IDX_BITS-1:0]      base_idx;
-    logic [IDX_BITS-1:0]      idx       [N];
-    logic [DST_H_BITS-1:0]    i_dst     [N];
-    logic [DST_W_BITS-1:0]    j_dst     [N];
-    logic [23:0]              x_src_fp  [N];
-    logic [23:0]              y_src_fp  [N];
-    logic [COORD_BITS-1:0]    x_l       [N];
-    logic [COORD_BITS-1:0]    y_l       [N];
-    logic [COORD_BITS-1:0]    x_h       [N];
-    logic [COORD_BITS-1:0]    y_h       [N];
-    logic                     valid_lane[N];
+    // ========== Variables con tamaño fijo máximo ==========
+    logic [31:0] base_idx;
+    logic [31:0] idx       [N];
+    logic [31:0] i_dst     [N];
+    logic [31:0] j_dst     [N];
+    logic [31:0] x_src_fp  [N];
+    logic [31:0] y_src_fp  [N];
+    logic [31:0] x_l       [N];
+    logic [31:0] y_l       [N];
+    logic [31:0] x_h       [N];
+    logic [31:0] y_h       [N];
+    logic        valid_lane[N];
 
     logic all_valid;
     integer kk;
     
-    // ========== CAMBIO: Contador para serializar escrituras ==========
     logic [2:0] write_lane_idx;  // [0..N-1]
 
     always_ff @(posedge clk or posedge rst) begin
@@ -153,11 +159,11 @@ module Downscale_SIMD #(
             S_CALC_COORDS: begin
                 for (int k = 0; k < N; k++) begin
                     idx[k] <= base_idx + k;
-                    valid_lane[k] <= (base_idx + k < TOT_PIX);
+                    valid_lane[k] <= (base_idx + k < total_pixels);
 
-                    if (base_idx + k < TOT_PIX) begin
-                        i_dst[k] <= DST_H_BITS'((base_idx + k) / DST_W);
-                        j_dst[k] <= DST_W_BITS'((base_idx + k) % DST_W);
+                    if (base_idx + k < total_pixels) begin
+                        i_dst[k] <= (base_idx + k) / img_width_out;
+                        j_dst[k] <= (base_idx + k) % img_width_out;
                     end
                 end
                 state <= S_CALC_SRC;
@@ -166,8 +172,8 @@ module Downscale_SIMD #(
             S_CALC_SRC: begin
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
-                        x_src_fp[k] <= 24'(j_dst[k]) * 24'(X_RATIO_FP);
-                        y_src_fp[k] <= 24'(i_dst[k]) * 24'(Y_RATIO_FP);
+                        x_src_fp[k] <= j_dst[k] * x_ratio_fp;
+                        y_src_fp[k] <= i_dst[k] * y_ratio_fp;
                     end
                 end
                 state <= S_REQ_I00;
@@ -176,21 +182,21 @@ module Downscale_SIMD #(
             S_REQ_I00: begin
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
-                        x_l[k] <= x_src_fp[k][23:FRAC];
-                        y_l[k] <= y_src_fp[k][23:FRAC];
+                        x_l[k] <= x_src_fp[k][31:FRAC];
+                        y_l[k] <= y_src_fp[k][31:FRAC];
 
-                        x_h[k] <= (x_src_fp[k][23:FRAC] < SRC_W-1) ? 
-                                  (x_src_fp[k][23:FRAC] + 1) : 
-                                  x_src_fp[k][23:FRAC];
-                        y_h[k] <= (y_src_fp[k][23:FRAC] < SRC_H-1) ? 
-                                  (y_src_fp[k][23:FRAC] + 1) : 
-                                  y_src_fp[k][23:FRAC];
+                        x_h[k] <= (x_src_fp[k][31:FRAC] < (img_width_in - 1)) ? 
+                                  (x_src_fp[k][31:FRAC] + 1) : 
+                                  x_src_fp[k][31:FRAC];
+                        y_h[k] <= (y_src_fp[k][31:FRAC] < (img_height_in - 1)) ? 
+                                  (y_src_fp[k][31:FRAC] + 1) : 
+                                  y_src_fp[k][31:FRAC];
 
                         alpha_vec[k] <= x_src_fp[k][FRAC-1:0];
                         beta_vec[k]  <= y_src_fp[k][FRAC-1:0];
 
                         mem_rd_req[k]  <= 1'b1;
-                        mem_rd_addr[k] <= y_src_fp[k][23:FRAC] * SRC_W + x_src_fp[k][23:FRAC];
+                        mem_rd_addr[k] <= y_src_fp[k][31:FRAC] * img_width_in + x_src_fp[k][31:FRAC];
                     end else begin
                         mem_rd_req[k] <= 1'b0;
                     end
@@ -222,7 +228,7 @@ module Downscale_SIMD #(
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
                         mem_rd_req[k]  <= 1'b1;
-                        mem_rd_addr[k] <= y_l[k] * SRC_W + x_h[k];
+                        mem_rd_addr[k] <= y_l[k] * img_width_in + x_h[k];
                     end else begin
                         mem_rd_req[k] <= 1'b0;
                     end
@@ -252,7 +258,7 @@ module Downscale_SIMD #(
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
                         mem_rd_req[k]  <= 1'b1;
-                        mem_rd_addr[k] <= y_h[k] * SRC_W + x_l[k];
+                        mem_rd_addr[k] <= y_h[k] * img_width_in + x_l[k];
                     end else begin
                         mem_rd_req[k] <= 1'b0;
                     end
@@ -282,7 +288,7 @@ module Downscale_SIMD #(
                 for (int k = 0; k < N; k++) begin
                     if (valid_lane[k]) begin
                         mem_rd_req[k]  <= 1'b1;
-                        mem_rd_addr[k] <= y_h[k] * SRC_W + x_h[k];
+                        mem_rd_addr[k] <= y_h[k] * img_width_in + x_h[k];
                     end else begin
                         mem_rd_req[k] <= 1'b0;
                     end
@@ -327,7 +333,7 @@ module Downscale_SIMD #(
                     if (valid_lane[write_lane_idx]) begin
                         // Escribir píxel actual
                         out_mem_we   <= 1'b1;
-                        out_mem_addr <= i_dst[write_lane_idx] * DST_W + j_dst[write_lane_idx];
+                        out_mem_addr <= i_dst[write_lane_idx] * img_width_out + j_dst[write_lane_idx];
                         out_mem_data <= pixel_out_vec[write_lane_idx];
                     end
                     
@@ -338,7 +344,7 @@ module Downscale_SIMD #(
                     // Todas las escrituras completadas
                     base_idx <= base_idx + N;
                     
-                    if (base_idx + N >= TOT_PIX) begin
+                    if (base_idx + N >= total_pixels) begin
                         done  <= 1'b1;
                         state <= S_DONE;
                     end else begin

@@ -5,11 +5,7 @@
  */
 
 module DSA_Avalon_Wrapper #(
-    parameter int N = 4,
-    parameter int MAX_SRC_W = 512,
-    parameter int MAX_SRC_H = 512,
-    parameter int MAX_DST_W = 512,
-    parameter int MAX_DST_H = 512
+    parameter int N = 4
 )(
     input  logic        clk,
     input  logic        reset_n,
@@ -99,51 +95,50 @@ module DSA_Avalon_Wrapper #(
     logic [31:0] adapter_perf_reads;
     logic [31:0] adapter_perf_writes;
 
-    // ========== CAMBIO: Downscale_SIMD con escrituras directas ==========
+    // ========== Downscale_SIMD con dimensiones dinámicas ==========
     Downscale_SIMD #(
-        .SRC_H      (MAX_SRC_H),
-        .SRC_W      (MAX_SRC_W),
-        .DST_H      (MAX_DST_H),
-        .DST_W      (MAX_DST_W),
         .N          (N)
     ) u_downscale_simd (
-        .clk           (clk),
-        .rst           (!reset_n),
-        .start         (dsa_start && dsa_mode == 1'b1),
-        .mem_rd_req    (simd_mem_rd_req),
-        .mem_rd_addr   (simd_mem_rd_addr),
-        .mem_rd_valid  (simd_mem_rd_valid),
-        .mem_rd_data   (simd_mem_rd_data),
-        .out_mem_we    (simd_out_mem_we),
-        .out_mem_addr  (simd_out_mem_addr),
-        .out_mem_data  (simd_out_mem_data),
-        .done          (simd_done)
+        .clk            (clk),
+        .rst            (!reset_n),
+        .start          (dsa_start && dsa_mode == 1'b1),
+        .img_width_in   (dsa_img_width_in),
+        .img_height_in  (dsa_img_height_in),
+        .img_width_out  (dsa_img_width_out),
+        .img_height_out (dsa_img_height_out),
+        .mem_rd_req     (simd_mem_rd_req),
+        .mem_rd_addr    (simd_mem_rd_addr),
+        .mem_rd_valid   (simd_mem_rd_valid),
+        .mem_rd_data    (simd_mem_rd_data),
+        .out_mem_we     (simd_out_mem_we),
+        .out_mem_addr   (simd_out_mem_addr),
+        .out_mem_data   (simd_out_mem_data),
+        .done           (simd_done)
     );
 
-    Downscale_Secuencial #(
-        .SRC_H      (MAX_SRC_H),
-        .SRC_W      (MAX_SRC_W),
-        .DST_H      (MAX_DST_H),
-        .DST_W      (MAX_DST_W)
-    ) u_downscale_seq (
-        .clk           (clk),
-        .rst           (!reset_n),
-        .start         (dsa_start && dsa_mode == 1'b0),
-        .mem_rd_req    (seq_mem_rd_req),
-        .mem_rd_addr   (seq_mem_rd_addr),
-        .mem_rd_valid  (seq_mem_rd_valid),
-        .mem_rd_data   (seq_mem_rd_data),
-        .out_mem_we    (seq_out_mem_we),
-        .out_mem_addr  (seq_out_mem_addr),
-        .out_mem_data  (seq_out_mem_data),
-        .done          (seq_done)
+    Downscale_Secuencial u_downscale_seq (
+        .clk            (clk),
+        .rst            (!reset_n),
+        .start          (dsa_start && dsa_mode == 1'b0),
+        .img_width_in   (dsa_img_width_in),
+        .img_height_in  (dsa_img_height_in),
+        .img_width_out  (dsa_img_width_out),
+        .img_height_out (dsa_img_height_out),
+        .mem_rd_req     (seq_mem_rd_req),
+        .mem_rd_addr    (seq_mem_rd_addr),
+        .mem_rd_valid   (seq_mem_rd_valid),
+        .mem_rd_data    (seq_mem_rd_data),
+        .out_mem_we     (seq_out_mem_we),
+        .out_mem_addr   (seq_out_mem_addr),
+        .out_mem_data   (seq_out_mem_data),
+        .done           (seq_done)
     );
 
-    // ========== CAMBIO: Adaptador sin arrays ==========
+    // ========== Adaptador de memoria ==========
     DSA_Memory_Adapter #(
         .N              (N),
-        .MAX_WIDTH      (MAX_DST_W),
-        .MAX_HEIGHT     (MAX_DST_H)
+        .MAX_WIDTH      (512),
+        .MAX_HEIGHT     (512)
     ) u_memory_adapter (
         .clk                (clk),
         .reset_n            (reset_n),

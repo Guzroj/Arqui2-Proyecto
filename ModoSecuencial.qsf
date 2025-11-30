@@ -90,7 +90,6 @@ set_global_assignment -name SYSTEMVERILOG_FILE rtl/DSA_Control_Registers.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/DSA_Avalon_Wrapper.sv
 set_global_assignment -name QIP_FILE qsys/dsa_system/synthesis/dsa_system.qip
 set_global_assignment -name SOURCE_FILE constraints/pin_assignments_de1soc.qsf
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Test_Phase1.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_SIMD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/SIMD_Registros.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/ModoSIMD.sv

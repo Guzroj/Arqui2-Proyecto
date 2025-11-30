@@ -49,29 +49,8 @@ set_parameter_property N DESCRIPTION "Number of parallel SIMD processing lanes"
 set_parameter_property N ALLOWED_RANGES {1 2 4 8 16}
 set_parameter_property N HDL_PARAMETER true
 
-add_parameter MAX_SRC_W INTEGER 512
-set_parameter_property MAX_SRC_W DISPLAY_NAME "Max Source Width"
-set_parameter_property MAX_SRC_W DESCRIPTION "Maximum input image width (pixels)"
-set_parameter_property MAX_SRC_W ALLOWED_RANGES {32:2048}
-set_parameter_property MAX_SRC_W HDL_PARAMETER true
-
-add_parameter MAX_SRC_H INTEGER 512
-set_parameter_property MAX_SRC_H DISPLAY_NAME "Max Source Height"
-set_parameter_property MAX_SRC_H DESCRIPTION "Maximum input image height (pixels)"
-set_parameter_property MAX_SRC_H ALLOWED_RANGES {32:2048}
-set_parameter_property MAX_SRC_H HDL_PARAMETER true
-
-add_parameter MAX_DST_W INTEGER 512
-set_parameter_property MAX_DST_W DISPLAY_NAME "Max Destination Width"
-set_parameter_property MAX_DST_W DESCRIPTION "Maximum output image width (pixels)"
-set_parameter_property MAX_DST_W ALLOWED_RANGES {32:2048}
-set_parameter_property MAX_DST_W HDL_PARAMETER true
-
-add_parameter MAX_DST_H INTEGER 512
-set_parameter_property MAX_DST_H DISPLAY_NAME "Max Destination Height"
-set_parameter_property MAX_DST_H DESCRIPTION "Maximum output image height (pixels)"
-set_parameter_property MAX_DST_H ALLOWED_RANGES {32:2048}
-set_parameter_property MAX_DST_H HDL_PARAMETER true
+# NOTA: Parámetros MAX_SRC/DST removidos - ahora las dimensiones son dinámicas
+# Las dimensiones se configuran en tiempo de ejecución vía registros de control
 
 # ==============================================================================
 # Clock Interface
@@ -181,17 +160,7 @@ add_interface_port avalon_master avm_mem_readdatavalid readdatavalid Input 1
 # Validation Callback
 # ==============================================================================
 proc validate {} {
-    # Validar que MAX_DST <= MAX_SRC
-    set src_w [get_parameter_value MAX_SRC_W]
-    set src_h [get_parameter_value MAX_SRC_H]
-    set dst_w [get_parameter_value MAX_DST_W]
-    set dst_h [get_parameter_value MAX_DST_H]
-    
-    if {$dst_w > $src_w} {
-        send_message error "MAX_DST_W ($dst_w) cannot be larger than MAX_SRC_W ($src_w)"
-    }
-    
-    if {$dst_h > $src_h} {
-        send_message error "MAX_DST_H ($dst_h) cannot be larger than MAX_SRC_H ($src_h)"
-    }
+    # No hay validación especial necesaria
+    # Las dimensiones ahora son dinámicas (configuradas en runtime vía registros)
+    # Solo validamos que N sea válido (ya se hace con ALLOWED_RANGES)
 }

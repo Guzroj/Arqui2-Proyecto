@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="dsa_system" kind="dsa_system" version="1.0" fabric="QSYS">
  <!-- Format version 20.1 720 (Future versions may contain additional information.) -->
- <!-- 2025.11.30.05:37:07 -->
+ <!-- 2025.11.30.14:35:11 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1764502627</value>
+  <value>1764534911</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -433,38 +433,6 @@ the requested settings for a module instance. -->
   <parameter name="N">
    <type>int</type>
    <value>4</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="MAX_SRC_W">
-   <type>int</type>
-   <value>512</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="MAX_SRC_H">
-   <type>int</type>
-   <value>512</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="MAX_DST_W">
-   <type>int</type>
-   <value>128</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="MAX_DST_H">
-   <type>int</type>
-   <value>128</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -1262,7 +1230,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>dsa_avalon_wrapper_0</moduleName>
     <slaveName>avalon_slave</slaveName>
     <name>dsa_avalon_wrapper_0.avalon_slave</name>
-    <baseAddress>100663296</baseAddress>
+    <baseAddress>83886080</baseAddress>
     <span>64</span>
    </memoryBlock>
    <memoryBlock>
@@ -1278,7 +1246,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>pio_leds</moduleName>
     <slaveName>s1</slaveName>
     <name>pio_leds.s1</name>
-    <baseAddress>83886080</baseAddress>
+    <baseAddress>67108864</baseAddress>
     <span>16</span>
    </memoryBlock>
   </interface>
@@ -1793,7 +1761,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>dsa_avalon_wrapper_0</moduleName>
     <slaveName>avalon_slave</slaveName>
     <name>dsa_avalon_wrapper_0.avalon_slave</name>
-    <baseAddress>100663296</baseAddress>
+    <baseAddress>83886080</baseAddress>
     <span>64</span>
    </memoryBlock>
    <memoryBlock>
@@ -1801,7 +1769,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>pio_leds</moduleName>
     <slaveName>s1</slaveName>
     <name>pio_leds.s1</name>
-    <baseAddress>83886080</baseAddress>
+    <baseAddress>67108864</baseAddress>
     <span>16</span>
    </memoryBlock>
    <memoryBlock>
@@ -3837,7 +3805,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x06000000</value>
+   <value>0x05000000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -3939,7 +3907,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x05000000</value>
+   <value>0x04000000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -3990,7 +3958,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x06000000</value>
+   <value>0x05000000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -4041,7 +4009,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x05000000</value>
+   <value>0x04000000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -4344,33 +4312,6 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>reset</endConnectionPoint>
  </connection>
  <connection
-   name="reset_bridge.out_reset/dsa_avalon_wrapper_0.reset"
-   kind="reset"
-   version="20.1"
-   start="reset_bridge.out_reset"
-   end="dsa_avalon_wrapper_0.reset">
-  <parameter name="deviceFamily">
-   <type>java.lang.String</type>
-   <value>UNKNOWN</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="generateLegacySim">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <startModule>reset_bridge</startModule>
-  <startConnectionPoint>out_reset</startConnectionPoint>
-  <endModule>dsa_avalon_wrapper_0</endModule>
-  <endConnectionPoint>reset</endConnectionPoint>
- </connection>
- <connection
    name="reset_bridge.out_reset/new_sdram_controller_0.reset"
    kind="reset"
    version="20.1"
@@ -4395,6 +4336,33 @@ parameters are a RESULT of the module parameters. -->
   <startModule>reset_bridge</startModule>
   <startConnectionPoint>out_reset</startConnectionPoint>
   <endModule>new_sdram_controller_0</endModule>
+  <endConnectionPoint>reset</endConnectionPoint>
+ </connection>
+ <connection
+   name="reset_bridge.out_reset/dsa_avalon_wrapper_0.reset"
+   kind="reset"
+   version="20.1"
+   start="reset_bridge.out_reset"
+   end="dsa_avalon_wrapper_0.reset">
+  <parameter name="deviceFamily">
+   <type>java.lang.String</type>
+   <value>UNKNOWN</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="generateLegacySim">
+   <type>boolean</type>
+   <value>false</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <startModule>reset_bridge</startModule>
+  <startConnectionPoint>out_reset</startConnectionPoint>
+  <endModule>dsa_avalon_wrapper_0</endModule>
   <endConnectionPoint>reset</endConnectionPoint>
  </connection>
  <plugin>

@@ -1,17 +1,17 @@
-Fitter Status : Failed - Sun Nov 30 13:22:19 2025
+Fitter Status : Successful - Sun Nov 30 14:45:42 2025
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : ModoSecuencial
 Top-level Entity Name : dsa_system_wrapper
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 169,534 / 32,070 ( 529 % )
-Total registers : 264076
+Logic utilization (in ALMs) : 9,400 / 32,070 ( 29 % )
+Total registers : 3186
 Total pins : 50 / 457 ( 11 % )
 Total virtual pins : 0
 Total block memory bits : 640 / 4,065,280 ( < 1 % )
-Total RAM Blocks : 0 / 397 ( 0 % )
-Total DSP Blocks : 49 / 87 ( 56 % )
+Total RAM Blocks : 2 / 397 ( < 1 % )
+Total DSP Blocks : 87 / 87 ( 100 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0

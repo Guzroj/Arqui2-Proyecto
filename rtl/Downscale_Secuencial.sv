@@ -1,35 +1,41 @@
 `timescale 1ns/1ps
 
-module Downscale_Secuencial #(
-    parameter int SRC_H = 512,
-    parameter int SRC_W = 512,
-    parameter int DST_H = 256,
-    parameter int DST_W = 256
-)(
+module Downscale_Secuencial (
     input  logic clk,
     input  logic rst,
     input  logic start,
+    
+    // ========== Dimensiones dinámicas ==========
+    input  logic [31:0] img_width_in,   // SRC_W
+    input  logic [31:0] img_height_in,  // SRC_H
+    input  logic [31:0] img_width_out,  // DST_W
+    input  logic [31:0] img_height_out, // DST_H
 
-    output logic                           mem_rd_req,
-    output logic [$clog2(SRC_W*SRC_H)-1:0] mem_rd_addr,
-    input  logic                           mem_rd_valid,
-    input  logic [7:0]                     mem_rd_data,
+    // ========== Interfaz de memoria (32 bits) ==========
+    output logic        mem_rd_req,
+    output logic [31:0] mem_rd_addr,
+    input  logic        mem_rd_valid,
+    input  logic [7:0]  mem_rd_data,
 
-    output logic                           out_mem_we,
-    output logic [$clog2(DST_W*DST_H)-1:0] out_mem_addr,
-    output logic [7:0]                     out_mem_data,
+    output logic        out_mem_we,
+    output logic [31:0] out_mem_addr,
+    output logic [7:0]  out_mem_data,
 
     output logic done
 );
 
-    localparam int FRAC       = 8;
-    localparam int X_RATIO_FP = ((SRC_W - 1) << FRAC) / (DST_W - 1);
-    localparam int Y_RATIO_FP = ((SRC_H - 1) << FRAC) / (DST_H - 1);
-
-    localparam int TOT_PIX    = DST_H * DST_W;
-    localparam int COORD_BITS = $clog2((SRC_W > SRC_H)? SRC_W : SRC_H) + 1;
-    localparam int DST_W_BITS = $clog2(DST_W) + 1;
-    localparam int DST_H_BITS = $clog2(DST_H) + 1;
+    localparam int FRAC = 8;
+    
+    // ========== Ratios calculados dinámicamente ==========
+    logic [31:0] x_ratio_fp;
+    logic [31:0] y_ratio_fp;
+    logic [31:0] total_pixels;
+    
+    always_comb begin
+        x_ratio_fp = ((img_width_in - 1) << FRAC) / (img_width_out - 1);
+        y_ratio_fp = ((img_height_in - 1) << FRAC) / (img_height_out - 1);
+        total_pixels = img_width_out * img_height_out;
+    end
 
     // Instancia del interpolador
     logic        valid_in;
@@ -68,13 +74,13 @@ module Downscale_Secuencial #(
 
     state_t state;
 
-    // Señales de coordenadas (como SIMD pero solo 1 píxel)
-    logic [$clog2(TOT_PIX):0]  pixel_idx;
-    logic [DST_H_BITS-1:0]     i_dst;
-    logic [DST_W_BITS-1:0]     j_dst;
-    logic [31:0]               x_src_fp;  // 32 bits como SIMD
-    logic [31:0]               y_src_fp;
-    logic [COORD_BITS-1:0]     x_l, y_l, x_h, y_h;
+    // ========== Variables con tamaño fijo máximo ==========
+    logic [31:0] pixel_idx;
+    logic [31:0] i_dst;
+    logic [31:0] j_dst;
+    logic [31:0] x_src_fp;
+    logic [31:0] y_src_fp;
+    logic [31:0] x_l, y_l, x_h, y_h;
 
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -109,29 +115,26 @@ module Downscale_Secuencial #(
                     state <= S_CALC_COORDS;
             end
 
-            // ===== IGUAL QUE SIMD: CALC_COORDS =====
             S_CALC_COORDS: begin
-                i_dst <= DST_H_BITS'(pixel_idx / DST_W);
-                j_dst <= DST_W_BITS'(pixel_idx % DST_W);
+                i_dst <= pixel_idx / img_width_out;
+                j_dst <= pixel_idx % img_width_out;
                 state <= S_CALC_SRC;
             end
 
-            // ===== IGUAL QUE SIMD: CALC_SRC =====
             S_CALC_SRC: begin
-                x_src_fp <= 32'(j_dst) * 32'(X_RATIO_FP);
-                y_src_fp <= 32'(i_dst) * 32'(Y_RATIO_FP);
+                x_src_fp <= j_dst * x_ratio_fp;
+                y_src_fp <= i_dst * y_ratio_fp;
                 state    <= S_REQ_I00;
             end
 
-            // ===== IGUAL QUE SIMD: REQ_I00 =====
             S_REQ_I00: begin
                 x_l <= x_src_fp[31:FRAC];
                 y_l <= y_src_fp[31:FRAC];
 
-                x_h <= (x_src_fp[31:FRAC] < SRC_W-1) ? 
+                x_h <= (x_src_fp[31:FRAC] < (img_width_in - 1)) ? 
                        (x_src_fp[31:FRAC] + 1) : 
                        x_src_fp[31:FRAC];
-                y_h <= (y_src_fp[31:FRAC] < SRC_H-1) ? 
+                y_h <= (y_src_fp[31:FRAC] < (img_height_in - 1)) ? 
                        (y_src_fp[31:FRAC] + 1) : 
                        y_src_fp[31:FRAC];
 
@@ -139,7 +142,7 @@ module Downscale_Secuencial #(
                 beta  <= y_src_fp[FRAC-1:0];
 
                 mem_rd_req  <= 1'b1;
-                mem_rd_addr <= y_src_fp[31:FRAC] * SRC_W + x_src_fp[31:FRAC];
+                mem_rd_addr <= y_src_fp[31:FRAC] * img_width_in + x_src_fp[31:FRAC];
                 state       <= S_WAIT_I00;
             end
 
@@ -150,10 +153,9 @@ module Downscale_Secuencial #(
                 end
             end
 
-            // ===== IGUAL QUE SIMD: REQ_I10 =====
             S_REQ_I10: begin
                 mem_rd_req  <= 1'b1;
-                mem_rd_addr <= y_l * SRC_W + x_h;
+                mem_rd_addr <= y_l * img_width_in + x_h;
                 state       <= S_WAIT_I10;
             end
 
@@ -164,10 +166,9 @@ module Downscale_Secuencial #(
                 end
             end
 
-            // ===== IGUAL QUE SIMD: REQ_I01 =====
             S_REQ_I01: begin
                 mem_rd_req  <= 1'b1;
-                mem_rd_addr <= y_h * SRC_W + x_l;
+                mem_rd_addr <= y_h * img_width_in + x_l;
                 state       <= S_WAIT_I01;
             end
 
@@ -178,10 +179,9 @@ module Downscale_Secuencial #(
                 end
             end
 
-            // ===== IGUAL QUE SIMD: REQ_I11 =====
             S_REQ_I11: begin
                 mem_rd_req  <= 1'b1;
-                mem_rd_addr <= y_h * SRC_W + x_h;
+                mem_rd_addr <= y_h * img_width_in + x_h;
                 state       <= S_WAIT_I11;
             end
 
@@ -204,15 +204,14 @@ module Downscale_Secuencial #(
                     state <= S_WRITE_OUT;
             end
 
-            // ===== IGUAL QUE SIMD: WRITE_BATCH =====
             S_WRITE_OUT: begin
                 out_mem_we   <= 1'b1;
-                out_mem_addr <= i_dst * DST_W + j_dst;
+                out_mem_addr <= i_dst * img_width_out + j_dst;
                 out_mem_data <= pixel_out;
 
                 pixel_idx <= pixel_idx + 1;
 
-                if (pixel_idx + 1 >= TOT_PIX) begin
+                if (pixel_idx + 1 >= total_pixels) begin
                     done  <= 1'b1;
                     state <= S_DONE;
                 end else begin
