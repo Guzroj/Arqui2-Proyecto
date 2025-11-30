@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Sun Nov 30 14:46:15 2025
+Sun Nov 30 16:34:37 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sun Nov 30 14:46:15 2025       ;
+; Flow Status                     ; Successful - Sun Nov 30 16:34:37 2025       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; ModoSecuencial                              ;
 ; Top-level Entity Name           ; dsa_system_wrapper                          ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/30/2025 14:39:04 ;
+; Start date & time ; 11/30/2025 16:27:55 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------+---------------------------------+
 ; Assignment Name                      ; Value                                                        ; Default Value  ; Entity Name        ; Section Id                      ;
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------+---------------------------------+
-; COMPILER_SIGNATURE_ID                ; 1097948206054.176453514415976                                ; --             ; --                 ; --                              ;
+; COMPILER_SIGNATURE_ID                ; 127943355051506.176454167511900                              ; --             ; --                 ; --                              ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_downscale_SIMD_Proceso       ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_Downscale_Secuencial         ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                 ; tb_Top_Downscale_Secuencial     ;
@@ -132,39 +132,36 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------+---------------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------+
-; Flow Elapsed Time                                                                                                          ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:14     ; 1.0                     ; 4922 MB             ; 00:00:26                           ;
-; Analysis & Synthesis   ; 00:00:30     ; 1.0                     ; 5142 MB             ; 00:00:41                           ;
-; Fitter                 ; 00:05:36     ; 1.2                     ; 8436 MB             ; 00:52:25                           ;
-; Assembler              ; 00:00:07     ; 1.0                     ; 5008 MB             ; 00:00:07                           ;
-; Timing Analyzer        ; 00:00:15     ; 4.7                     ; 5710 MB             ; 00:01:03                           ;
-; EDA Netlist Writer     ; 00:00:05     ; 1.0                     ; 4896 MB             ; 00:00:05                           ;
-; Total                  ; 00:06:47     ; --                      ; --                  ; 00:54:47                           ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:00:28     ; 1.0                     ; 5187 MB             ; 00:00:41                           ;
+; Fitter               ; 00:05:42     ; 1.2                     ; 8485 MB             ; 00:54:23                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 5004 MB             ; 00:00:07                           ;
+; Timing Analyzer      ; 00:00:13     ; 5.6                     ; 5706 MB             ; 00:01:03                           ;
+; EDA Netlist Writer   ; 00:00:04     ; 1.0                     ; 4896 MB             ; 00:00:04                           ;
+; Total                ; 00:06:34     ; --                      ; --                  ; 00:56:18                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+--------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                      ;
-+------------------------+------------------+------------+------------+----------------+
-; Module Name            ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
-+------------------------+------------------+------------+------------+----------------+
-; Analysis & Elaboration ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-; Analysis & Synthesis   ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter                 ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler              ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-; Timing Analyzer        ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-; EDA Netlist Writer     ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
-+------------------------+------------------+------------+------------+----------------+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; LenvoHT15        ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
-quartus_map --read_settings_files=on --write_settings_files=off ModoSecuencial -c ModoSecuencial --analysis_and_elaboration
 quartus_map --read_settings_files=on --write_settings_files=off ModoSecuencial -c ModoSecuencial
 quartus_fit --read_settings_files=off --write_settings_files=off ModoSecuencial -c ModoSecuencial
 quartus_asm --read_settings_files=off --write_settings_files=off ModoSecuencial -c ModoSecuencial

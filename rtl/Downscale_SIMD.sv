@@ -102,6 +102,10 @@ module Downscale_SIMD #(
     integer kk;
     
     logic [2:0] write_lane_idx;  // [0..N-1]
+    
+    // ========== Timeout para evitar deadlock ==========
+    logic [15:0] wait_timeout;
+    localparam int TIMEOUT_MAX = 1000;  // ~20ms @ 50MHz
 
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -136,11 +140,32 @@ module Downscale_SIMD #(
                 alpha_vec[k]   <= 8'd0;
                 beta_vec[k]    <= 8'd0;
             end
+            wait_timeout <= '0;
 
         end else begin
             
             // ========== Default: escritura OFF ==========
             out_mem_we <= 1'b0;
+            
+            // Timeout counter
+            if (state == S_WAIT_I00 || state == S_WAIT_I10 || 
+                state == S_WAIT_I01 || state == S_WAIT_I11) begin
+                all_valid = 1'b1;
+                for (kk = 0; kk < N; kk++) begin
+                    if (valid_lane[kk] && mem_rd_valid[kk])
+                        ; // Lane válido
+                    else if (valid_lane[kk] && !mem_rd_valid[kk])
+                        all_valid = 1'b0;
+                end
+                
+                if (all_valid) begin
+                    wait_timeout <= '0;  // Reset on all valid
+                end else begin
+                    wait_timeout <= wait_timeout + 1;
+                end
+            end else begin
+                wait_timeout <= '0;
+            end
 
             case (state)
 
@@ -208,18 +233,17 @@ module Downscale_SIMD #(
                 for (int k = 0; k < N; k++)
                     mem_rd_req[k] <= 1'b0;
 
-                all_valid = 1'b1;
-                for (kk = 0; kk < N; kk++) begin
-                    if (valid_lane[kk] && !mem_rd_valid[kk])
-                        all_valid = 1'b0;
-                end
-
                 if (all_valid) begin
                     for (int k = 0; k < N; k++)
                         if (valid_lane[k])
                             I00_vec[k] <= mem_rd_data[k];
                         else
                             I00_vec[k] <= 8'd0;
+                    state <= S_REQ_I10;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    // Timeout: usar valores por defecto y continuar
+                    for (int k = 0; k < N; k++)
+                        I00_vec[k] <= 8'd0;
                     state <= S_REQ_I10;
                 end
             end
@@ -239,17 +263,16 @@ module Downscale_SIMD #(
             S_WAIT_I10: begin
                 for (int k = 0; k < N; k++)
                     mem_rd_req[k] <= 1'b0;
-                all_valid = 1'b1;
-                for (kk = 0; kk < N; kk++) begin
-                    if (valid_lane[kk] && !mem_rd_valid[kk])
-                        all_valid = 1'b0;
-                end
                 if (all_valid) begin
                     for (int k = 0; k < N; k++)
                         if (valid_lane[k])
                             I10_vec[k] <= mem_rd_data[k];
                         else
                             I10_vec[k] <= 8'd0;
+                    state <= S_REQ_I01;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    for (int k = 0; k < N; k++)
+                        I10_vec[k] <= 8'd0;
                     state <= S_REQ_I01;
                 end
             end
@@ -269,17 +292,16 @@ module Downscale_SIMD #(
             S_WAIT_I01: begin
                 for (int k = 0; k < N; k++)
                     mem_rd_req[k] <= 1'b0;
-                all_valid = 1'b1;
-                for (kk = 0; kk < N; kk++) begin
-                    if (valid_lane[kk] && !mem_rd_valid[kk])
-                        all_valid = 1'b0;
-                end
                 if (all_valid) begin
                     for (int k = 0; k < N; k++)
                         if (valid_lane[k])
                             I01_vec[k] <= mem_rd_data[k];
                         else
                             I01_vec[k] <= 8'd0;
+                    state <= S_REQ_I11;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    for (int k = 0; k < N; k++)
+                        I01_vec[k] <= 8'd0;
                     state <= S_REQ_I11;
                 end
             end
@@ -299,17 +321,16 @@ module Downscale_SIMD #(
             S_WAIT_I11: begin
                 for (int k = 0; k < N; k++)
                     mem_rd_req[k] <= 1'b0;
-                all_valid = 1'b1;
-                for (kk = 0; kk < N; kk++) begin
-                    if (valid_lane[kk] && !mem_rd_valid[kk])
-                        all_valid = 1'b0;
-                end
                 if (all_valid) begin
                     for (int k = 0; k < N; k++)
                         if (valid_lane[k])
                             I11_vec[k] <= mem_rd_data[k];
                         else
                             I11_vec[k] <= 8'd0;
+                    state <= S_START_TOP;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    for (int k = 0; k < N; k++)
+                        I11_vec[k] <= 8'd0;
                     state <= S_START_TOP;
                 end
             end

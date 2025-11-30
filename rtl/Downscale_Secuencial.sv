@@ -81,6 +81,10 @@ module Downscale_Secuencial (
     logic [31:0] x_src_fp;
     logic [31:0] y_src_fp;
     logic [31:0] x_l, y_l, x_h, y_h;
+    
+    // ========== Timeout para evitar deadlock ==========
+    logic [15:0] wait_timeout;
+    localparam int TIMEOUT_MAX = 1000;  // ~20ms @ 50MHz
 
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -99,12 +103,25 @@ module Downscale_Secuencial (
             I00 <= 8'd0; I10 <= 8'd0;
             I01 <= 8'd0; I11 <= 8'd0;
             alpha <= 8'd0; beta <= 8'd0;
+            wait_timeout <= '0;
 
         end else begin
             // Defaults
             valid_in   <= 1'b0;
             mem_rd_req <= 1'b0;
             out_mem_we <= 1'b0;
+            
+            // Timeout counter
+            if (state == S_WAIT_I00 || state == S_WAIT_I10 || 
+                state == S_WAIT_I01 || state == S_WAIT_I11) begin
+                if (mem_rd_valid) begin
+                    wait_timeout <= '0;  // Reset on valid
+                end else begin
+                    wait_timeout <= wait_timeout + 1;
+                end
+            end else begin
+                wait_timeout <= '0;
+            end
 
             case (state)
 
@@ -150,6 +167,10 @@ module Downscale_Secuencial (
                 if (mem_rd_valid) begin
                     I00 <= mem_rd_data;
                     state <= S_REQ_I10;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    // Timeout: usar valor por defecto y continuar
+                    I00 <= 8'd0;
+                    state <= S_REQ_I10;
                 end
             end
 
@@ -162,6 +183,9 @@ module Downscale_Secuencial (
             S_WAIT_I10: begin
                 if (mem_rd_valid) begin
                     I10 <= mem_rd_data;
+                    state <= S_REQ_I01;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    I10 <= 8'd0;
                     state <= S_REQ_I01;
                 end
             end
@@ -176,6 +200,9 @@ module Downscale_Secuencial (
                 if (mem_rd_valid) begin
                     I01 <= mem_rd_data;
                     state <= S_REQ_I11;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    I01 <= 8'd0;
+                    state <= S_REQ_I11;
                 end
             end
 
@@ -188,6 +215,9 @@ module Downscale_Secuencial (
             S_WAIT_I11: begin
                 if (mem_rd_valid) begin
                     I11 <= mem_rd_data;
+                    state <= S_START_INTERP;
+                end else if (wait_timeout >= TIMEOUT_MAX) begin
+                    I11 <= 8'd0;
                     state <= S_START_INTERP;
                 end
             end
