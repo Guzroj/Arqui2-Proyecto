@@ -7,8 +7,7 @@
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Project,Library,Library/DSA,Library/DSA/Image Processing" />
+ <library expandedCategories="Library,Project" />
  <window width="1938" height="1038" x="-9" y="-9" />
- <generation simulation="NONE" synthesis="NONE" />
+ <generation simulation="NONE" synthesis="VERILOG" />
 </preferences>
