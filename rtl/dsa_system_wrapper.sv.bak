@@ -1,0 +1,20 @@
+`timescale 1ns/1ps
+
+module dsa_system_wrapper (
+    input  logic       clk_0,
+    input  logic [3:0] key,
+    output logic [9:0] led
+);
+
+    // Reset activo bajo desde KEY[0]
+    logic rst_n;
+    assign rst_n = key[0];
+
+    // Instancia del sistema Qsys
+    dsa_system u_qsys (
+        .clk_0_clk                    (clk_0),  // clk_0.clk
+        .reset_bridge_in_reset_reset_n(rst_n),   // reset_bridge_in_reset.reset_n
+        .pio_leds_external_connection_export(led) // pio_leds_external_connection.export
+    );
+
+endmodule

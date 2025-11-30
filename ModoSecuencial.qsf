@@ -38,8 +38,8 @@
 
 
 set_global_assignment -name FAMILY "Cyclone V"
-set_global_assignment -name DEVICE 5CGXFC7C7F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY Top_Downscale_Integration
+set_global_assignment -name DEVICE 5CSEMA5F31C6
+set_global_assignment -name TOP_LEVEL_ENTITY dsa_system_wrapper
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:25:47  NOVEMBER 13, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
@@ -75,30 +75,6 @@ set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Top_Downscale_Secuenci
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_Top_Downscale_Integration -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_Top_Downscale_Integration
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Top_Downscale_Integration -section_id tb_Top_Downscale_Integration
-set_global_assignment -name SYSTEMVERILOG_FILE Top_VJTAG.sv
-set_global_assignment -name SYSTEMVERILOG_FILE tb_Top_Downscale_SIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ImageMemory_SequentialPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE connect.sv
-set_global_assignment -name SYSTEMVERILOG_FILE JTAG_Interface.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Top_General.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Top_Downscale_Secuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE tb_Top_Downscale_Secuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ModoSecuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ModoSIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE SIMD_Registros.sv
-set_global_assignment -name SYSTEMVERILOG_FILE FSM_SIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Top_SIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Downscale_Secuencial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Downscale_SIMD.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ImageMemory.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ImageMemory_SIMDPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE tb_ImageMemory_SIMDPort.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Top_Downscale_Integration.sv
-set_global_assignment -name SYSTEMVERILOG_FILE tb_Top_Downscale_Integration.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ImageMemory_SeqPort.sv
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_Downscale_Secuencial.sv -section_id tb_Downscale_Secuencial
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_Downscale_SIMD.sv -section_id tb_Downscale_SIMD
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_downscale_Secuencial_Proceso.sv -section_id tb_downscale_Secuencial_Proceso
@@ -106,4 +82,25 @@ set_global_assignment -name EDA_TEST_BENCH_FILE tb_downscale_SIMD_Proceso.sv -se
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_ImageMemory_SIMDPort.sv -section_id tb_ImageMemory_SIMDPort
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_Top_Downscale_Secuencial.sv -section_id tb_Top_Downscale_Secuencial
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_Top_Downscale_Integration.sv -section_id tb_Top_Downscale_Integration
+set_global_assignment -name QIP_FILE qsys/dsa_system/synthesis/dsa_system.qip
+set_global_assignment -name SOURCE_FILE constraints/pin_assignments_de1soc.qsf
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Test_Phase1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_SIMD.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_General.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Downscale_Secuencial.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Downscale_Integration.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/SIMD_Registros.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ModoSIMD.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ModoSecuencial.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SIMDPort.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SequentialPort.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory_SeqPort.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ImageMemory.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/FSM_SIMD.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Downscale_SIMD.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/Downscale_Secuencial.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/dsa_system_wrapper.sv
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
