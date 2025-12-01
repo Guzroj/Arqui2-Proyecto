@@ -9,14 +9,14 @@
  * 0x04 - STATUS        [R/O] - Estado: [0]=busy, [1]=done, [2]=error
  * 0x08 - IMG_WIDTH_IN  [R/W] - Ancho imagen entrada (pixeles)
  * 0x0C - IMG_HEIGHT_IN [R/W] - Alto imagen entrada (pixeles)
- * 0x10 - IMG_WIDTH_OUT [R/W] - Ancho imagen salida (pixeles)
- * 0x14 - IMG_HEIGHT_OUT[R/W] - Alto imagen salida (pixeles)
- * 0x18 - INPUT_BASE   [R/W] - Dirección base memoria entrada
- * 0x1C - OUTPUT_BASE  [R/W] - Dirección base memoria salida
- * 0x20 - PERF_CYCLES  [R/O] - Contador de ciclos de reloj
- * 0x24 - PERF_READS   [R/O] - Contador de lecturas de memoria
- * 0x28 - PERF_WRITES  [R/O] - Contador de escrituras de memoria
- * 0x2C - PERF_FLOPS   [R/O] - Contador de operaciones FP
+ * 0x10 - SCALE_FACTOR  [R/W] - Factor de escala Q8.8 (0.5-1.0 → 128-256)
+ * 0x14 - (RESERVED)    [---] - Reservado para compatibilidad
+ * 0x18 - INPUT_BASE    [R/W] - Dirección base memoria entrada
+ * 0x1C - OUTPUT_BASE   [R/W] - Dirección base memoria salida
+ * 0x20 - PERF_CYCLES   [R/O] - Contador de ciclos de reloj
+ * 0x24 - PERF_READS    [R/O] - Contador de lecturas de memoria
+ * 0x28 - PERF_WRITES   [R/O] - Contador de escrituras de memoria
+ * 0x2C - PERF_FLOPS    [R/O] - Contador de operaciones FP
  */
 
 module DSA_Control_Registers (
@@ -38,11 +38,10 @@ module DSA_Control_Registers (
     output logic        dsa_mode,           // 0=Secuencial, 1=SIMD
     output logic [31:0] dsa_img_width_in,   // Ancho entrada
     output logic [31:0] dsa_img_height_in,  // Alto entrada
-    output logic [31:0] dsa_img_width_out,  // Ancho salida
-    output logic [31:0] dsa_img_height_out, // Alto salida
+    output logic [31:0] dsa_scale_factor,   // Factor de escala Q8.8 (128-256 = 0.5-1.0)
     output logic [31:0] dsa_input_base,     // Dirección base entrada
     output logic [31:0] dsa_output_base,    // Dirección base salida
-    
+   
     // Señales de Estado desde DSA (inputs)
     input  logic        dsa_busy,           // DSA ocupado procesando
     input  logic        dsa_done,           // DSA terminó operación
@@ -60,8 +59,8 @@ module DSA_Control_Registers (
     localparam ADDR_STATUS        = 4'h1;  // 0x04
     localparam ADDR_IMG_WIDTH_IN  = 4'h2;  // 0x08
     localparam ADDR_IMG_HEIGHT_IN = 4'h3;  // 0x0C
-    localparam ADDR_IMG_WIDTH_OUT = 4'h4;  // 0x10
-    localparam ADDR_IMG_HEIGHT_OUT= 4'h5;  // 0x14
+    localparam ADDR_SCALE_FACTOR  = 4'h4;  // 0x10
+    // ADDR 0x14 RESERVED for future use
     localparam ADDR_INPUT_BASE    = 4'h6;  // 0x18
     localparam ADDR_OUTPUT_BASE   = 4'h7;  // 0x1C
     localparam ADDR_PERF_CYCLES   = 4'h8;  // 0x20
@@ -75,8 +74,7 @@ module DSA_Control_Registers (
     logic [31:0] reg_ctrl;
     logic [31:0] reg_img_width_in;
     logic [31:0] reg_img_height_in;
-    logic [31:0] reg_img_width_out;
-    logic [31:0] reg_img_height_out;
+    logic [31:0] reg_scale_factor;    // Factor de escala Q8.8
     logic [31:0] reg_input_base;
     logic [31:0] reg_output_base;
     
@@ -94,8 +92,7 @@ module DSA_Control_Registers (
             reg_ctrl           <= 32'h0;
             reg_img_width_in   <= 32'd512;  // Defaults razonables
             reg_img_height_in  <= 32'd512;
-            reg_img_width_out  <= 32'd256;
-            reg_img_height_out <= 32'd256;
+            reg_scale_factor   <= 32'd256;  // Default 1.0 en Q8.8
             reg_input_base     <= 32'h00000000;
             reg_output_base    <= 32'h00040000;
         end else begin
@@ -121,12 +118,10 @@ module DSA_Control_Registers (
                     ADDR_IMG_HEIGHT_IN: begin
                         reg_img_height_in <= avs_writedata;
                     end
-                    ADDR_IMG_WIDTH_OUT: begin
-                        reg_img_width_out <= avs_writedata;
+                    ADDR_SCALE_FACTOR: begin
+                        reg_scale_factor <= avs_writedata;
                     end
-                    ADDR_IMG_HEIGHT_OUT: begin
-                        reg_img_height_out <= avs_writedata;
-                    end
+                    // ADDR 0x14 reserved - no action
                     ADDR_INPUT_BASE: begin
                         reg_input_base <= avs_writedata;
                     end
@@ -164,8 +159,9 @@ module DSA_Control_Registers (
                 ADDR_STATUS:         avs_readdata <= reg_status;
                 ADDR_IMG_WIDTH_IN:   avs_readdata <= reg_img_width_in;
                 ADDR_IMG_HEIGHT_IN:  avs_readdata <= reg_img_height_in;
-                ADDR_IMG_WIDTH_OUT:  avs_readdata <= reg_img_width_out;
-                ADDR_IMG_HEIGHT_OUT: avs_readdata <= reg_img_height_out;
+                ADDR_SCALE_FACTOR:   avs_readdata <= reg_scale_factor;
+                // ADDR 0x14 reserved returns 0
+                4'h5:                avs_readdata <= 32'h0;
                 ADDR_INPUT_BASE:     avs_readdata <= reg_input_base;
                 ADDR_OUTPUT_BASE:    avs_readdata <= reg_output_base;
                 ADDR_PERF_CYCLES:    avs_readdata <= dsa_perf_cycles;
@@ -185,8 +181,7 @@ module DSA_Control_Registers (
     assign dsa_mode           = reg_ctrl[2];  // 0=Secuencial, 1=SIMD
     assign dsa_img_width_in   = reg_img_width_in;
     assign dsa_img_height_in  = reg_img_height_in;
-    assign dsa_img_width_out  = reg_img_width_out;
-    assign dsa_img_height_out = reg_img_height_out;
+    assign dsa_scale_factor   = reg_scale_factor;  // Q8.8: 128-256 = 0.5-1.0
     assign dsa_input_base     = reg_input_base;
     assign dsa_output_base    = reg_output_base;
 

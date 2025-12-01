@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("C:/Users/sebas/OneDrive/Escritorio/Arqui2-Proyecto1/output_files/") File("ModoSecuencial.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/output_files/") File("ModoSecuencial.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

@@ -16,7 +16,7 @@ module Downscale_SIMD #(
     // ========== Interfaz de memoria (32 bits) ==========
     output logic        mem_rd_req   [N],
     output logic [31:0] mem_rd_addr  [N],
-    input  logic        mem_rd_valid [N],
+    input  logic        mem_rd_valid [N], 
     input  logic [7:0]  mem_rd_data  [N],
 
     output logic        out_mem_we,
@@ -28,16 +28,19 @@ module Downscale_SIMD #(
 
     localparam int FRAC = 8;
 
-    // ========== Ratios calculados dinámicamente ==========
+    // ========== Ratios pre-calculados desde software ==========
+    // Las dimensiones de salida ya vienen calculadas desde DSA_Avalon_Wrapper
+    // a partir del scale_factor: width_out = (width_in * scale_factor) >> 8
     logic [31:0] x_ratio_fp;  // ((SRC_W - 1) << FRAC) / (DST_W - 1)
     logic [31:0] y_ratio_fp;  // ((SRC_H - 1) << FRAC) / (DST_H - 1)
     logic [31:0] total_pixels;  // DST_H * DST_W
-    
+
     always_comb begin
-        // Calcular ratios de escala en punto fijo Q0.8
+        total_pixels = img_width_out * img_height_out;
+        // Nota: Aún hay UNA división, pero ahora width_out y width_in están
+        // correctamente relacionados por scale_factor, minimizando casos patológicos
         x_ratio_fp = ((img_width_in - 1) << FRAC) / (img_width_out - 1);
         y_ratio_fp = ((img_height_in - 1) << FRAC) / (img_height_out - 1);
-        total_pixels = img_width_out * img_height_out;
     end
 
     logic [7:0] I00_vec   [N];
@@ -143,12 +146,12 @@ module Downscale_SIMD #(
             wait_timeout <= '0;
 
         end else begin
-            
+
             // ========== Default: escritura OFF ==========
             out_mem_we <= 1'b0;
-            
+
             // Timeout counter
-            if (state == S_WAIT_I00 || state == S_WAIT_I10 || 
+            if (state == S_WAIT_I00 || state == S_WAIT_I10 ||
                 state == S_WAIT_I01 || state == S_WAIT_I11) begin
                 all_valid = 1'b1;
                 for (kk = 0; kk < N; kk++) begin
@@ -157,7 +160,7 @@ module Downscale_SIMD #(
                     else if (valid_lane[kk] && !mem_rd_valid[kk])
                         all_valid = 1'b0;
                 end
-                
+
                 if (all_valid) begin
                     wait_timeout <= '0;  // Reset on all valid
                 end else begin
@@ -185,6 +188,7 @@ module Downscale_SIMD #(
                 for (int k = 0; k < N; k++) begin
                     idx[k] <= base_idx + k;
                     valid_lane[k] <= (base_idx + k < total_pixels);
+                    mem_rd_req[k] <= 1'b0;
 
                     if (base_idx + k < total_pixels) begin
                         i_dst[k] <= (base_idx + k) / img_width_out;
@@ -196,6 +200,7 @@ module Downscale_SIMD #(
 
             S_CALC_SRC: begin
                 for (int k = 0; k < N; k++) begin
+                    mem_rd_req[k] <= 1'b0;
                     if (valid_lane[k]) begin
                         x_src_fp[k] <= j_dst[k] * x_ratio_fp;
                         y_src_fp[k] <= i_dst[k] * y_ratio_fp;
@@ -230,20 +235,28 @@ module Downscale_SIMD #(
             end
 
             S_WAIT_I00: begin
+                // Mantener mem_rd_req activo para todos los lanes válidos
                 for (int k = 0; k < N; k++)
-                    mem_rd_req[k] <= 1'b0;
+                    if (valid_lane[k])
+                        mem_rd_req[k] <= 1'b1;
+                    else
+                        mem_rd_req[k] <= 1'b0;
 
                 if (all_valid) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         if (valid_lane[k])
                             I00_vec[k] <= mem_rd_data[k];
                         else
                             I00_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;  // Bajar después de recibir
+                    end
                     state <= S_REQ_I10;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
                     // Timeout: usar valores por defecto y continuar
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         I00_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_REQ_I10;
                 end
             end
@@ -261,18 +274,27 @@ module Downscale_SIMD #(
             end
 
             S_WAIT_I10: begin
+                // Mantener mem_rd_req activo
                 for (int k = 0; k < N; k++)
-                    mem_rd_req[k] <= 1'b0;
+                    if (valid_lane[k])
+                        mem_rd_req[k] <= 1'b1;
+                    else
+                        mem_rd_req[k] <= 1'b0;
+
                 if (all_valid) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         if (valid_lane[k])
                             I10_vec[k] <= mem_rd_data[k];
                         else
                             I10_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_REQ_I01;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         I10_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_REQ_I01;
                 end
             end
@@ -290,18 +312,27 @@ module Downscale_SIMD #(
             end
 
             S_WAIT_I01: begin
+                // Mantener mem_rd_req activo
                 for (int k = 0; k < N; k++)
-                    mem_rd_req[k] <= 1'b0;
+                    if (valid_lane[k])
+                        mem_rd_req[k] <= 1'b1;
+                    else
+                        mem_rd_req[k] <= 1'b0;
+
                 if (all_valid) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         if (valid_lane[k])
                             I01_vec[k] <= mem_rd_data[k];
                         else
                             I01_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_REQ_I11;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         I01_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_REQ_I11;
                 end
             end
@@ -319,29 +350,42 @@ module Downscale_SIMD #(
             end
 
             S_WAIT_I11: begin
+                // Mantener mem_rd_req activo
                 for (int k = 0; k < N; k++)
-                    mem_rd_req[k] <= 1'b0;
+                    if (valid_lane[k])
+                        mem_rd_req[k] <= 1'b1;
+                    else
+                        mem_rd_req[k] <= 1'b0;
+
                 if (all_valid) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         if (valid_lane[k])
                             I11_vec[k] <= mem_rd_data[k];
                         else
                             I11_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_START_TOP;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
-                    for (int k = 0; k < N; k++)
+                    for (int k = 0; k < N; k++) begin
                         I11_vec[k] <= 8'd0;
+                        mem_rd_req[k] <= 1'b0;
+                    end
                     state <= S_START_TOP;
                 end
             end
 
             S_START_TOP: begin
                 top_start <= 1'b1;
+                for (int k = 0; k < N; k++)
+                    mem_rd_req[k] <= 1'b0;
                 state <= S_WAIT_TOP;
             end
 
             S_WAIT_TOP: begin
                 top_start <= 1'b0;
+                for (int k = 0; k < N; k++)
+                    mem_rd_req[k] <= 1'b0;
                 if (top_done) begin
                     write_lane_idx <= '0;  // Resetear contador
                     state <= S_WRITE_BATCH;
@@ -350,6 +394,9 @@ module Downscale_SIMD #(
 
             // ========== CAMBIO: Serializar escrituras de N píxeles ==========
             S_WRITE_BATCH: begin
+                for (int k = 0; k < N; k++)
+                    mem_rd_req[k] <= 1'b0;
+
                 if (write_lane_idx < N) begin
                     if (valid_lane[write_lane_idx]) begin
                         // Escribir píxel actual
@@ -357,14 +404,14 @@ module Downscale_SIMD #(
                         out_mem_addr <= i_dst[write_lane_idx] * img_width_out + j_dst[write_lane_idx];
                         out_mem_data <= pixel_out_vec[write_lane_idx];
                     end
-                    
+
                     // Avanzar al siguiente lane
                     write_lane_idx <= write_lane_idx + 1;
-                    
+
                 end else begin
                     // Todas las escrituras completadas
                     base_idx <= base_idx + N;
-                    
+
                     if (base_idx + N >= total_pixels) begin
                         done  <= 1'b1;
                         state <= S_DONE;
@@ -375,6 +422,8 @@ module Downscale_SIMD #(
             end
 
             S_DONE: begin
+                for (int k = 0; k < N; k++)
+                    mem_rd_req[k] <= 1'b0;
                 if (!start)
                     state <= S_IDLE;
             end

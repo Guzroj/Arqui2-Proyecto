@@ -23,18 +23,26 @@ module Downscale_Secuencial (
 
     output logic done
 );
-
+ 
     localparam int FRAC = 8;
-    
-    // ========== Ratios calculados dinámicamente ==========
+
+    // ========== Ratios pre-calculados desde software ==========
+    // Ahora x_ratio_fp y y_ratio_fp se calculan a partir del inverso del scale_factor
+    // scale_factor = 0.5 (Q8.8=128) → x_ratio = (256<<8)/128 = 512 (factor 2.0)
+    // scale_factor = 1.0 (Q8.8=256) → x_ratio = (256<<8)/256 = 256 (factor 1.0)
     logic [31:0] x_ratio_fp;
     logic [31:0] y_ratio_fp;
     logic [31:0] total_pixels;
-    
+
     always_comb begin
+        total_pixels = img_width_out * img_height_out;
+        // Las dimensiones de salida ya vienen calculadas correctamente
+        // desde el wrapper: width_out = (width_in * scale_factor) >> 8
+        // Por tanto, el ratio es simplemente la relación entre dimensiones:
+        // Nota: Aún hay UNA división, pero ahora width_out y width_in están
+        // correctamente relacionados, minimizando casos patológicos
         x_ratio_fp = ((img_width_in - 1) << FRAC) / (img_width_out - 1);
         y_ratio_fp = ((img_height_in - 1) << FRAC) / (img_height_out - 1);
-        total_pixels = img_width_out * img_height_out;
     end
 
     // Instancia del interpolador
@@ -108,11 +116,10 @@ module Downscale_Secuencial (
         end else begin
             // Defaults
             valid_in   <= 1'b0;
-            mem_rd_req <= 1'b0;
             out_mem_we <= 1'b0;
-            
+
             // Timeout counter
-            if (state == S_WAIT_I00 || state == S_WAIT_I10 || 
+            if (state == S_WAIT_I00 || state == S_WAIT_I10 ||
                 state == S_WAIT_I01 || state == S_WAIT_I11) begin
                 if (mem_rd_valid) begin
                     wait_timeout <= '0;  // Reset on valid
@@ -128,6 +135,7 @@ module Downscale_Secuencial (
             S_IDLE: begin
                 done      <= 1'b0;
                 pixel_idx <= '0;
+                mem_rd_req <= 1'b0;
                 if (start)
                     state <= S_CALC_COORDS;
             end
@@ -135,12 +143,14 @@ module Downscale_Secuencial (
             S_CALC_COORDS: begin
                 i_dst <= pixel_idx / img_width_out;
                 j_dst <= pixel_idx % img_width_out;
+                mem_rd_req <= 1'b0;
                 state <= S_CALC_SRC;
             end
 
             S_CALC_SRC: begin
                 x_src_fp <= j_dst * x_ratio_fp;
                 y_src_fp <= i_dst * y_ratio_fp;
+                mem_rd_req <= 1'b0;
                 state    <= S_REQ_I00;
             end
 
@@ -148,11 +158,11 @@ module Downscale_Secuencial (
                 x_l <= x_src_fp[31:FRAC];
                 y_l <= y_src_fp[31:FRAC];
 
-                x_h <= (x_src_fp[31:FRAC] < (img_width_in - 1)) ? 
-                       (x_src_fp[31:FRAC] + 1) : 
+                x_h <= (x_src_fp[31:FRAC] < (img_width_in - 1)) ?
+                       (x_src_fp[31:FRAC] + 1) :
                        x_src_fp[31:FRAC];
-                y_h <= (y_src_fp[31:FRAC] < (img_height_in - 1)) ? 
-                       (y_src_fp[31:FRAC] + 1) : 
+                y_h <= (y_src_fp[31:FRAC] < (img_height_in - 1)) ?
+                       (y_src_fp[31:FRAC] + 1) :
                        y_src_fp[31:FRAC];
 
                 alpha <= x_src_fp[FRAC-1:0];
@@ -164,12 +174,15 @@ module Downscale_Secuencial (
             end
 
             S_WAIT_I00: begin
+                mem_rd_req <= 1'b1;  // Mantener activo hasta recibir valid
                 if (mem_rd_valid) begin
                     I00 <= mem_rd_data;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I10;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
                     // Timeout: usar valor por defecto y continuar
                     I00 <= 8'd0;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I10;
                 end
             end
@@ -181,11 +194,14 @@ module Downscale_Secuencial (
             end
 
             S_WAIT_I10: begin
+                mem_rd_req <= 1'b1;  // Mantener activo
                 if (mem_rd_valid) begin
                     I10 <= mem_rd_data;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I01;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
                     I10 <= 8'd0;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I01;
                 end
             end
@@ -197,11 +213,14 @@ module Downscale_Secuencial (
             end
 
             S_WAIT_I01: begin
+                mem_rd_req <= 1'b1;  // Mantener activo
                 if (mem_rd_valid) begin
                     I01 <= mem_rd_data;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I11;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
                     I01 <= 8'd0;
+                    mem_rd_req <= 1'b0;
                     state <= S_REQ_I11;
                 end
             end
@@ -213,11 +232,14 @@ module Downscale_Secuencial (
             end
 
             S_WAIT_I11: begin
+                mem_rd_req <= 1'b1;  // Mantener activo
                 if (mem_rd_valid) begin
                     I11 <= mem_rd_data;
+                    mem_rd_req <= 1'b0;
                     state <= S_START_INTERP;
                 end else if (wait_timeout >= TIMEOUT_MAX) begin
                     I11 <= 8'd0;
+                    mem_rd_req <= 1'b0;
                     state <= S_START_INTERP;
                 end
             end
@@ -225,11 +247,13 @@ module Downscale_Secuencial (
             // ===== IGUAL QUE SIMD: START_TOP =====
             S_START_INTERP: begin
                 valid_in <= 1'b1;
+                mem_rd_req <= 1'b0;
                 state    <= S_WAIT_INTERP;
             end
 
             // ===== IGUAL QUE SIMD: WAIT_TOP =====
             S_WAIT_INTERP: begin
+                mem_rd_req <= 1'b0;
                 if (valid_out)
                     state <= S_WRITE_OUT;
             end
@@ -238,6 +262,7 @@ module Downscale_Secuencial (
                 out_mem_we   <= 1'b1;
                 out_mem_addr <= i_dst * img_width_out + j_dst;
                 out_mem_data <= pixel_out;
+                mem_rd_req <= 1'b0;
 
                 pixel_idx <= pixel_idx + 1;
 
@@ -250,6 +275,7 @@ module Downscale_Secuencial (
             end
 
             S_DONE: begin
+                mem_rd_req <= 1'b0;
                 if (!start)
                     state <= S_IDLE;
             end
@@ -258,4 +284,4 @@ module Downscale_Secuencial (
         end
     end
 
-endmodule
+endmodule 

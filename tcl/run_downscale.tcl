@@ -8,16 +8,16 @@
 # ==============================================================================
 # CONFIGURACIÓN DE DIRECCIONES
 # ==============================================================================
-set DSA_BASE     0x05000000
-set SDRAM_BASE   0x00000000
+set DSA_BASE          0x05000000
+set INPUT_MEMORY_BASE 0x00000000
+set OUTPUT_MEMORY_BASE 0x00040000
 
-# Offsets de registros
+# Offsets de registros (deben coincidir con DSA_Control_Registers.sv)
 set REG_CTRL           0x00
 set REG_STATUS         0x04
 set REG_IMG_WIDTH_IN   0x08
 set REG_IMG_HEIGHT_IN  0x0C
-set REG_IMG_WIDTH_OUT  0x10
-set REG_IMG_HEIGHT_OUT 0x14
+set REG_SCALE_FACTOR   0x10
 set REG_INPUT_BASE     0x18
 set REG_OUTPUT_BASE    0x1C
 set REG_PERF_CYCLES    0x20
@@ -40,6 +40,7 @@ proc run_downscale {width_in height_in width_out height_out {mode 0} {input_addr
     global REG_CTRL REG_STATUS REG_IMG_WIDTH_IN REG_IMG_HEIGHT_IN
     global REG_IMG_WIDTH_OUT REG_IMG_HEIGHT_OUT REG_INPUT_BASE REG_OUTPUT_BASE
     global REG_PERF_CYCLES REG_PERF_READS REG_PERF_WRITES REG_PERF_FLOPS
+    global REG_SCALE_FACTOR
     
     puts "\n=========================================="
     puts "  EJECUTANDO DOWNSCALE"
@@ -132,23 +133,49 @@ proc run_downscale {width_in height_in width_out height_out {mode 0} {input_addr
     puts "   ✓ Counters reseteados\n"
     
     # ==============================================================================
-    # 5. CONFIGURAR DIMENSIONES Y DIRECCIONES
+    # 5. CALCULAR SCALE_FACTOR (Q8.8)
     # ==============================================================================
-    puts "4. Configurando registros..."
+    puts "4. Calculando scale_factor..."
+    
+    # Calcular ratio = width_out / width_in (formato Q8.8)
+    # Q8.8 significa 8 bits enteros + 8 bits fraccionarios
+    # Para convertir: (valor * 256) y truncar
+    
+    set ratio_float [expr {double($width_out) / double($width_in)}]
+    set scale_factor [expr {int($ratio_float * 256.0)}]
+    
+    # Validar rango (0 < scale_factor <= 256)
+    if {$scale_factor <= 0 || $scale_factor > 256} {
+        puts "   ✗ ERROR: scale_factor fuera de rango"
+        puts "     Calculado: $scale_factor (debe estar entre 1-256)"
+        puts "     Ratio: $ratio_float"
+        return -1
+    }
+    
+    puts "   Ratio: $ratio_float"
+    puts "   Scale Factor (Q8.8): $scale_factor (0x[format %04X $scale_factor])"
+    puts "   ✓ Scale factor calculado\n"
+    
+    # ==============================================================================
+    # 6. CONFIGURAR DIMENSIONES Y DIRECCIONES
+    # ==============================================================================
+    puts "5. Configurando registros..."
     
     master_write_32 $jtag [expr {$DSA_BASE + $REG_IMG_WIDTH_IN}]   $width_in
     master_write_32 $jtag [expr {$DSA_BASE + $REG_IMG_HEIGHT_IN}]  $height_in
-    master_write_32 $jtag [expr {$DSA_BASE + $REG_IMG_WIDTH_OUT}]  $width_out
-    master_write_32 $jtag [expr {$DSA_BASE + $REG_IMG_HEIGHT_OUT}] $height_out
+    master_write_32 $jtag [expr {$DSA_BASE + $REG_SCALE_FACTOR}]   $scale_factor
     master_write_32 $jtag [expr {$DSA_BASE + $REG_INPUT_BASE}]     $input_addr
     master_write_32 $jtag [expr {$DSA_BASE + $REG_OUTPUT_BASE}]    $output_addr
+    
+    # Nota: IMG_WIDTH_OUT e IMG_HEIGHT_OUT se calculan automáticamente en hardware
+    # a partir de scale_factor
     
     puts "   ✓ Registros configurados\n"
     
     # ==============================================================================
-    # 6. INICIAR PROCESAMIENTO
+    # 7. INICIAR PROCESAMIENTO
     # ==============================================================================
-    puts "5. Iniciando procesamiento..."
+    puts "6. Iniciando procesamiento..."
     puts "   Modo: $mode_str"
     
     # Escribir bit start (bit 0) + bit mode (bit 2)
@@ -162,9 +189,9 @@ proc run_downscale {width_in height_in width_out height_out {mode 0} {input_addr
     puts "   ✓ Comando START enviado\n"
     
     # ==============================================================================
-    # 7. MONITOREAR PROGRESO
+    # 8. MONITOREAR PROGRESO
     # ==============================================================================
-    puts "6. Monitoreando progreso..."
+    puts "7. Monitoreando progreso..."
     puts "   (Esperando señal DONE...)\n"
     
     set done 0
@@ -210,9 +237,9 @@ proc run_downscale {width_in height_in width_out height_out {mode 0} {input_addr
     puts "   Tiempo real: $elapsed_ms ms\n"
     
     # ==============================================================================
-    # 8. LEER PERFORMANCE COUNTERS
+    # 9. LEER PERFORMANCE COUNTERS
     # ==============================================================================
-    puts "7. Leyendo performance counters...\n"
+    puts "8. Leyendo performance counters...\n"
     
     set perf_cycles [master_read_32 $jtag [expr {$DSA_BASE + $REG_PERF_CYCLES}] 1]
     set perf_reads  [master_read_32 $jtag [expr {$DSA_BASE + $REG_PERF_READS}] 1]

@@ -32,8 +32,9 @@ module DSA_Avalon_Wrapper #(
     logic        dsa_mode;
     logic [31:0] dsa_img_width_in;
     logic [31:0] dsa_img_height_in;
-    logic [31:0] dsa_img_width_out;
-    logic [31:0] dsa_img_height_out;
+    logic [31:0] dsa_scale_factor;    // Q8.8: 128-256 = 0.5-1.0
+    logic [31:0] dsa_img_width_out;   // Calculado = width_in * scale_factor >> 8
+    logic [31:0] dsa_img_height_out;  // Calculado = height_in * scale_factor >> 8
     logic [31:0] dsa_input_base;
     logic [31:0] dsa_output_base;
     
@@ -59,8 +60,7 @@ module DSA_Avalon_Wrapper #(
         .dsa_mode           (dsa_mode),
         .dsa_img_width_in   (dsa_img_width_in),
         .dsa_img_height_in  (dsa_img_height_in),
-        .dsa_img_width_out  (dsa_img_width_out),
-        .dsa_img_height_out (dsa_img_height_out),
+        .dsa_scale_factor   (dsa_scale_factor),
         .dsa_input_base     (dsa_input_base),
         .dsa_output_base    (dsa_output_base),
         .dsa_busy           (dsa_busy),
@@ -71,6 +71,12 @@ module DSA_Avalon_Wrapper #(
         .dsa_perf_writes    (dsa_perf_writes),
         .dsa_perf_flops     (dsa_perf_flops)
     );
+
+    // ========== Calcular dimensiones de salida desde scale_factor ==========
+    always_comb begin
+        dsa_img_width_out  = (dsa_img_width_in * dsa_scale_factor) >> 8;
+        dsa_img_height_out = (dsa_img_height_in * dsa_scale_factor) >> 8;
+    end
 
     // ========== CAMBIO: Señales de escritura SIMD ==========
     logic        simd_mem_rd_req   [N];
