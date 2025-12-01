@@ -1,0 +1,103 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\gabri\OneDrive\Desktop\PrograProyectoArqui\Arqui2-Proyecto\qsys\dsa_system.qsys --block-symbol-file --output-directory=C:\Users\gabri\OneDrive\Desktop\PrograProyectoArqui\Arqui2-Proyecto\qsys\qsys --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading qsys/dsa_system.qsys
+Progress: Reading input file
+Progress: Adding Jtag_master [altera_jtag_avalon_master 20.1]
+Progress: Parameterizing module Jtag_master
+Progress: Adding clk_0 [clock_source 20.1]
+Progress: Parameterizing module clk_0
+Progress: Adding dsa_downscaler_0 [dsa_avalon_wrapper 1.0]
+Progress: Parameterizing module dsa_downscaler_0
+Progress: Adding input_memory [altera_avalon_onchip_memory2 20.1]
+Progress: Parameterizing module input_memory
+Progress: Adding output_memory [altera_avalon_onchip_memory2 20.1]
+Progress: Parameterizing module output_memory
+Progress: Adding pio_leds [altera_avalon_pio 20.1]
+Progress: Parameterizing module pio_leds
+Progress: Adding reset_bridge_0 [altera_reset_bridge 20.1]
+Progress: Parameterizing module reset_bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\gabri\OneDrive\Desktop\PrograProyectoArqui\Arqui2-Proyecto\qsys\dsa_system.qsys --synthesis=VERILOG --output-directory=C:\Users\gabri\OneDrive\Desktop\PrograProyectoArqui\Arqui2-Proyecto\qsys\qsys\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading qsys/dsa_system.qsys
+Progress: Reading input file
+Progress: Adding Jtag_master [altera_jtag_avalon_master 20.1]
+Progress: Parameterizing module Jtag_master
+Progress: Adding clk_0 [clock_source 20.1]
+Progress: Parameterizing module clk_0
+Progress: Adding dsa_downscaler_0 [dsa_avalon_wrapper 1.0]
+Progress: Parameterizing module dsa_downscaler_0
+Progress: Adding input_memory [altera_avalon_onchip_memory2 20.1]
+Progress: Parameterizing module input_memory
+Progress: Adding output_memory [altera_avalon_onchip_memory2 20.1]
+Progress: Parameterizing module output_memory
+Progress: Adding pio_leds [altera_avalon_pio 20.1]
+Progress: Parameterizing module pio_leds
+Progress: Adding reset_bridge_0 [altera_reset_bridge 20.1]
+Progress: Parameterizing module reset_bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: dsa_system: Generating dsa_system "dsa_system" for QUARTUS_SYNTH
+Info: Jtag_master: "dsa_system" instantiated altera_jtag_avalon_master "Jtag_master"
+Info: dsa_downscaler_0: "dsa_system" instantiated dsa_avalon_wrapper "dsa_downscaler_0"
+Info: input_memory: Starting RTL generation for module 'dsa_system_input_memory'
+Info: input_memory:   Generation command is [exec C:/intelfpga_lite/20.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/20.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=dsa_system_input_memory --dir=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0003_input_memory_gen/ --quartus_dir=C:/intelfpga_lite/20.1/quartus --verilog --config=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0003_input_memory_gen//dsa_system_input_memory_component_configuration.pl  --do_build_sim=0  ]
+Info: input_memory: Done RTL generation for module 'dsa_system_input_memory'
+Info: input_memory: "dsa_system" instantiated altera_avalon_onchip_memory2 "input_memory"
+Info: output_memory: Starting RTL generation for module 'dsa_system_output_memory'
+Info: output_memory:   Generation command is [exec C:/intelfpga_lite/20.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/20.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=dsa_system_output_memory --dir=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0004_output_memory_gen/ --quartus_dir=C:/intelfpga_lite/20.1/quartus --verilog --config=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0004_output_memory_gen//dsa_system_output_memory_component_configuration.pl  --do_build_sim=0  ]
+Info: output_memory: Done RTL generation for module 'dsa_system_output_memory'
+Info: output_memory: "dsa_system" instantiated altera_avalon_onchip_memory2 "output_memory"
+Info: pio_leds: Starting RTL generation for module 'dsa_system_pio_leds'
+Info: pio_leds:   Generation command is [exec C:/intelfpga_lite/20.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/20.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/20.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=dsa_system_pio_leds --dir=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0005_pio_leds_gen/ --quartus_dir=C:/intelfpga_lite/20.1/quartus --verilog --config=C:/Users/gabri/AppData/Local/Temp/alt0423_5217236877293822803.dir/0005_pio_leds_gen//dsa_system_pio_leds_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_leds: Done RTL generation for module 'dsa_system_pio_leds'
+Info: pio_leds: "dsa_system" instantiated altera_avalon_pio "pio_leds"
+Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+Info: mm_interconnect_0: "dsa_system" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: rst_controller: "dsa_system" instantiated altera_reset_controller "rst_controller"
+Info: jtag_phy_embedded_in_jtag_master: "Jtag_master" instantiated altera_jtag_dc_streaming "jtag_phy_embedded_in_jtag_master"
+Info: timing_adt: "Jtag_master" instantiated timing_adapter "timing_adt"
+Info: fifo: "Jtag_master" instantiated altera_avalon_sc_fifo "fifo"
+Info: b2p: "Jtag_master" instantiated altera_avalon_st_bytes_to_packets "b2p"
+Info: p2b: "Jtag_master" instantiated altera_avalon_st_packets_to_bytes "p2b"
+Info: transacto: "Jtag_master" instantiated altera_avalon_packets_to_master "transacto"
+Info: b2p_adapter: "Jtag_master" instantiated channel_adapter "b2p_adapter"
+Info: p2b_adapter: "Jtag_master" instantiated channel_adapter "p2b_adapter"
+Info: dsa_downscaler_0_avalon_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "dsa_downscaler_0_avalon_master_translator"
+Info: input_memory_s1_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "input_memory_s1_translator"
+Info: dsa_downscaler_0_avalon_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "dsa_downscaler_0_avalon_master_agent"
+Info: input_memory_s1_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "input_memory_s1_agent"
+Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+Info: router_002: "mm_interconnect_0" instantiated altera_merlin_router "router_002"
+Info: router_004: "mm_interconnect_0" instantiated altera_merlin_router "router_004"
+Info: dsa_downscaler_0_avalon_master_limiter: "mm_interconnect_0" instantiated altera_merlin_traffic_limiter "dsa_downscaler_0_avalon_master_limiter"
+Info: Reusing file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/qsys/qsys/synthesis/submodules/altera_avalon_sc_fifo.v
+Info: Reusing file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/qsys/qsys/synthesis/submodules/altera_avalon_st_pipeline_base.v
+Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+Info: cmd_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_001"
+Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+Info: cmd_mux_002: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_002"
+Info: Reusing file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/qsys/qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+Info: rsp_demux_002: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_002"
+Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+Info: Reusing file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/qsys/qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_001"
+Info: Reusing file C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/qsys/qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+Info: dsa_system: Done "dsa_system" with 35 modules, 59 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

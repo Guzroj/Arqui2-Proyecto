@@ -116,7 +116,7 @@ def main():
     print()
     
     # Rutas de archivos
-    output_file = "C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_output.txt"
+    output_file = "C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_output_secuencial.txt"
     input_file = "C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_grayscale.txt"
     png_file = "C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/imagen_output.png"
     

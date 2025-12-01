@@ -1,0 +1,28 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst dsa_system.input_memory -pg 1 -lvl 4 -y 30
+preplace inst dsa_system.Jtag_master.p2b_adapter -pg 1
+preplace inst dsa_system.Jtag_master.p2b -pg 1
+preplace inst dsa_system.Jtag_master.b2p -pg 1
+preplace inst dsa_system.Jtag_master.transacto -pg 1
+preplace inst dsa_system.Jtag_master.jtag_phy_embedded_in_jtag_master -pg 1
+preplace inst dsa_system.Jtag_master.clk_rst -pg 1
+preplace inst dsa_system.output_memory -pg 1 -lvl 4 -y 110
+preplace inst dsa_system.clk_0 -pg 1 -lvl 1 -y 150
+preplace inst dsa_system.Jtag_master.fifo -pg 1
+preplace inst dsa_system.Jtag_master.b2p_adapter -pg 1
+preplace inst dsa_system.reset_bridge_0 -pg 1 -lvl 2 -y 150
+preplace inst dsa_system.Jtag_master -pg 1 -lvl 3 -y 100
+preplace inst dsa_system.Jtag_master.timing_adt -pg 1
+preplace inst dsa_system.Jtag_master.clk_src -pg 1
+preplace inst dsa_system.pio_leds -pg 1 -lvl 4 -y 190
+preplace inst dsa_system -pg 1 -lvl 1 -y 40 -regy -20
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.leds,(SLAVE)pio_leds.external_connection) 1 0 4 NJ 220 NJ 220 NJ 220 NJ
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc POINT_TO_POINT<net_container>dsa_system</net_container>(MASTER)clk_0.clk_reset,(SLAVE)reset_bridge_0.in_reset) 1 1 1 N
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)input_memory.s1,(SLAVE)output_memory.s1,(SLAVE)pio_leds.s1,(MASTER)Jtag_master.master) 1 3 1 690
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(MASTER)reset_bridge_0.out_reset,(SLAVE)input_memory.reset1,(SLAVE)pio_leds.reset,(SLAVE)Jtag_master.clk_reset,(SLAVE)output_memory.reset1) 1 2 2 430 200 670
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)Jtag_master.clk,(SLAVE)reset_bridge_0.clk,(SLAVE)input_memory.clk1,(SLAVE)output_memory.clk1,(MASTER)clk_0.clk,(SLAVE)pio_leds.clk) 1 1 3 260 140 410 180 710
+levelinfo -pg 1 0 50 910
+levelinfo -hier dsa_system 60 90 290 510 750 900

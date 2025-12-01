@@ -1,0 +1,82 @@
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|DSA_Avalon_Wrapper:dsa_downscaler_0|DSA_Memory_Adapter:u_memory_adapter|state
+Name state.ARB_IDLE state.ARB_READ state.ARB_WRITE 
+state.ARB_IDLE 0 0 0 
+state.ARB_WRITE 1 0 1 
+state.ARB_READ 1 1 0 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|DSA_Avalon_Wrapper:dsa_downscaler_0|Downscale_SIMD:u_downscale_simd|state
+Name state.S_DONE state.S_WRITE_BATCH state.S_WAIT_TOP state.S_START_TOP state.S_WAIT_I11 state.S_REQ_I11 state.S_WAIT_I01 state.S_REQ_I01 state.S_WAIT_I10 state.S_REQ_I10 state.S_WAIT_I00 state.S_REQ_I00 state.S_CALC_SRC state.S_CALC_COORDS state.S_IDLE 
+state.S_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.S_CALC_COORDS 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.S_CALC_SRC 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.S_REQ_I00 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.S_WAIT_I00 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.S_REQ_I10 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.S_WAIT_I10 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.S_REQ_I01 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.S_WAIT_I01 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.S_REQ_I11 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_I11 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.S_START_TOP 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_TOP 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WRITE_BATCH 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_DONE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|DSA_Avalon_Wrapper:dsa_downscaler_0|Downscale_SIMD:u_downscale_simd|Top_SIMD:u_top_simd|FSM_SIMD:fsm_inst|state
+Name state.S_WAIT state.S_RUN state.S_LOAD state.S_IDLE state.S_WRITE 
+state.S_IDLE 0 0 0 0 0 
+state.S_LOAD 0 0 1 1 0 
+state.S_RUN 0 1 0 1 0 
+state.S_WAIT 1 0 0 1 0 
+state.S_WRITE 0 0 0 1 1 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|DSA_Avalon_Wrapper:dsa_downscaler_0|Downscale_Secuencial:u_downscale_seq|state
+Name state.S_DONE state.S_WRITE_OUT state.S_WAIT_INTERP state.S_START_INTERP state.S_WAIT_I11 state.S_REQ_I11 state.S_WAIT_I01 state.S_REQ_I01 state.S_WAIT_I10 state.S_REQ_I10 state.S_WAIT_I00 state.S_REQ_I00 state.S_CALC_SRC state.S_CALC_COORDS state.S_IDLE 
+state.S_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.S_CALC_COORDS 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.S_CALC_SRC 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.S_REQ_I00 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.S_WAIT_I00 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.S_REQ_I10 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.S_WAIT_I10 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.S_REQ_I01 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.S_WAIT_I01 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.S_REQ_I11 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_I11 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.S_START_INTERP 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WAIT_INTERP 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_WRITE_OUT 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_DONE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|dsa_system_Jtag_master:jtag_master|altera_avalon_packets_to_master:transacto|packets_to_master:p2m|state
+Name state.READ_SEND_WAIT state.READ_SEND_ISSUE state.READ_DATA_WAIT state.READ_CMD_WAIT state.READ_ASSERT state.RETURN_PACKET state.WRITE_WAIT state.GET_WRITE_DATA state.GET_ADDR4 state.GET_ADDR3 state.GET_ADDR2 state.GET_ADDR1 state.GET_SIZE2 state.GET_SIZE1 state.GET_EXTRA state.0000 
+state.0000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.GET_EXTRA 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.GET_SIZE1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.GET_SIZE2 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.GET_ADDR1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.GET_ADDR2 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.GET_ADDR3 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.GET_ADDR4 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.GET_WRITE_DATA 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.WRITE_WAIT 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.RETURN_PACKET 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.READ_ASSERT 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.READ_CMD_WAIT 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.READ_DATA_WAIT 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.READ_SEND_ISSUE 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.READ_SEND_WAIT 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|dsa_system_Jtag_master:jtag_master|altera_avalon_st_jtag_interface:jtag_phy_embedded_in_jtag_master|altera_jtag_dc_streaming:normal.jtag_dc_streaming|altera_jtag_streaming:jtag_streaming|read_state
+Name read_state.ST_HEADER read_state.ST_READ_DATA read_state.ST_PADDED 
+read_state.ST_HEADER 0 0 0 
+read_state.ST_PADDED 1 0 1 
+read_state.ST_READ_DATA 1 1 0 
+
+State Machine - |dsa_system_wrapper|dsa_system:u_dsa_system|dsa_system_Jtag_master:jtag_master|altera_avalon_st_jtag_interface:jtag_phy_embedded_in_jtag_master|altera_jtag_dc_streaming:normal.jtag_dc_streaming|altera_jtag_streaming:jtag_streaming|write_state
+Name write_state.ST_WRITE_DATA write_state.ST_HEADER_2 write_state.ST_HEADER_1 write_state.ST_BYPASS 
+write_state.ST_BYPASS 0 0 0 0 
+write_state.ST_HEADER_1 0 0 1 1 
+write_state.ST_HEADER_2 0 1 0 1 
+write_state.ST_WRITE_DATA 1 0 0 1 
