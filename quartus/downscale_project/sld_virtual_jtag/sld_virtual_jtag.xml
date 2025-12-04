@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2025.12.03.22:27:22"
+ outputDirectory="C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/quartus/downscale_project/sld_virtual_jtag/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Cyclone V"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="5CSEMA5F31C6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="jtag" kind="conduit" start="0">
+   <property name="associatedClock" value="tck" />
+   <property name="associatedReset" value="" />
+   <port name="tdi" direction="output" role="tdi" width="1" />
+   <port name="tdo" direction="input" role="tdo" width="1" />
+   <port name="ir_in" direction="output" role="ir_in" width="1" />
+   <port name="ir_out" direction="input" role="ir_out" width="1" />
+   <port
+       name="virtual_state_cdr"
+       direction="output"
+       role="virtual_state_cdr"
+       width="1" />
+   <port
+       name="virtual_state_sdr"
+       direction="output"
+       role="virtual_state_sdr"
+       width="1" />
+   <port
+       name="virtual_state_e1dr"
+       direction="output"
+       role="virtual_state_e1dr"
+       width="1" />
+   <port
+       name="virtual_state_pdr"
+       direction="output"
+       role="virtual_state_pdr"
+       width="1" />
+   <port
+       name="virtual_state_e2dr"
+       direction="output"
+       role="virtual_state_e2dr"
+       width="1" />
+   <port
+       name="virtual_state_udr"
+       direction="output"
+       role="virtual_state_udr"
+       width="1" />
+   <port
+       name="virtual_state_cir"
+       direction="output"
+       role="virtual_state_cir"
+       width="1" />
+   <port
+       name="virtual_state_uir"
+       direction="output"
+       role="virtual_state_uir"
+       width="1" />
+  </interface>
+  <interface name="tck" kind="clock" start="1">
+   <property name="associatedDirectClock" value="" />
+   <property name="clockRate" value="0" />
+   <property name="clockRateKnown" value="false" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="tck" direction="output" role="clk" width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="sld_virtual_jtag:1.0:AUTO_DEVICE=5CSEMA5F31C6,AUTO_DEVICE_FAMILY=Cyclone V,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1764822441,AUTO_UNIQUE_ID=(altera_virtual_jtag:20.1:CREATE_PRIMITIVE_JTAG_STATE_SIGNAL_PORTS=false,device_family=Cyclone V,gui_use_auto_index=true,sld_auto_instance_index=YES,sld_instance_index=0,sld_ir_width=1)"
+   instancePathKey="sld_virtual_jtag"
+   kind="sld_virtual_jtag"
+   version="1.0"
+   name="sld_virtual_jtag">
+  <parameter name="AUTO_GENERATION_ID" value="1764822441" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/quartus/downscale_project/sld_virtual_jtag/synthesis/sld_virtual_jtag.v"
+       type="VERILOG" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/quartus/downscale_project/sld_virtual_jtag/synthesis/sld_virtual_jtag.v"
+       type="VERILOG" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/quartus/downscale_project/sld_virtual_jtag.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/quartus/downscale_project/sld_virtual_jtag.qsys" />
+  </childSourceFiles>
+  <instantiator instantiator="sld_virtual_jtag" as="virtual_jtag_0" />
+  <messages>
+   <message level="Debug" culprit="sld_virtual_jtag">queue size: 0 starting:sld_virtual_jtag "sld_virtual_jtag"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>1</b> modules, <b>0</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Debug" culprit="sld_virtual_jtag"><![CDATA["<b>sld_virtual_jtag</b>" reuses <b>altera_virtual_jtag</b> "<b>sld_virtual_jtag</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>

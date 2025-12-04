@@ -1,0 +1,124 @@
+Flow report for Proyecto2Arqui
+Thu Dec 04 00:23:53 2025
+Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++---------------------------------------------------------------------------+
+; Flow Summary                                                              ;
++-----------------------------+---------------------------------------------+
+; Flow Status                 ; Flow Failed - Thu Dec 04 00:23:53 2025      ;
+; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name               ; Proyecto2Arqui                              ;
+; Top-level Entity Name       ; top_downscale_system                        ;
+; Family                      ; Cyclone V                                   ;
+; Device                      ; 5CSEMA5F31C6                                ;
+; Timing Models               ; Final                                       ;
+; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
+; Total registers             ; N/A until Partition Merge                   ;
+; Total pins                  ; N/A until Partition Merge                   ;
+; Total virtual pins          ; N/A until Partition Merge                   ;
+; Total block memory bits     ; N/A until Partition Merge                   ;
+; Total PLLs                  ; N/A until Partition Merge                   ;
+; Total DLLs                  ; N/A until Partition Merge                   ;
++-----------------------------+---------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 12/04/2025 00:23:46 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; Proyecto2Arqui      ;
++-------------------+---------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                                                     ;
++-------------------------------------+--------------------------------------------------------------------+----------------+----------------------+-----------------------------------+
+; Assignment Name                     ; Value                                                              ; Default Value  ; Entity Name          ; Section Id                        ;
++-------------------------------------+--------------------------------------------------------------------+----------------+----------------------+-----------------------------------+
+; COMPILER_SIGNATURE_ID               ; 128059400897965.176482942510420                                    ; --             ; --                   ; --                                ;
+; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                                ; --             ; --                   ; eda_board_design_timing           ;
+; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                                ; --             ; --                   ; eda_board_design_boundary_scan    ;
+; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                                ; --             ; --                   ; eda_board_design_signal_integrity ;
+; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                                                ; --             ; --                   ; eda_board_design_symbol           ;
+; EDA_OUTPUT_DATA_FORMAT              ; Systemverilog Hdl                                                  ; --             ; --                   ; eda_simulation                    ;
+; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (SystemVerilog)                                    ; <None>         ; --                   ; --                                ;
+; EDA_TIME_SCALE                      ; 1 ps                                                               ; --             ; --                   ; eda_simulation                    ;
+; MISC_FILE                           ; sld_virtual_jtag/synthesis/../sld_virtual_jtag.cmp                 ; --             ; --                   ; --                                ;
+; MISC_FILE                           ; sld_virtual_jtag/synthesis/../../sld_virtual_jtag.qsys             ; --             ; --                   ; --                                ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family)                             ; --             ; top_downscale_system ; Top                               ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                             ; --             ; top_downscale_system ; Top                               ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                             ; --             ; top_downscale_system ; Top                               ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                                                       ; --             ; --                   ; --                                ;
+; SLD_FILE                            ; sld_virtual_jtag/synthesis/sld_virtual_jtag.debuginfo              ; --             ; --                   ; --                                ;
+; SLD_INFO                            ; QSYS_NAME sld_virtual_jtag HAS_SOPCINFO 1 GENERATION_ID 1764822441 ; --             ; sld_virtual_jtag     ; --                                ;
+; SOPCINFO_FILE                       ; sld_virtual_jtag/synthesis/../../sld_virtual_jtag.sopcinfo         ; --             ; --                   ; --                                ;
+; SYNTHESIS_ONLY_QIP                  ; On                                                                 ; --             ; --                   ; --                                ;
+; TOP_LEVEL_ENTITY                    ; top_downscale_system                                               ; Proyecto2Arqui ; --                   ; --                                ;
++-------------------------------------+--------------------------------------------------------------------+----------------+----------------------+-----------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:00:08     ; 1.0                     ; 4779 MB             ; 00:00:19                           ;
+; Total                ; 00:00:08     ; --                      ; --                  ; 00:00:19                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; JoseAndresCompu  ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off Proyecto2Arqui -c Proyecto2Arqui
+
+
+

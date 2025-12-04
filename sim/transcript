@@ -1,0 +1,181 @@
+# do run_downscale_sim.do
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/memory/image_memory_input.sv 
+# -- Compiling module image_memory_input
+# 
+# Top level modules:
+# 	image_memory_input
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/memory/image_memory_output.sv 
+# -- Compiling module image_memory_output
+# 
+# Top level modules:
+# 	image_memory_output
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/downscale/fixed_point_mult.sv 
+# -- Compiling module fixed_point_mult
+# 
+# Top level modules:
+# 	fixed_point_mult
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/downscale/bilinear_interpolator.sv 
+# -- Compiling module bilinear_interpolator
+# 
+# Top level modules:
+# 	bilinear_interpolator
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/downscale/downscale_fsm.sv 
+# -- Compiling module downscale_fsm
+# 
+# Top level modules:
+# 	downscale_fsm
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv ../rtl/downscale/downscale_sequential.sv 
+# -- Compiling module downscale_sequential
+# 
+# Top level modules:
+# 	downscale_sequential
+# End time: 22:01:53 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:01:53 on Dec 03,2025
+# vlog -reportprogress 300 -sv "+define+SIMULATION" tb_downscale_sequential.sv 
+# -- Compiling module tb_downscale_sequential
+# 
+# Top level modules:
+# 	tb_downscale_sequential
+# End time: 22:01:54 on Dec 03,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vsim -voptargs=""+acc"" work.tb_downscale_sequential 
+# Start time: 22:01:54 on Dec 03,2025
+# Loading sv_std.std
+# Loading work.tb_downscale_sequential
+# Loading work.image_memory_input
+# Loading work.image_memory_output
+# Loading work.downscale_sequential
+# Loading work.downscale_fsm
+# Loading work.bilinear_interpolator
+# Loading work.fixed_point_mult
+# 
+# ========================================
+# Testbench: Downscale Sequential (Pipeline)
+# ========================================
+# Input:  64x64 = 4096 píxeles
+# Output: 32x32 = 1024 píxeles
+# Pipeline: 3 etapas
+# ========================================
+# 
+# 
+# ========================================
+# TEST 1: Gradiente horizontal
+# ========================================
+# Inicializando memoria de entrada (64x64)...
+# Memoria de entrada inicializada con patrón 0
+# 
+# ========================================
+# Iniciando downscaling
+# ========================================
+# [OK] Downscaling completado
+# 
+# ========================================
+# Verificando memoria de salida (32x32)
+# ========================================
+# Píxeles no-cero en memoria: 1023/1024
+# Contador pixels_written: 1024
+# [OK] Se escribieron los 1024 píxeles correctamente
+# Muestra de píxeles:
+#   (0,0) = 0, (1,0) = 130, (0,1) = 126, (31,31) = 250
+# Test 1 completado
+# 
+# 
+# ========================================
+# TEST 2: Gradiente vertical
+# ========================================
+# Inicializando memoria de entrada (64x64)...
+# Memoria de entrada inicializada con patrón 1
+# 
+# ========================================
+# Iniciando downscaling
+# ========================================
+# [OK] Downscaling completado
+# 
+# ========================================
+# Verificando memoria de salida (32x32)
+# ========================================
+# Píxeles no-cero en memoria: 1023/1024
+# Contador pixels_written: 1024
+# [OK] Se escribieron los 1024 píxeles correctamente
+# Muestra de píxeles:
+#   (0,0) = 0, (1,0) = 126, (0,1) = 130, (31,31) = 250
+# Test 2 completado
+# 
+# 
+# ========================================
+# TEST 3: Tablero de ajedrez
+# ========================================
+# Inicializando memoria de entrada (64x64)...
+# Memoria de entrada inicializada con patrón 2
+# 
+# ========================================
+# Iniciando downscaling
+# ========================================
+# [OK] Downscaling completado
+# 
+# ========================================
+# Verificando memoria de salida (32x32)
+# ========================================
+# Píxeles no-cero en memoria: 1023/1024
+# Contador pixels_written: 1024
+# [OK] Se escribieron los 1024 píxeles correctamente
+# Muestra de píxeles:
+#   (0,0) = 0, (1,0) = 128, (0,1) = 128, (31,31) = 128
+# Test 3 completado
+# 
+# 
+# ========================================
+# TEST 4: Patrón constante
+# ========================================
+# Inicializando memoria de entrada (64x64)...
+# Memoria de entrada inicializada con patrón 3
+# 
+# ========================================
+# Iniciando downscaling
+# ========================================
+# [OK] Downscaling completado
+# [OK] Todos los píxeles = 128 (interpolación correcta)
+# Test 4 completado
+# 
+# 
+# ========================================
+# Resumen de Tests
+# ========================================
+# ✓ TODOS LOS TESTS PASARON
+# ========================================
+# 
+# ** Note: $finish    : tb_downscale_sequential.sv(300)
+#    Time: 1065910 ns  Iteration: 1  Instance: /tb_downscale_sequential
+# 1
+# Break in Module tb_downscale_sequential at tb_downscale_sequential.sv line 300
+# 0 ps
+# 1119205500 ps
+# End time: 22:17:31 on Dec 03,2025, Elapsed time: 0:15:37
+# Errors: 0, Warnings: 0

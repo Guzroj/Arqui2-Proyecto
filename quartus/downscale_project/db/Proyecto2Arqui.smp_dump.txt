@@ -1,0 +1,20 @@
+
+State Machine - |top_downscale_system|downscale_sequential:u_downscaler|downscale_fsm:u_fsm|state
+Name state.WRITE_RESULT state.INTERPOLATE state.READ_P11 state.READ_P10 state.READ_P01 state.READ_P00 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 
+state.READ_P00 0 0 0 0 0 1 1 
+state.READ_P01 0 0 0 0 1 0 1 
+state.READ_P10 0 0 0 1 0 0 1 
+state.READ_P11 0 0 1 0 0 0 1 
+state.INTERPOLATE 0 1 0 0 0 0 1 
+state.WRITE_RESULT 1 0 0 0 0 0 1 
+
+State Machine - |top_downscale_system|jtag_avalon_controller:u_jtag_controller|state
+Name state.UPDATE state.WAIT_RESPONSE state.EXECUTE_WRITE state.EXECUTE_READ state.SHIFT state.CAPTURE state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 
+state.CAPTURE 0 0 0 0 0 1 1 
+state.SHIFT 0 0 0 0 1 0 1 
+state.EXECUTE_READ 0 0 0 1 0 0 1 
+state.EXECUTE_WRITE 0 0 1 0 0 0 1 
+state.WAIT_RESPONSE 0 1 0 0 0 0 1 
+state.UPDATE 1 0 0 0 0 0 1 

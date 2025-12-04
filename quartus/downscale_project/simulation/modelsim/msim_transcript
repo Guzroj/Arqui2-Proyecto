@@ -1,0 +1,43 @@
+# Reading pref.tcl
+# do Proyecto2Arqui_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl {C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/Proyecto2Arqui.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:30:31 on Dec 03,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl" C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/Proyecto2Arqui.sv 
+# -- Compiling module Proyecto2Arqui
+# 
+# Top level modules:
+# 	Proyecto2Arqui
+# End time: 21:30:31 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory {C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory/image_memory_input.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:30:32 on Dec 03,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory" C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory/image_memory_input.sv 
+# -- Compiling module image_memory_input
+# 
+# Top level modules:
+# 	image_memory_input
+# End time: 21:30:32 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory {C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory/image_memory_output.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:30:32 on Dec 03,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory" C:/Users/josev/OneDrive/Documentos/Arqui2ProyectoInicio/rtl/memory/image_memory_output.sv 
+# -- Compiling module image_memory_output
+# 
+# Top level modules:
+# 	image_memory_output
+# End time: 21:30:32 on Dec 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 

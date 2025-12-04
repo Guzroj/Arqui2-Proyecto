@@ -1,0 +1,27 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\downscale_project\sld_virtual_jtag.qsys --block-symbol-file --output-directory=C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\downscale_project\sld_virtual_jtag --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading downscale_project/sld_virtual_jtag.qsys
+Progress: Reading input file
+Progress: Adding virtual_jtag_0 [altera_virtual_jtag 20.1]
+Progress: Parameterizing module virtual_jtag_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\downscale_project\sld_virtual_jtag.qsys --synthesis=VERILOG --output-directory=C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\downscale_project\sld_virtual_jtag\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading downscale_project/sld_virtual_jtag.qsys
+Progress: Reading input file
+Progress: Adding virtual_jtag_0 [altera_virtual_jtag 20.1]
+Progress: Parameterizing module virtual_jtag_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sld_virtual_jtag: Generating sld_virtual_jtag "sld_virtual_jtag" for QUARTUS_SYNTH
+Info: sld_virtual_jtag: Done "sld_virtual_jtag" with 1 modules, 1 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
