@@ -444,7 +444,7 @@ void print_stats(const DownscaleSequential::Stats& stats,
                  uint32_t width_out, uint32_t height_out,
                  const char* mode_name) {
     uint32_t total_pixels = width_out * height_out;
-    
+
     std::cout << "\n=========================================" << std::endl;
     std::cout << "  ESTADÍSTICAS - " << mode_name << std::endl;
     std::cout << "=========================================" << std::endl;
@@ -453,9 +453,52 @@ void print_stats(const DownscaleSequential::Stats& stats,
     std::cout << "Escrituras mem:   " << stats.memory_writes << std::endl;
     std::cout << "FLOPs:            " << stats.flops << std::endl;
     std::cout << "\nPíxeles de salida: " << total_pixels << std::endl;
-    if (stats.cycles > 0) {
+
+    if (stats.cycles > 0 && total_pixels > 0) {
+        // Ciclos por píxel: indica cuántos ciclos tarda en promedio cada píxel de salida
+        float cycles_per_pixel = static_cast<float>(stats.cycles) / total_pixels;
         std::cout << "Ciclos/píxel:      " << std::fixed << std::setprecision(2)
-                  << (float)stats.cycles / total_pixels << std::endl;
+                  << cycles_per_pixel << std::endl;
+
+        // Asumimos una frecuencia de reloj de 50 MHz (igual que la FPGA del proyecto)
+        // Tiempo total (segundos) = ciclos / frecuencia
+        constexpr double F_CLK_HZ = 50e6;
+        double time_seconds = static_cast<double>(stats.cycles) / F_CLK_HZ;
+
+        // Throughput en MPix/s: (píxeles de salida / tiempo) / 1e6
+        double throughput_mpix = (static_cast<double>(total_pixels) / time_seconds) / 1e6;
+
+        // GFLOPS efectivos: (FLOPs / tiempo) / 1e9
+        double gflops = 0.0;
+        if (stats.flops > 0) {
+            gflops = (static_cast<double>(stats.flops) / time_seconds) / 1e9;
+        }
+
+        // Intensidad aritmética aproximada: FLOPs / (lecturas + escrituras de memoria)
+        uint64_t mem_ops = static_cast<uint64_t>(stats.memory_reads) +
+                           static_cast<uint64_t>(stats.memory_writes);
+        double intensity = 0.0;
+        if (mem_ops > 0 && stats.flops > 0) {
+            intensity = static_cast<double>(stats.flops) / static_cast<double>(mem_ops);
+        }
+
+        std::cout << "\n-- Métricas derivadas (asumiendo 50 MHz) --" << std::endl;
+        std::cout << "Tiempo estimado:   " << std::setprecision(3)
+                  << (time_seconds * 1e3) << " ms  "
+                  << "(time = ciclos / 50e6)" << std::endl;
+        std::cout << "Throughput:        " << std::setprecision(3)
+                  << throughput_mpix << " MPix/s  "
+                  << "(píxeles_salida / tiempo)" << std::endl;
+        if (stats.flops > 0) {
+            std::cout << "GFLOPS efectivos:  " << std::setprecision(3)
+                      << gflops << " GFLOPS  "
+                      << "(FLOPs / tiempo)" << std::endl;
+        }
+        if (mem_ops > 0 && stats.flops > 0) {
+            std::cout << "Intensidad aritm.: " << std::setprecision(3)
+                      << intensity << " FLOPs/op_mem  "
+                      << "(FLOPs / (lecturas+escrituras))" << std::endl;
+        }
     }
     std::cout << "=========================================" << std::endl;
 }
