@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module tb_Top_Downscale_Secuencial;
+module tb_top_Downscale_Secuencial;
 
     localparam int SRC_W = 512;
     localparam int SRC_H = 512;
@@ -90,10 +90,10 @@ module tb_Top_Downscale_Secuencial;
             $display("\n[%0t] Verificando BRAM...", $time);
             $display("  Primeros 8 valores en BRAM:");
             for (i = 0; i < 8; i = i + 1) begin
-                $display("    memory[%0d] = %0d", i, dut.mem.memory[i]);
+                $display("    memory[%0d] = %0d", i, dut.memory[i]);
             end
-            
-            if (dut.mem.memory[0] === 8'bxxxxxxxx)
+
+            if (dut.memory[0] === 8'bxxxxxxxx)
                 $display("  ✗ ERROR: Memoria contiene valores indefinidos!");
             else
                 $display("  ✓ Memoria inicializada correctamente");
@@ -104,14 +104,14 @@ module tb_Top_Downscale_Secuencial;
     task verify_input_image;
         begin
             $display("\n=== VERIFICANDO IMAGEN DE ENTRADA ===");
-            $display("Esquina superior izquierda [0,0] = %0d", dut.mem.memory[0]);
-            $display("Esquina superior derecha [0,511] = %0d", dut.mem.memory[511]);
-            $display("Centro [256,256] = %0d", dut.mem.memory[256*512 + 256]);
-            $display("Esquina inferior izquierda [511,0] = %0d", dut.mem.memory[511*512]);
-            $display("Esquina inferior derecha [511,511] = %0d", dut.mem.memory[512*512-1]);
-            
-            if (dut.mem.memory[0] == dut.mem.memory[511] &&
-                dut.mem.memory[0] == dut.mem.memory[256*512 + 256])
+            $display("Esquina superior izquierda [0,0] = %0d", dut.memory[0]);
+            $display("Esquina superior derecha [0,511] = %0d", dut.memory[511]);
+            $display("Centro [256,256] = %0d", dut.memory[256*512 + 256]);
+            $display("Esquina inferior izquierda [511,0] = %0d", dut.memory[511*512]);
+            $display("Esquina inferior derecha [511,511] = %0d", dut.memory[512*512-1]);
+
+            if (dut.memory[0] == dut.memory[511] &&
+                dut.memory[0] == dut.memory[256*512 + 256])
                 $display("⚠ WARNING: Primeros valores son iguales");
             else
                 $display("✓ Valores diferentes en distintas posiciones");

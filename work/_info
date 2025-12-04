@@ -1,0 +1,115 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
+vDownscale_Secuencial
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1764864942
+!i10b 1
+!s100 T?jMl6;^4eL[=NndEz9bI2
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Ii;mk=S^30?BFZzE;jS8OM2
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1764846436
+8rtl/Downscale_Secuencial.sv
+Frtl/Downscale_Secuencial.sv
+!i122 1
+L0 14 248
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1764864942.000000
+!s107 rtl/Downscale_Secuencial.sv|
+!s90 -sv|rtl/Downscale_Secuencial.sv|
+!i113 1
+o-sv
+Z7 tCvgOpt 0
+n@downscale_@secuencial
+vModoSecuencial
+R1
+R2
+!i10b 1
+!s100 FGL[@GLnQ5k7j;8nAjPab1
+R3
+IDb??7BCFe7mmjG8NYO6oH1
+R4
+S1
+R0
+w1764560770
+8rtl/ModoSecuencial.sv
+Frtl/ModoSecuencial.sv
+!i122 0
+L0 3 99
+R5
+r1
+!s85 0
+31
+R6
+!s107 rtl/ModoSecuencial.sv|
+!s90 -sv|rtl/ModoSecuencial.sv|
+!i113 1
+o-sv
+R7
+n@modo@secuencial
+vtb_Top_Downscale_Secuencial
+R1
+R2
+!i10b 1
+!s100 lXjELN``_a;A:i>U;>7dM2
+R3
+IUe9JZ>g<_ZGH[kbZ`g:Ba2
+R4
+S1
+R0
+w1764864882
+8testbench/tb_top_Downscale_Secuencial.sv
+Ftestbench/tb_top_Downscale_Secuencial.sv
+!i122 3
+L0 3 335
+R5
+r1
+!s85 0
+31
+R6
+!s107 testbench/tb_top_Downscale_Secuencial.sv|
+!s90 -sv|testbench/tb_top_Downscale_Secuencial.sv|
+!i113 1
+o-sv
+R7
+ntb_@top_@downscale_@secuencial
+vTop_Downscale_Secuencial
+R1
+R2
+!i10b 1
+!s100 DWoJ@oT3zJZF6f9Rb4FIf0
+R3
+I=]0kQgXEGU;[F=3AImDFb1
+R4
+S1
+R0
+w1764864848
+8rtl/Top_Downscale_Secuencial.sv
+Frtl/Top_Downscale_Secuencial.sv
+!i122 2
+L0 13 123
+R5
+r1
+!s85 0
+31
+R6
+!s107 rtl/Top_Downscale_Secuencial.sv|
+!s90 -sv|rtl/Top_Downscale_Secuencial.sv|
+!i113 1
+o-sv
+R7
+n@top_@downscale_@secuencial
