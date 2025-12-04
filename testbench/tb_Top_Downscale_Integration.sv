@@ -20,18 +20,29 @@ module tb_Top_Downscale_Integration;
     reg wr_en;
     reg [17:0] wr_addr;
     reg [7:0] wr_data;
+    reg [3:0] scale_factor;  // Factor de escala configurable
     wire [7:0] image_out [0:DST_H-1][0:DST_W-1];
+
+    // Performance counters
+    wire [31:0] perf_flops;
+    wire [31:0] perf_mem_reads;
+    wire [31:0] perf_mem_writes;
 
     // ==================================================
     // DUT
     // ==================================================
-    Top_Downscale_Integration #(
+    Top_Downscale_SIMD #(
         .SRC_H(SRC_H), .SRC_W(SRC_W),
         .DST_H(DST_H), .DST_W(DST_W), .N(N)
     ) dut (
         .clk(clk), .rst(rst), .start(start), .done(done),
         .wr_en(wr_en), .wr_addr(wr_addr), .wr_data(wr_data),
-        .image_out(image_out)
+        .scale_factor(scale_factor),
+        .image_out(image_out),
+        .dbg_data(),
+        .perf_flops(perf_flops),
+        .perf_mem_reads(perf_mem_reads),
+        .perf_mem_writes(perf_mem_writes)
     );
 
     // ==================================================
@@ -47,13 +58,10 @@ module tb_Top_Downscale_Integration;
     // ==================================================
     initial begin
         #1;
-        $display("\n=== PARÁMETROS DEL DISEÑO ===");
+        $display("\n=== PARÁMETROS DEL DISEÑO (SIMD N=%0d) ===", N);
         $display("SRC_H = %0d, SRC_W = %0d", SRC_H, SRC_W);
-        $display("DST_H = %0d, DST_W = %0d", DST_H, DST_W);
-        $display("TOT_PIX = %0d", dut.u_downscale.TOT_PIX);
-        $display("X_RATIO_FP = %0d (0x%h)", dut.u_downscale.X_RATIO_FP, dut.u_downscale.X_RATIO_FP);
-        $display("Y_RATIO_FP = %0d (0x%h)", dut.u_downscale.Y_RATIO_FP, dut.u_downscale.Y_RATIO_FP);
-        $display("FRAC = %0d", dut.u_downscale.FRAC);
+        $display("Scale Factor = %0d (Factor real = %.2f)", scale_factor, 0.50 + scale_factor * 0.05);
+        $display("DST dinámico calculado en RTL según scale_factor");
         $display("================================\n");
     end
 
@@ -172,9 +180,9 @@ module tb_Top_Downscale_Integration;
 									  $display("  Memoria entrada [%0d,%0d] = %0d", 
 												  dut.u_downscale.y_l[k], 
 												  dut.u_downscale.x_l[k],
-												  dut.u_image_memory.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
+												  dut.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
 									  $display("  ESPERADO: debería leer de [256,256] = %0d", 
-												  dut.u_image_memory.memory[256 * 512 + 256]);
+												  dut.memory[256 * 512 + 256]);
 								 end
 								 
 								 // También mostrar el píxel [0,128]
@@ -189,9 +197,9 @@ module tb_Top_Downscale_Integration;
 									  $display("  Memoria entrada [%0d,%0d] = %0d", 
 												  dut.u_downscale.y_l[k], 
 												  dut.u_downscale.x_l[k],
-												  dut.u_image_memory.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
+												  dut.memory[dut.u_downscale.y_l[k] * 512 + dut.u_downscale.x_l[k]]);
 									  $display("  ESPERADO: debería leer de [0,256] = %0d", 
-												  dut.u_image_memory.memory[0 * 512 + 256]);
+												  dut.memory[0 * 512 + 256]);
 								 end
 							end
 					  end
@@ -205,16 +213,15 @@ module tb_Top_Downscale_Integration;
     task verify_memory_load;
         begin
             $display("\n[%0t] Verificando BRAM...", $time);
-            
+
             // Acceder directamente a la memoria interna del DUT
             $display("  Primeros 8 valores en BRAM:");
             for (i = 0; i < 8; i = i + 1) begin
-                $display("    memory[%0d] = %0d", i, 
-                         dut.u_image_memory.memory[i]);
+                $display("    memory[%0d] = %0d", i, dut.memory[i]);
             end
-            
+
             // Verificar si hay 'x'
-            if (dut.u_image_memory.memory[0] === 8'bxxxxxxxx) begin
+            if (dut.memory[0] === 8'bxxxxxxxx) begin
                 $display("  ✗ ERROR: Memoria contiene valores indefinidos!");
             end else begin
                 $display("  ✓ Memoria inicializada correctamente");
@@ -228,22 +235,17 @@ module tb_Top_Downscale_Integration;
     task verify_input_image;
         begin
             $display("\n=== VERIFICANDO IMAGEN DE ENTRADA ===");
-            
+
             // Verificar esquinas y centro
-            $display("Esquina superior izquierda [0,0] = %0d", 
-                     dut.u_image_memory.memory[0]);
-            $display("Esquina superior derecha [0,511] = %0d", 
-                     dut.u_image_memory.memory[511]);
-            $display("Centro [256,256] = %0d", 
-                     dut.u_image_memory.memory[256*512 + 256]);
-            $display("Esquina inferior izquierda [511,0] = %0d", 
-                     dut.u_image_memory.memory[511*512]);
-            $display("Esquina inferior derecha [511,511] = %0d", 
-                     dut.u_image_memory.memory[512*512-1]);
-            
+            $display("Esquina superior izquierda [0,0] = %0d", dut.memory[0]);
+            $display("Esquina superior derecha [0,511] = %0d", dut.memory[511]);
+            $display("Centro [256,256] = %0d", dut.memory[256*512 + 256]);
+            $display("Esquina inferior izquierda [511,0] = %0d", dut.memory[511*512]);
+            $display("Esquina inferior derecha [511,511] = %0d", dut.memory[512*512-1]);
+
             // Verificar que no son todos iguales
-            if (dut.u_image_memory.memory[0] == dut.u_image_memory.memory[511] &&
-                dut.u_image_memory.memory[0] == dut.u_image_memory.memory[256*512 + 256]) begin
+            if (dut.memory[0] == dut.memory[511] &&
+                dut.memory[0] == dut.memory[256*512 + 256]) begin
                 $display("⚠ WARNING: Primeros valores son iguales, posible problema de carga");
             end else begin
                 $display("✓ Valores diferentes en distintas posiciones");
@@ -497,6 +499,40 @@ module tb_Top_Downscale_Integration;
     endtask
 
     // ==================================================
+    // Mostrar Performance Counters
+    // ==================================================
+    task display_performance_counters;
+        real arithmetic_intensity;
+        integer total_mem_accesses;
+        begin
+            $display("\n=== PERFORMANCE COUNTERS (SIMD) ===");
+            $display("FLOPs (Operaciones aritméticas): %0d", perf_flops);
+            $display("Lecturas de memoria:             %0d", perf_mem_reads);
+            $display("Escrituras de memoria:           %0d", perf_mem_writes);
+
+            total_mem_accesses = perf_mem_reads + perf_mem_writes;
+            $display("Total accesos a memoria:         %0d", total_mem_accesses);
+
+            if (total_mem_accesses > 0) begin
+                arithmetic_intensity = real'(perf_flops) / real'(total_mem_accesses);
+                $display("Intensidad aritmética (FLOPs/acceso): %.3f", arithmetic_intensity);
+            end else begin
+                $display("Intensidad aritmética: N/A (sin accesos a memoria)");
+            end
+
+            // Análisis adicional
+            $display("\n--- Análisis ---");
+            $display("Píxeles procesados:              %0d", perf_mem_writes);
+            if (perf_mem_writes > 0) begin
+                $display("Lecturas por píxel:              %.2f", real'(perf_mem_reads) / real'(perf_mem_writes));
+                $display("FLOPs por píxel:                 %.2f", real'(perf_flops) / real'(perf_mem_writes));
+            end
+            $display("SIMD lanes:                      %0d", N);
+            $display("================================\n");
+        end
+    endtask
+
+    // ==================================================
     // Secuencia principal
     // ==================================================
     initial begin
@@ -505,6 +541,7 @@ module tb_Top_Downscale_Integration;
         wr_en = 0;
         wr_addr = 0;
         wr_data = 0;
+        scale_factor = 4'd0;  // Default: 0.5 (256x256)
 
         repeat(10) @(posedge clk);
         rst = 0;
@@ -513,14 +550,15 @@ module tb_Top_Downscale_Integration;
         load_image();
         verify_input_image();
         repeat(10) @(posedge clk);
-        
+
         run_downscale();
         repeat(10) @(posedge clk);
-        
+
         verify_output();
         verify_pixel_mapping();
         display_sample();
-        
+        display_performance_counters();
+
         save_output_image();
 
         $display("\n=== TEST COMPLETADO ===\n");

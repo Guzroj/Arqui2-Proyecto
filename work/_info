@@ -9,35 +9,61 @@ z2
 !i10f 100
 cModel Technology
 Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
-vDownscale_Secuencial
+vDownscale_SIMD
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1764867108
+Z2 !s110 1764867908
 !i10b 1
-!s100 T?jMl6;^4eL[=NndEz9bI2
+!s100 7__G_GV0INA`7=J_9WGVI1
 Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
-Ii;mk=S^30?BFZzE;jS8OM2
+ID6IJ06l>W<cZ1z2ozWVbd1
 Z4 VDg1SIo80bB@j0V0VzS_@n1
 S1
 R0
-w1764846436
-8rtl/Downscale_Secuencial.sv
-Frtl/Downscale_Secuencial.sv
-!i122 1
-L0 14 248
+w1764562284
+8rtl/Downscale_SIMD.sv
+Frtl/Downscale_SIMD.sv
+!i122 5
+L0 15 364
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1764867108.000000
-!s107 rtl/Downscale_Secuencial.sv|
-!s90 -sv|rtl/Downscale_Secuencial.sv|
+Z6 !s108 1764867908.000000
+!s107 rtl/Downscale_SIMD.sv|
+!s90 -sv|rtl/Downscale_SIMD.sv|
 !i113 1
 o-sv
 Z7 tCvgOpt 0
-n@downscale_@secuencial
+n@downscale_@s@i@m@d
+vFSM_SIMD
+R1
+Z8 !s110 1764867907
+!i10b 1
+!s100 Mn6PHRJlPjg5>E9ZVgOJ11
+R3
+I?RID1J<O8CHH6[GlG36nB3
+R4
+S1
+R0
+Z9 w1764560770
+8rtl/FSM_SIMD.sv
+Frtl/FSM_SIMD.sv
+!i122 2
+L0 3 75
+R5
+r1
+!s85 0
+31
+Z10 !s108 1764867907.000000
+!s107 rtl/FSM_SIMD.sv|
+!s90 -sv|rtl/FSM_SIMD.sv|
+!i113 1
+o-sv
+R7
+n@f@s@m_@s@i@m@d
 vModoSecuencial
 R1
-R2
+R8
 !i10b 1
 !s100 FGL[@GLnQ5k7j;8nAjPab1
 R3
@@ -45,7 +71,7 @@ IDb??7BCFe7mmjG8NYO6oH1
 R4
 S1
 R0
-w1764560770
+R9
 8rtl/ModoSecuencial.sv
 Frtl/ModoSecuencial.sv
 !i122 0
@@ -54,62 +80,140 @@ R5
 r1
 !s85 0
 31
-R6
+R10
 !s107 rtl/ModoSecuencial.sv|
 !s90 -sv|rtl/ModoSecuencial.sv|
 !i113 1
 o-sv
 R7
 n@modo@secuencial
-vtb_top_Downscale_Secuencial
+vModoSIMD
 R1
-!s110 1764867109
+R8
 !i10b 1
-!s100 1?jf52B`2oaPabh>^nF@U2
+!s100 h8@SOM4[Vna@FX`PimzJS0
 R3
-IZ@XdLn9?IaZ7CUCChWFHo1
+Io[7=8onBdfLh5z_TJ8zH90
 R4
 S1
 R0
-w1764867082
-8testbench/tb_top_Downscale_Secuencial.sv
-Ftestbench/tb_top_Downscale_Secuencial.sv
-!i122 3
-L0 3 377
+R9
+8rtl/ModoSIMD.sv
+Frtl/ModoSIMD.sv
+!i122 1
+L0 1 44
 R5
 r1
 !s85 0
 31
-!s108 1764867109.000000
-!s107 testbench/tb_top_Downscale_Secuencial.sv|
-!s90 -sv|testbench/tb_top_Downscale_Secuencial.sv|
+R10
+!s107 rtl/ModoSIMD.sv|
+!s90 -sv|rtl/ModoSIMD.sv|
 !i113 1
 o-sv
 R7
-ntb_top_@downscale_@secuencial
-vTop_Downscale_Secuencial
+n@modo@s@i@m@d
+vSIMD_Registros
 R1
 R2
 !i10b 1
-!s100 eO7?lNnnJkQ8LKjG=4[F:3
+!s100 =GSLDm4WA9_8]zXV]ULFf1
 R3
-I[lOUBmB?kO7Gb6[`Uo?Ji2
+I1I_HBU_g;P0RNVR?@zh7b3
 R4
 S1
 R0
-w1764866997
-8rtl/Top_Downscale_Secuencial.sv
-Frtl/Top_Downscale_Secuencial.sv
-!i122 2
-L0 13 190
+R9
+8rtl/SIMD_Registros.sv
+Frtl/SIMD_Registros.sv
+!i122 3
+L0 1 51
 R5
 r1
 !s85 0
 31
 R6
-!s107 rtl/Top_Downscale_Secuencial.sv|
-!s90 -sv|rtl/Top_Downscale_Secuencial.sv|
+!s107 rtl/SIMD_Registros.sv|
+!s90 -sv|rtl/SIMD_Registros.sv|
 !i113 1
 o-sv
 R7
-n@top_@downscale_@secuencial
+n@s@i@m@d_@registros
+vtb_Top_Downscale_Integration
+R1
+R2
+!i10b 1
+!s100 4@JW::[m;6oQMgPdzk3PV2
+R3
+IN2mU=KaQ=4UB]cGOj7;TI0
+R4
+S1
+R0
+w1764867814
+8testbench/tb_Top_Downscale_Integration.sv
+Ftestbench/tb_Top_Downscale_Integration.sv
+!i122 7
+L0 3 575
+R5
+r1
+!s85 0
+31
+R6
+!s107 testbench/tb_Top_Downscale_Integration.sv|
+!s90 -sv|testbench/tb_Top_Downscale_Integration.sv|
+!i113 1
+o-sv
+R7
+ntb_@top_@downscale_@integration
+vTop_Downscale_SIMD
+R1
+R2
+!i10b 1
+!s100 i=bO24S=OTjKkZCHk0TN83
+R3
+ImRA717ZFTWg1V8;Jg@E_02
+R4
+S1
+R0
+w1764867520
+8rtl/Top_Downscale_SIMD.sv
+Frtl/Top_Downscale_SIMD.sv
+!i122 6
+L0 15 196
+R5
+r1
+!s85 0
+31
+R6
+!s107 rtl/Top_Downscale_SIMD.sv|
+!s90 -sv|rtl/Top_Downscale_SIMD.sv|
+!i113 1
+o-sv
+R7
+n@top_@downscale_@s@i@m@d
+vTop_SIMD
+R1
+R2
+!i10b 1
+!s100 :>::k2HF]@jWi8;GfaJ110
+R3
+IeYP_J82FkVU:XoaSPnzB13
+R4
+S1
+R0
+R9
+8rtl/Top_SIMD.sv
+Frtl/Top_SIMD.sv
+!i122 4
+L0 4 84
+R5
+r1
+!s85 0
+31
+R6
+!s107 rtl/Top_SIMD.sv|
+!s90 -sv|rtl/Top_SIMD.sv|
+!i113 1
+o-sv
+R7
+n@top_@s@i@m@d

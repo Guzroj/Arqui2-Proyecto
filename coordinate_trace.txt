@@ -1,0 +1,20 @@
+
+=== BATCH base_idx=0 ===
+
+=== BATCH base_idx=4 ===
+Lane 0: idx=    0 → DST[  0,  0] reads SRC x_l=  0, y_l=  0, x_h=  1, y_h=  1
+Lane 1: idx=    1 → DST[  0,  1] reads SRC x_l=  2, y_l=  0, x_h=  3, y_h=  1
+Lane 2: idx=    2 → DST[  0,  2] reads SRC x_l=  4, y_l=  0, x_h=  5, y_h=  1
+Lane 3: idx=    3 → DST[  0,  3] reads SRC x_l=  6, y_l=  0, x_h=  7, y_h=  1
+
+=== BATCH base_idx=8 ===
+Lane 0: idx=    4 → DST[  0,  4] reads SRC x_l=  8, y_l=  0, x_h=  9, y_h=  1
+Lane 1: idx=    5 → DST[  0,  5] reads SRC x_l= 10, y_l=  0, x_h= 11, y_h=  1
+Lane 2: idx=    6 → DST[  0,  6] reads SRC x_l= 12, y_l=  0, x_h= 13, y_h=  1
+Lane 3: idx=    7 → DST[  0,  7] reads SRC x_l= 14, y_l=  0, x_h= 15, y_h=  1
+
+=== BATCH base_idx=12 ===
+Lane 0: idx=    8 → DST[  0,  8] reads SRC x_l= 16, y_l=  0, x_h= 17, y_h=  1
+Lane 1: idx=    9 → DST[  0,  9] reads SRC x_l= 18, y_l=  0, x_h= 19, y_h=  1
+Lane 2: idx=   10 → DST[  0, 10] reads SRC x_l= 20, y_l=  0, x_h= 21, y_h=  1
+Lane 3: idx=   11 → DST[  0, 11] reads SRC x_l= 22, y_l=  0, x_h= 23, y_h=  1

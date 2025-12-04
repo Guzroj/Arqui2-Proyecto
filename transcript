@@ -1,13 +1,17 @@
-# vsim -c -do "run -all; quit" tb_top_Downscale_Secuencial 
-# Start time: 10:51:49 on Dec 04,2025
+# vsim -c -do "run -all; quit" tb_Top_Downscale_Integration 
+# Start time: 11:05:09 on Dec 04,2025
 # Loading sv_std.std
-# Loading work.tb_top_Downscale_Secuencial
-# Loading work.Top_Downscale_Secuencial
-# Loading work.Downscale_Secuencial
+# Loading work.tb_Top_Downscale_Integration
+# Loading work.Top_Downscale_SIMD
+# Loading work.Downscale_SIMD
+# Loading work.Top_SIMD
+# Loading work.FSM_SIMD
+# Loading work.SIMD_Registros
+# Loading work.ModoSIMD
 # Loading work.ModoSecuencial
 # run -all
 # 
-# === TEST 512x512 → 256x256 SECUENCIAL ===
+# === TEST 512x512 con DEBUG ===
 # 
 # [0] Leyendo archivo...
 # [0] ✓ Archivo leído
@@ -22,8 +26,7 @@
 #   test_image[0][6] = 152
 #   test_image[0][7] = 151
 # 
-# 
-# === PARÁMETROS DEL DISEÑO ===
+# === PARÁMETROS DEL DISEÑO (SIMD N=4) ===
 # SRC_H = 512, SRC_W = 512
 # Scale Factor = 0 (Factor real = 0.50)
 # DST dinámico calculado en RTL según scale_factor
@@ -43,7 +46,6 @@
 #   Progreso: 89%
 #   Progreso: 99%
 # [2621605000] ✓ Carga completada
-# 
 # 
 # [2621605000] Verificando BRAM...
 #   Primeros 8 valores en BRAM:
@@ -66,32 +68,39 @@
 # ✓ Valores diferentes en distintas posiciones
 # 
 # [2621705000] Iniciando downscale...
-#   Ciclos: 100000, state=8, pixel_idx=5555
-#     mem_rd_req=1, mem_rd_valid=0, i_dst=21, j_dst=179
-#   Ciclos: 200000, state=2, pixel_idx=11111
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=43, j_dst=103
-#   Ciclos: 300000, state=9, pixel_idx=16666
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=65, j_dst=26
-#   Ciclos: 400000, state=4, pixel_idx=22222
-#     mem_rd_req=1, mem_rd_valid=0, i_dst=86, j_dst=206
-#   Ciclos: 500000, state=10, pixel_idx=27777
-#     mem_rd_req=0, mem_rd_valid=1, i_dst=108, j_dst=129
-#   Ciclos: 600000, state=5, pixel_idx=33333
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=130, j_dst=53
-#   Ciclos: 700000, state=12, pixel_idx=38888
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=151, j_dst=232
-#   Ciclos: 800000, state=6, pixel_idx=44444
-#     mem_rd_req=0, mem_rd_valid=1, i_dst=173, j_dst=156
-#   Ciclos: 900000, state=13, pixel_idx=49999
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=195, j_dst=79
-#   Ciclos: 1000000, state=8, pixel_idx=55555
-#     mem_rd_req=1, mem_rd_valid=0, i_dst=217, j_dst=3
-#   Ciclos: 1100000, state=2, pixel_idx=61111
-#     mem_rd_req=0, mem_rd_valid=0, i_dst=238, j_dst=183
-# [14418205000] ✓ Downscale completado en 1179649 ciclos
 # 
+# --- BATCH base_idx=0 ---
+#   Lane 0: idx=0 → i_dst=0, j_dst=0 (valid=0)
+#   Lane 1: idx=0 → i_dst=0, j_dst=0 (valid=0)
+#   Lane 2: idx=0 → i_dst=0, j_dst=0 (valid=0)
+#   Lane 3: idx=0 → i_dst=0, j_dst=0 (valid=0)
 # 
-# [14418305000] Verificando salida...
+# 🎯 ENCONTRADO PÍXEL DE SALIDA [0,128]:
+#   idx = 128
+#   i_dst = 0, j_dst = 128
+#   x_src_fp = 65664 (0x00010080)
+#   y_src_fp = 0 (0x00000000)
+#   x_l = 256, y_l = 0
+#   x_h = 257, y_h = 1
+#   Memoria entrada [0,256] = 159
+#   ESPERADO: debería leer de [0,256] = 159
+#   Ciclos: 100000
+#   Ciclos: 200000
+# 
+# 🎯 ENCONTRADO PÍXEL DE SALIDA [128,128]:
+#   idx = 32896
+#   i_dst = 128, j_dst = 128
+#   x_src_fp = 65664 (0x00010080)
+#   y_src_fp = 65664 (0x00010080)
+#   x_l = 256, y_l = 256
+#   x_h = 257, y_h = 257
+#   Memoria entrada [256,256] = 125
+#   ESPERADO: debería leer de [256,256] = 125
+#   Ciclos: 300000
+#   Ciclos: 400000
+# [6717725000] ✓ Downscale completado en 409601 ciclos
+# 
+# [6717825000] Verificando salida...
 #   Total píxeles: 65536
 #   Indefinidos (x): 0
 #   Ceros: 511
@@ -128,6 +137,14 @@
 # [128,128] = 124
 # [255,255] =   2
 # 
+# --- Detección de repetición ---
+# Repetición: [0,0]==[0,128] = 0
+# Repetición: [0,1]==[0,129] = 0
+# Repetición: [0,2]==[0,130] = 0
+# Repetición: [0,3]==[0,131] = 0
+# 
+# ⚠ 10 píxeles repetidos (puede ser normal en bordes)
+# 
 # === MUESTRA DE SALIDA (primeras 8x16) ===
 # Row   0:   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
 # Row   1:   0 152 151 151 152 153 154 154 154 154 153 154 154 154 151 153 
@@ -140,21 +157,22 @@
 # ==========================================
 # 
 # 
-# === PERFORMANCE COUNTERS ===
+# === PERFORMANCE COUNTERS (SIMD) ===
 # FLOPs (Operaciones aritméticas): 458752
-# Lecturas de memoria:             262144
+# Lecturas de memoria:             65536
 # Escrituras de memoria:           65536
-# Total accesos a memoria:         327680
-# Intensidad aritmética (FLOPs/acceso): 1.400
+# Total accesos a memoria:         131072
+# Intensidad aritmética (FLOPs/acceso): 3.500
 # 
 # --- Análisis ---
 # Píxeles procesados:              65536
-# Lecturas por píxel:              4.00
+# Lecturas por píxel:              1.00
 # FLOPs por píxel:                 7.00
+# SIMD lanes:                      4
 # ================================
 # 
 # 
-# [14418305000] Guardando imagen de salida...
+# [6717825000] Guardando imagen de salida...
 #   Progreso: 0%
 #   Progreso: 9%
 #   Progreso: 19%
@@ -166,16 +184,15 @@
 #   Progreso: 78%
 #   Progreso: 87%
 #   Progreso: 97%
-# [14418305000] ✓ Imagen guardada en imagen_output_secuencial.txt
+# [6717825000] ✓ Imagen guardada en imagen_output.txt
 #   Formato: 256 filas x 256 columnas
-# 
 # 
 # === TEST COMPLETADO ===
 # 
-# ** Note: $stop    : testbench/tb_top_Downscale_Secuencial.sv(369)
-#    Time: 14418305 ns  Iteration: 1  Instance: /tb_top_Downscale_Secuencial
-# Break in Module tb_top_Downscale_Secuencial at testbench/tb_top_Downscale_Secuencial.sv line 369
-# Stopped at testbench/tb_top_Downscale_Secuencial.sv line 369
+# ** Note: $stop    : testbench/tb_Top_Downscale_Integration.sv(565)
+#    Time: 6717825 ns  Iteration: 1  Instance: /tb_Top_Downscale_Integration
+# Break in Module tb_Top_Downscale_Integration at testbench/tb_Top_Downscale_Integration.sv line 565
+# Stopped at testbench/tb_Top_Downscale_Integration.sv line 565
 #  quit
-# End time: 10:51:55 on Dec 04,2025, Elapsed time: 0:00:06
+# End time: 11:10:22 on Dec 04,2025, Elapsed time: 0:05:13
 # Errors: 0, Warnings: 0
