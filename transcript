@@ -1,5 +1,5 @@
 # vsim -c -do "run -all; quit" tb_Top_Downscale_Integration 
-# Start time: 11:05:09 on Dec 04,2025
+# Start time: 12:18:05 on Dec 04,2025
 # Loading sv_std.std
 # Loading work.tb_Top_Downscale_Integration
 # Loading work.Top_Downscale_SIMD
@@ -189,10 +189,10 @@
 # 
 # === TEST COMPLETADO ===
 # 
-# ** Note: $stop    : testbench/tb_Top_Downscale_Integration.sv(565)
+# ** Note: $stop    : testbench/tb_Top_Downscale_Integration.sv(566)
 #    Time: 6717825 ns  Iteration: 1  Instance: /tb_Top_Downscale_Integration
-# Break in Module tb_Top_Downscale_Integration at testbench/tb_Top_Downscale_Integration.sv line 565
-# Stopped at testbench/tb_Top_Downscale_Integration.sv line 565
+# Break in Module tb_Top_Downscale_Integration at testbench/tb_Top_Downscale_Integration.sv line 566
+# Stopped at testbench/tb_Top_Downscale_Integration.sv line 566
 #  quit
-# End time: 11:10:22 on Dec 04,2025, Elapsed time: 0:05:13
+# End time: 12:18:11 on Dec 04,2025, Elapsed time: 0:00:06
 # Errors: 0, Warnings: 0

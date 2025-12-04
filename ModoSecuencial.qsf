@@ -65,7 +65,7 @@ set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
-set_global_assignment -name TOP_LEVEL_ENTITY Top_Downscale_Secuencial
+set_global_assignment -name TOP_LEVEL_ENTITY dsa_system_wrapper
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -74,7 +74,6 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 
 # DSA Avalon Integration Modules (Fase 3)
 
-set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_Downscale_Secuencial.sv
 set_global_assignment -name QIP_FILE qsys/qsys/synthesis/dsa_system.qip
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/Top_SIMD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/SIMD_Registros.sv
@@ -87,6 +86,8 @@ set_global_assignment -name SYSTEMVERILOG_FILE rtl/dsa_system_wrapper.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/DSA_Control_Registers.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/DSA_Memory_Adapter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/DSA_Avalon_Wrapper.sv
+set_global_assignment -name EDA_TEST_BENCH_NAME tb_top_Downscale_Secuencial -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_FILE testbench/tb_top_Downscale_Secuencial.sv -section_id tb_top_Downscale_Secuencial
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
@@ -101,6 +102,4 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9]
-set_global_assignment -name EDA_TEST_BENCH_NAME tb_top_Downscale_Secuencial -section_id eda_simulation
-set_global_assignment -name EDA_TEST_BENCH_FILE testbench/tb_top_Downscale_Secuencial.sv -section_id tb_top_Downscale_Secuencial
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,5 +1,5 @@
 Timing Analyzer report for ModoSecuencial
-Thu Dec 04 00:01:24 2025
+Thu Dec 04 12:28:45 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -103,26 +103,26 @@ https://fpgasoftware.intel.com/eula.
 ; Number detected on machine ; 16          ;
 ; Maximum allowed            ; 16          ;
 ;                            ;             ;
-; Average used               ; 6.38        ;
+; Average used               ; 6.50        ;
 ; Maximum used               ; 16          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  36.6%      ;
-;     Processor 3            ;  36.5%      ;
-;     Processor 4            ;  36.5%      ;
-;     Processor 5            ;  35.7%      ;
-;     Processor 6            ;  35.7%      ;
-;     Processor 7            ;  35.7%      ;
-;     Processor 8            ;  35.7%      ;
-;     Processor 9            ;  35.7%      ;
-;     Processor 10           ;  35.7%      ;
-;     Processor 11           ;  35.7%      ;
-;     Processor 12           ;  35.7%      ;
-;     Processor 13           ;  35.7%      ;
-;     Processor 14           ;  35.7%      ;
-;     Processor 15           ;  35.7%      ;
-;     Processor 16           ;  35.7%      ;
+;     Processor 2            ;  37.3%      ;
+;     Processor 3            ;  37.3%      ;
+;     Processor 4            ;  37.2%      ;
+;     Processor 5            ;  36.5%      ;
+;     Processor 6            ;  36.5%      ;
+;     Processor 7            ;  36.5%      ;
+;     Processor 8            ;  36.5%      ;
+;     Processor 9            ;  36.5%      ;
+;     Processor 10           ;  36.5%      ;
+;     Processor 11           ;  36.5%      ;
+;     Processor 12           ;  36.5%      ;
+;     Processor 13           ;  36.5%      ;
+;     Processor 14           ;  36.5%      ;
+;     Processor 15           ;  36.5%      ;
+;     Processor 16           ;  36.5%      ;
 +----------------------------+-------------+
 
 
@@ -131,8 +131,8 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------------------------------------+--------+--------------------------+
 ; SDC File Path                                                      ; Status ; Read at                  ;
 +--------------------------------------------------------------------+--------+--------------------------+
-; qsys/qsys/synthesis/submodules/altera_reset_controller.sdc         ; OK     ; Thu Dec 04 00:01:05 2025 ;
-; qsys/qsys/synthesis/submodules/altera_avalon_st_jtag_interface.sdc ; OK     ; Thu Dec 04 00:01:05 2025 ;
+; qsys/qsys/synthesis/submodules/altera_reset_controller.sdc         ; OK     ; Thu Dec 04 12:28:26 2025 ;
+; qsys/qsys/synthesis/submodules/altera_avalon_st_jtag_interface.sdc ; OK     ; Thu Dec 04 12:28:26 2025 ;
 +--------------------------------------------------------------------+--------+--------------------------+
 
 
@@ -682,7 +682,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Thu Dec 04 00:01:01 2025
+    Info: Processing started: Thu Dec 04 12:28:21 2025
 Info: Command: quartus_sta ModoSecuencial -c ModoSecuencial
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -855,9 +855,9 @@ Info (332114): Report Metastability: Found 5 synchronizer chains.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 5 warnings
-    Info: Peak virtual memory: 5675 megabytes
-    Info: Processing ended: Thu Dec 04 00:01:24 2025
-    Info: Elapsed time: 00:00:23
-    Info: Total CPU time (on all processors): 00:02:03
+    Info: Peak virtual memory: 5672 megabytes
+    Info: Processing ended: Thu Dec 04 12:28:45 2025
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:02:06
 
 
