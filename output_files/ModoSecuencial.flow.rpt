@@ -1,5 +1,5 @@
 Flow report for ModoSecuencial
-Thu Dec 04 10:23:30 2025
+Thu Dec 04 10:45:46 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Thu Dec 04 10:23:30 2025       ;
+; Flow Status                 ; Successful - Thu Dec 04 10:45:46 2025       ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; ModoSecuencial                              ;
 ; Top-level Entity Name       ; Top_Downscale_Secuencial                    ;
@@ -63,7 +63,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 12/04/2025 10:23:23 ;
+; Start date & time ; 12/04/2025 10:45:30 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ModoSecuencial      ;
 +-------------------+---------------------+
@@ -74,7 +74,7 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------------+-----------------------------+
 ; Assignment Name                      ; Value                                                        ; Default Value  ; Entity Name              ; Section Id                  ;
 +--------------------------------------+--------------------------------------------------------------+----------------+--------------------------+-----------------------------+
-; COMPILER_SIGNATURE_ID                ; 91769883643.176486540333456                                  ; --             ; --                       ; --                          ;
+; COMPILER_SIGNATURE_ID                ; 91769883643.176486673016928                                  ; --             ; --                       ; --                          ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                           ; --             ; --                       ; tb_Top_Downscale_Secuencial ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tb_top_Downscale_Secuencial                                  ; --             ; --                       ; eda_simulation              ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                                            ; --             ; --                       ; eda_simulation              ;
@@ -108,8 +108,8 @@ https://fpgasoftware.intel.com/eula.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:08     ; 1.0                     ; 4873 MB             ; 00:00:16                           ;
-; Total                  ; 00:00:08     ; --                      ; --                  ; 00:00:16                           ;
+; Analysis & Elaboration ; 00:00:17     ; 1.0                     ; 6538 MB             ; 00:00:25                           ;
+; Total                  ; 00:00:17     ; --                      ; --                  ; 00:00:25                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

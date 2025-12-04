@@ -12,49 +12,49 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/Top_Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 10:23:40 on Dec 04,2025
+# Start time: 10:46:13 on Dec 04,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/Top_Downscale_Secuencial.sv 
 # -- Compiling module Top_Downscale_Secuencial
 # 
 # Top level modules:
 # 	Top_Downscale_Secuencial
-# End time: 10:23:40 on Dec 04,2025, Elapsed time: 0:00:00
+# End time: 10:46:13 on Dec 04,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/ModoSecuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 10:23:41 on Dec 04,2025
+# Start time: 10:46:14 on Dec 04,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/ModoSecuencial.sv 
 # -- Compiling module ModoSecuencial
 # 
 # Top level modules:
 # 	ModoSecuencial
-# End time: 10:23:41 on Dec 04,2025, Elapsed time: 0:00:00
+# End time: 10:46:14 on Dec 04,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 10:23:41 on Dec 04,2025
+# Start time: 10:46:14 on Dec 04,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/rtl/Downscale_Secuencial.sv 
 # -- Compiling module Downscale_Secuencial
 # 
 # Top level modules:
 # 	Downscale_Secuencial
-# End time: 10:23:42 on Dec 04,2025, Elapsed time: 0:00:01
+# End time: 10:46:14 on Dec 04,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench {C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 10:23:42 on Dec 04,2025
+# Start time: 10:46:15 on Dec 04,2025
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench" C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv 
 # -- Compiling module tb_top_Downscale_Secuencial
 # 
 # Top level modules:
 # 	tb_top_Downscale_Secuencial
-# End time: 10:23:42 on Dec 04,2025, Elapsed time: 0:00:00
+# End time: 10:46:15 on Dec 04,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb_top_Downscale_Secuencial
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb_top_Downscale_Secuencial 
-# Start time: 10:23:42 on Dec 04,2025
+# Start time: 10:46:15 on Dec 04,2025
 # Loading sv_std.std
 # Loading work.tb_top_Downscale_Secuencial
 # Loading work.Top_Downscale_Secuencial
@@ -200,6 +200,20 @@
 # ==========================================
 # 
 # 
+# === PERFORMANCE COUNTERS ===
+# FLOPs (Operaciones aritméticas): 458752
+# Lecturas de memoria:             262144
+# Escrituras de memoria:           65536
+# Total accesos a memoria:         327680
+# Intensidad aritmética (FLOPs/acceso): 1.400
+# 
+# --- Análisis ---
+# Píxeles procesados:              65536
+# Lecturas por píxel:              4.00
+# FLOPs por píxel:                 7.00
+# ================================
+# 
+# 
 # [14418305000] Guardando imagen de salida...
 #   Progreso: 0%
 #   Progreso: 9%
@@ -218,8 +232,8 @@
 # 
 # === TEST COMPLETADO ===
 # 
-# ** Note: $stop    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv(327)
+# ** Note: $stop    : C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv(365)
 #    Time: 14418305 ns  Iteration: 1  Instance: /tb_top_Downscale_Secuencial
-# Break in Module tb_top_Downscale_Secuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv line 327
-# End time: 10:25:25 on Dec 04,2025, Elapsed time: 0:01:43
+# Break in Module tb_top_Downscale_Secuencial at C:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto/testbench/tb_top_Downscale_Secuencial.sv line 365
+# End time: 10:46:36 on Dec 04,2025, Elapsed time: 0:00:21
 # Errors: 0, Warnings: 0

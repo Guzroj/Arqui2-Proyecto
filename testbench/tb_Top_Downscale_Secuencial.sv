@@ -12,9 +12,15 @@ module tb_top_Downscale_Secuencial;
     logic        cfg_we;
     logic [17:0] cfg_addr;
     logic [7:0]  cfg_data;
+    logic [3:0]  scale_factor;  // Factor de escala configurable
     logic        start_req;
     logic        done;
     logic [7:0]  dbg_data;
+
+    // Performance counters
+    logic [31:0] perf_flops;
+    logic [31:0] perf_mem_reads;
+    logic [31:0] perf_mem_writes;
 
     // DUT
     Top_Downscale_Secuencial #(
@@ -28,9 +34,13 @@ module tb_top_Downscale_Secuencial;
         .cfg_we(cfg_we),
         .cfg_addr(cfg_addr),
         .cfg_data(cfg_data),
+        .scale_factor(scale_factor),
         .start_req(start_req),
         .done(done),
-        .dbg_data(dbg_data)
+        .dbg_data(dbg_data),
+        .perf_flops(perf_flops),
+        .perf_mem_reads(perf_mem_reads),
+        .perf_mem_writes(perf_mem_writes)
     );
 
     // Clock
@@ -48,7 +58,8 @@ module tb_top_Downscale_Secuencial;
         #1;
         $display("\n=== PARÁMETROS DEL DISEÑO ===");
         $display("SRC_H = %0d, SRC_W = %0d", SRC_H, SRC_W);
-        $display("DST_H = %0d, DST_W = %0d", DST_H, DST_W);
+        $display("Scale Factor = %0d (Factor real = %.2f)", scale_factor, 0.50 + scale_factor * 0.05);
+        $display("DST dinámico calculado en RTL según scale_factor");
         $display("================================\n");
     end
 
@@ -263,6 +274,35 @@ module tb_top_Downscale_Secuencial;
         end
     endtask
 
+    // Mostrar Performance Counters
+    task display_performance_counters;
+        real arithmetic_intensity;
+        integer total_mem_accesses;
+        begin
+            $display("\n=== PERFORMANCE COUNTERS ===");
+            $display("FLOPs (Operaciones aritméticas): %0d", perf_flops);
+            $display("Lecturas de memoria:             %0d", perf_mem_reads);
+            $display("Escrituras de memoria:           %0d", perf_mem_writes);
+
+            total_mem_accesses = perf_mem_reads + perf_mem_writes;
+            $display("Total accesos a memoria:         %0d", total_mem_accesses);
+
+            if (total_mem_accesses > 0) begin
+                arithmetic_intensity = real'(perf_flops) / real'(total_mem_accesses);
+                $display("Intensidad aritmética (FLOPs/acceso): %.3f", arithmetic_intensity);
+            end else begin
+                $display("Intensidad aritmética: N/A (sin accesos a memoria)");
+            end
+
+            // Análisis adicional
+            $display("\n--- Análisis ---");
+            $display("Píxeles procesados:              %0d", perf_mem_writes);
+            $display("Lecturas por píxel:              %.2f", real'(perf_mem_reads) / real'(perf_mem_writes));
+            $display("FLOPs por píxel:                 %.2f", real'(perf_flops) / real'(perf_mem_writes));
+            $display("================================\n");
+        end
+    endtask
+
     // Guardar imagen
     task save_output_image;
         integer outfile;
@@ -305,6 +345,7 @@ module tb_top_Downscale_Secuencial;
         cfg_we = 0;
         cfg_addr = 0;
         cfg_data = 0;
+        scale_factor = 4'd0;  // Default: 0.5 (256x256)
 
         repeat(10) @(posedge clk);
         rst = 0;
@@ -320,7 +361,8 @@ module tb_top_Downscale_Secuencial;
         verify_output();
         verify_pixel_mapping();
         display_sample();
-        
+        display_performance_counters();
+
         save_output_image();
 
         $display("\n=== TEST COMPLETADO ===\n");

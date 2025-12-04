@@ -30,7 +30,7 @@ if errorlevel 1 goto error
 REM Ejecutar simulación
 echo.
 echo Ejecutando simulacion...
-vsim -c -do "run -all; quit" tb_Top_Downscale_Secuencial
+vsim -c -do "run -all; quit" tb_top_Downscale_Secuencial
 if errorlevel 1 goto error
 
 echo.

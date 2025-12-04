@@ -11,7 +11,7 @@ cModel Technology
 Z0 dC:/Users/gabri/OneDrive/Desktop/PrograProyectoArqui/Arqui2-Proyecto
 vDownscale_Secuencial
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1764864942
+Z2 !s110 1764867108
 !i10b 1
 !s100 T?jMl6;^4eL[=NndEz9bI2
 Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -28,7 +28,7 @@ Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1764864942.000000
+Z6 !s108 1764867108.000000
 !s107 rtl/Downscale_Secuencial.sv|
 !s90 -sv|rtl/Downscale_Secuencial.sv|
 !i113 1
@@ -61,47 +61,47 @@ R6
 o-sv
 R7
 n@modo@secuencial
-vtb_Top_Downscale_Secuencial
+vtb_top_Downscale_Secuencial
 R1
-R2
+!s110 1764867109
 !i10b 1
-!s100 lXjELN``_a;A:i>U;>7dM2
+!s100 1?jf52B`2oaPabh>^nF@U2
 R3
-IUe9JZ>g<_ZGH[kbZ`g:Ba2
+IZ@XdLn9?IaZ7CUCChWFHo1
 R4
 S1
 R0
-w1764864882
+w1764867082
 8testbench/tb_top_Downscale_Secuencial.sv
 Ftestbench/tb_top_Downscale_Secuencial.sv
 !i122 3
-L0 3 335
+L0 3 377
 R5
 r1
 !s85 0
 31
-R6
+!s108 1764867109.000000
 !s107 testbench/tb_top_Downscale_Secuencial.sv|
 !s90 -sv|testbench/tb_top_Downscale_Secuencial.sv|
 !i113 1
 o-sv
 R7
-ntb_@top_@downscale_@secuencial
+ntb_top_@downscale_@secuencial
 vTop_Downscale_Secuencial
 R1
 R2
 !i10b 1
-!s100 DWoJ@oT3zJZF6f9Rb4FIf0
+!s100 eO7?lNnnJkQ8LKjG=4[F:3
 R3
-I=]0kQgXEGU;[F=3AImDFb1
+I[lOUBmB?kO7Gb6[`Uo?Ji2
 R4
 S1
 R0
-w1764864848
+w1764866997
 8rtl/Top_Downscale_Secuencial.sv
 Frtl/Top_Downscale_Secuencial.sv
 !i122 2
-L0 13 123
+L0 13 190
 R5
 r1
 !s85 0
