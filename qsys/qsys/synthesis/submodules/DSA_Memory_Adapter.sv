@@ -100,6 +100,10 @@ module DSA_Memory_Adapter #(
     logic [31:0] word_address;
     logic [1:0]  byte_offset;
     logic [7:0]  extracted_byte;
+    
+    // Señales para trackear lectura y mantener dirección
+    logic        read_issued;
+    logic [31:0] read_address_hold;  // Guardar dirección mientras esperamos respuesta
 
     // ========================================================================
     // Multiplexación de Escrituras (SIMD o Secuencial)
@@ -186,6 +190,8 @@ module DSA_Memory_Adapter #(
             rr_counter       <= 3'd0;
             perf_mem_reads   <= 32'd0;
             perf_mem_writes  <= 32'd0;
+            read_issued      <= 1'b0;
+            read_address_hold <= 32'd0;
 
             seq_mem_rd_valid <= 1'b0;
             seq_mem_rd_data  <= 8'd0;
@@ -197,12 +203,14 @@ module DSA_Memory_Adapter #(
 
         end else begin
             // Defaults
-            avm_read  <= 1'b0;
             avm_write <= 1'b0;
             seq_mem_rd_valid <= 1'b0;
 
             for (int k = 0; k < N; k++)
                 simd_mem_rd_valid[k] <= 1'b0;
+
+            // NOTA: avm_read se maneja específicamente en cada estado
+            // No lo ponemos en 0 por defecto para mantenerlo activo si es necesario
 
             case (state)
 
@@ -211,10 +219,14 @@ module DSA_Memory_Adapter #(
                 // ============================================================
                 ARB_IDLE: begin
                     // Prioridad: Escrituras > Lecturas
+                    avm_read <= 1'b0;  // Asegurar que read está inactivo en IDLE
+                    read_issued <= 1'b0;
+                    
                     if (write_req) begin
                         state <= ARB_WRITE;
                     end else if (read_req) begin
                         state <= ARB_READ;
+                        read_issued <= 1'b0;  // Resetear flag al entrar
                     end
                 end
 
@@ -263,16 +275,36 @@ module DSA_Memory_Adapter #(
                 // READ: Procesar lectura
                 // ============================================================
                 ARB_READ: begin
-                    if (!avm_waitrequest && !avm_read) begin
+                    // Fase 1: Emitir la lectura (solo una vez cuando entramos al estado)
+                    if (!read_issued) begin
+                        // Calcular y guardar dirección word
+                        read_address_hold <= input_base_addr + (word_address << 2);
+                        
                         // Emitir lectura Avalon-MM
                         avm_read        <= 1'b1;
                         avm_address     <= input_base_addr + (word_address << 2);
                         avm_byteenable  <= 4'b1111;  // Leer palabra completa
+                        read_issued     <= 1'b1;
                         perf_mem_reads  <= perf_mem_reads + 32'd1;
+                    end else begin
+                        // Fase 2: Mantener señales activas según protocolo Avalon-MM
+                        // Protocolo: mantener read=1 y address mientras waitrequest=1
+                        if (avm_waitrequest) begin
+                            // Memoria ocupada: mantener señales activas
+                            avm_read    <= 1'b1;
+                            avm_address <= read_address_hold;
+                            avm_byteenable <= 4'b1111;
+                        end else begin
+                            // waitrequest=0: transacción aceptada, podemos bajar read
+                            avm_read <= 1'b0;
+                            avm_address <= read_address_hold;  // Mantener por estabilidad
+                            avm_byteenable <= 4'b1111;
+                        end
                     end
 
-                    // Esperar readdatavalid
+                    // Fase 3: Esperar readdatavalid (puede llegar varios ciclos después)
                     if (avm_readdatavalid) begin
+                        // Datos disponibles, extraer byte y validar
                         if (is_simd_read) begin
                             simd_mem_rd_valid[read_lane_idx] <= 1'b1;
                             simd_mem_rd_data[read_lane_idx]  <= extracted_byte;
@@ -282,6 +314,9 @@ module DSA_Memory_Adapter #(
                             seq_mem_rd_data  <= extracted_byte;
                         end
 
+                        // Limpiar señales y volver a IDLE
+                        avm_read <= 1'b0;
+                        read_issued <= 1'b0;
                         state <= ARB_IDLE;
                     end
                 end
