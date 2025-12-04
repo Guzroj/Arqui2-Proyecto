@@ -36,8 +36,8 @@ module Top_Downscale_SIMD #(
     input  logic        start,
     output logic        done,
 
-    // Salida de imagen (compatible con testbench)
-    output logic [7:0]  image_out [0:DST_H-1][0:DST_W-1],
+    // ELIMINADO: Salida de imagen 2D (causaba 7 minutos de elaboración en Quartus)
+    // output logic [7:0]  image_out [0:DST_H-1][0:DST_W-1],
 
     // Debug
     output logic [7:0]  dbg_data,
@@ -132,15 +132,11 @@ module Top_Downscale_SIMD #(
     end
 
     // ========================================================================
-    // Mapeo de memoria plana a array 2D (para compatibilidad con testbench)
+    // ELIMINADO: Mapeo de memoria plana a array 2D
     // ========================================================================
-    always_comb begin
-        for (int i = 0; i < DST_H; i++) begin
-            for (int j = 0; j < DST_W; j++) begin
-                image_out[i][j] = output_memory_flat[i * DST_W + j];
-            end
-        end
-    end
+    // Este bloque always_comb con 262,144 asignaciones causaba que Quartus
+    // tardara 7 minutos en Analysis & Elaboration.
+    // Solución: El testbench accede directamente a output_memory_flat
 
     // ========================================================================
     // Instancia del módulo Downscale_SIMD

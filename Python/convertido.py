@@ -39,13 +39,48 @@ def load_output_image(filename):
     return image
 
 
-def display_image(image, title="Imagen Downscaled"):
-    """Muestra la imagen usando matplotlib"""
-    plt.figure(figsize=(10, 10))
+def display_image(image, title="Imagen Downscaled", show_grid=True):
+    """Muestra la imagen usando matplotlib con grid opcional"""
+    plt.figure(figsize=(12, 10))
     plt.imshow(image, cmap='gray', vmin=0, vmax=255)
-    plt.title(title)
-    plt.colorbar(label='Intensidad (0-255)')
-    plt.axis('off')
+    plt.title(title, fontsize=14, fontweight='bold')
+    plt.colorbar(label='Intensidad (0-255)', fraction=0.046)
+
+    if show_grid:
+        # Activar el eje para mostrar grid
+        plt.axis('on')
+
+        # Configurar grid principal cada 64 píxeles
+        height, width = image.shape
+        major_ticks_x = np.arange(0, width, 64)
+        major_ticks_y = np.arange(0, height, 64)
+
+        # Grid secundario cada 32 píxeles
+        minor_ticks_x = np.arange(0, width, 32)
+        minor_ticks_y = np.arange(0, height, 32)
+
+        ax = plt.gca()
+        ax.set_xticks(major_ticks_x)
+        ax.set_yticks(major_ticks_y)
+        ax.set_xticks(minor_ticks_x, minor=True)
+        ax.set_yticks(minor_ticks_y, minor=True)
+
+        # Estilo del grid
+        ax.grid(which='major', color='red', linestyle='-', linewidth=1.0, alpha=0.6)
+        ax.grid(which='minor', color='yellow', linestyle=':', linewidth=0.5, alpha=0.4)
+
+        # Labels de ejes
+        ax.set_xlabel('Columna (píxeles)', fontsize=11)
+        ax.set_ylabel('Fila (píxeles)', fontsize=11)
+
+        # Añadir dimensiones como texto
+        textstr = f'Dimensiones: {height} × {width}\nGrid mayor: 64px\nGrid menor: 32px'
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
+        ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', bbox=props)
+    else:
+        plt.axis('off')
+
     plt.tight_layout()
     plt.show()
 
@@ -108,6 +143,41 @@ def analyze_image(image):
         bar = '█' * int(hist[i] / np.max(hist) * 40)
         print(f"  {bins[i]:3.0f}-{bins[i+1]:3.0f}: {bar} ({hist[i]})")
 
+def display_image(image, title="Imagen Downscaled", show_axes=True):
+    """Muestra la imagen con ejes visibles (ticks) sin grid."""
+    
+    height, width = image.shape
+
+    plt.figure(figsize=(12, 10))
+    plt.imshow(image, cmap='gray', vmin=0, vmax=255, interpolation='nearest')
+    plt.title(title, fontsize=14, fontweight='bold')
+    plt.colorbar(label='Intensidad (0-255)', fraction=0.046)
+
+    ax = plt.gca()
+
+    if show_axes:
+        # Mostrar ejes normalmente
+        plt.axis('on')
+
+        # Ticks cada 32 o 64 píxeles (ajusta si quieres)
+        step_x = max(1, width // 8)
+        step_y = max(1, height // 8)
+
+        ax.set_xticks(np.arange(0, width + 1, step_x))
+        ax.set_yticks(np.arange(0, height + 1, step_y))
+
+        # Etiquetas
+        ax.set_xlabel("Columna (píxeles)")
+        ax.set_ylabel("Fila (píxeles)")
+
+        # No mostrar ninguna línea de grid
+        ax.grid(False)
+
+    else:
+        plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
 
 def main():
     print("="*60)

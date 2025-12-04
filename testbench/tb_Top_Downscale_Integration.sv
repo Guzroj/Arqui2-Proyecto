@@ -21,7 +21,8 @@ module tb_Top_Downscale_Integration;
     reg [17:0] wr_addr;
     reg [7:0] wr_data;
     reg [3:0] scale_factor;  // Factor de escala configurable
-    wire [7:0] image_out [0:DST_H-1][0:DST_W-1];
+    // ELIMINADO: wire [7:0] image_out [0:DST_H-1][0:DST_W-1];
+    // Accedemos directamente a dut.output_memory_flat
 
     // Performance counters
     wire [31:0] perf_flops;
@@ -38,7 +39,7 @@ module tb_Top_Downscale_Integration;
         .clk(clk), .rst(rst), .start(start), .done(done),
         .wr_en(wr_en), .wr_addr(wr_addr), .wr_data(wr_data),
         .scale_factor(scale_factor),
-        .image_out(image_out),
+        // .image_out(image_out),  // ELIMINADO: Puerto removido del Top
         .dbg_data(),
         .perf_flops(perf_flops),
         .perf_mem_reads(perf_mem_reads),
@@ -352,23 +353,23 @@ module tb_Top_Downscale_Integration;
             for (pix = 0; pix < 20; pix = pix + 1) begin
                 expected_i = pix / DST_W;
                 expected_j = pix % DST_W;
-                $display("pix=%3d → esperado[%3d,%3d], valor=%3d", 
-                         pix, expected_i, expected_j, image_out[expected_i][expected_j]);
+                $display("pix=%3d → esperado[%3d,%3d], valor=%3d",
+                         pix, expected_i, expected_j, dut.output_memory_flat[expected_i * DST_W + expected_j]);
             end
             
             // Verificar píxeles clave
             $display("\n--- Píxeles clave ---");
-            $display("[0,0]     = %3d", image_out[0][0]);
-            $display("[0,128]   = %3d", image_out[0][128]);
-            $display("[128,0]   = %3d", image_out[128][0]);
-            $display("[128,128] = %3d", image_out[128][128]);
-            $display("[255,255] = %3d", image_out[255][255]);
+            $display("[0,0]     = %3d", dut.output_memory_flat[0 * DST_W + 0]);
+            $display("[0,128]   = %3d", dut.output_memory_flat[0 * DST_W + 128]);
+            $display("[128,0]   = %3d", dut.output_memory_flat[128 * DST_W + 0]);
+            $display("[128,128] = %3d", dut.output_memory_flat[128 * DST_W + 128]);
+            $display("[255,255] = %3d", dut.output_memory_flat[255 * DST_W + 255]);
             
             // Verificar patrón repetido
             $display("\n--- Detección de repetición ---");
-            if (image_out[0][0] == image_out[0][128] &&
-                image_out[0][0] == image_out[128][0] &&
-                image_out[0][0] == image_out[128][128]) begin
+            if (dut.output_memory_flat[0 * DST_W + 0] == dut.output_memory_flat[0 * DST_W + 128] &&
+                dut.output_memory_flat[0 * DST_W + 0] == dut.output_memory_flat[128 * DST_W + 0] &&
+                dut.output_memory_flat[0 * DST_W + 0] == dut.output_memory_flat[128 * DST_W + 128]) begin
                 $display("⚠ PATRÓN REPETIDO DETECTADO en esquinas de cuadrantes");
                 errors = errors + 1;
             end
@@ -376,13 +377,13 @@ module tb_Top_Downscale_Integration;
             // Comparar cuadrante 1 vs cuadrante 2
             for (ii = 0; ii < 10; ii = ii + 1) begin
                 for (jj = 0; jj < 10; jj = jj + 1) begin
-                    if (image_out[ii][jj] != image_out[ii][jj+128]) begin
+                    if (dut.output_memory_flat[ii * DST_W + jj] != dut.output_memory_flat[ii * DST_W + jj+128]) begin
                         // OK, son diferentes
                     end else begin
                         errors = errors + 1;
                         if (errors < 5) // Mostrar solo primeros errores
                             $display("Repetición: [%0d,%0d]==[%0d,%0d] = %0d", 
-                                     ii, jj, ii, jj+128, image_out[ii][jj]);
+                                     ii, jj, ii, jj+128, dut.output_memory_flat[ii * DST_W + jj]);
                     end
                 end
             end
@@ -411,9 +412,9 @@ module tb_Top_Downscale_Integration;
             // Contar problemas
             for (i = 0; i < DST_H; i = i + 1) begin
                 for (j = 0; j < DST_W; j = j + 1) begin
-                    if (image_out[i][j] === 8'bxxxxxxxx)
+                    if (dut.output_memory_flat[i * DST_W + j] === 8'bxxxxxxxx)
                         undefined_count = undefined_count + 1;
-                    if (image_out[i][j] == 8'd0)
+                    if (dut.output_memory_flat[i * DST_W + j] == 8'd0)
                         zero_count = zero_count + 1;
                 end
             end
@@ -427,7 +428,7 @@ module tb_Top_Downscale_Integration;
                 $display("\nPrimeros píxeles indefinidos:");
                 for (i = 0; i < DST_H && i < 5; i = i + 1) begin
                     for (j = 0; j < DST_W && j < 5; j = j + 1) begin
-                        if (image_out[i][j] === 8'bxxxxxxxx)
+                        if (dut.output_memory_flat[i * DST_W + j] === 8'bxxxxxxxx)
                             $display("    [%0d,%0d] = x", i, j);
                     end
                 end
@@ -446,10 +447,10 @@ module tb_Top_Downscale_Integration;
             for (i = 0; i < 8; i = i + 1) begin
                 $write("Row %3d: ", i);
                 for (j = 0; j < 16; j = j + 1) begin
-                    if (image_out[i][j] === 8'bxxxxxxxx)
+                    if (dut.output_memory_flat[i * DST_W + j] === 8'bxxxxxxxx)
                         $write("  x ");
                     else
-                        $write("%3d ", image_out[i][j]);
+                        $write("%3d ", dut.output_memory_flat[i * DST_W + j]);
                 end
                 $write("\n");
             end
@@ -478,7 +479,7 @@ module tb_Top_Downscale_Integration;
             // Escribir todos los píxeles
             for (i = 0; i < DST_H; i = i + 1) begin
                 for (j = 0; j < DST_W; j = j + 1) begin
-                    $fwrite(outfile, "%0d", image_out[i][j]);
+                    $fwrite(outfile, "%0d", dut.output_memory_flat[i * DST_W + j]);
                     
                     // Espacio entre píxeles, salto de línea al final de fila
                     if (j < DST_W - 1)

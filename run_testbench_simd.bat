@@ -56,6 +56,8 @@ echo.
 echo ========================================
 echo ERROR en la compilacion o simulacion
 echo ========================================
+pause
 exit /b 1
 
 :end
+pause
