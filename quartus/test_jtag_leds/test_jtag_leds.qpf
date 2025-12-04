@@ -1,0 +1,7 @@
+# ============================================================================
+# test_jtag_leds.qpf
+# Quartus Project File para JTAG LED Test
+# FASE 3: Test de JTAG con LEDs en DE1-SoC MTL2
+# ============================================================================
+
+PROJECT_REVISION = "test_jtag_leds"

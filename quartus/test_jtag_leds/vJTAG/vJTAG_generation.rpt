@@ -1,0 +1,28 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\test_jtag_leds\vJTAG.qsys --block-symbol-file --output-directory=C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\test_jtag_leds\vJTAG --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading test_jtag_leds/vJTAG.qsys
+Progress: Reading input file
+Progress: Adding virtual_jtag_0 [altera_virtual_jtag 20.1]
+Progress: Parameterizing module virtual_jtag_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\test_jtag_leds\vJTAG.qsys --synthesis=VERILOG --output-directory=C:\Users\josev\OneDrive\Documentos\Arqui2ProyectoInicio\quartus\test_jtag_leds\vJTAG\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading test_jtag_leds/vJTAG.qsys
+Progress: Reading input file
+Progress: Adding virtual_jtag_0 [altera_virtual_jtag 20.1]
+Progress: Parameterizing module virtual_jtag_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: vJTAG: Generating vJTAG "vJTAG" for QUARTUS_SYNTH
+Info: virtual_jtag_0: "vJTAG" instantiated altera_virtual_jtag "virtual_jtag_0"
+Info: vJTAG: Done "vJTAG" with 2 modules, 1 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
