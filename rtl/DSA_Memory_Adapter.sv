@@ -105,6 +105,12 @@ module DSA_Memory_Adapter #(
     logic        read_issued;
     logic [31:0] read_address_hold;  // Guardar dirección mientras esperamos respuesta
 
+    // Señales para trackear escritura y mantener datos
+    logic        write_issued;
+    logic [31:0] write_address_hold;
+    logic [31:0] write_data_hold;
+    logic [3:0]  write_byteenable_hold;
+
     // ========================================================================
     // Multiplexación de Escrituras (SIMD o Secuencial)
     // ========================================================================
@@ -192,6 +198,10 @@ module DSA_Memory_Adapter #(
             perf_mem_writes  <= 32'd0;
             read_issued      <= 1'b0;
             read_address_hold <= 32'd0;
+            write_issued     <= 1'b0;
+            write_address_hold <= 32'd0;
+            write_data_hold  <= 32'd0;
+            write_byteenable_hold <= 4'b0000;
 
             seq_mem_rd_valid <= 1'b0;
             seq_mem_rd_data  <= 8'd0;
@@ -203,14 +213,13 @@ module DSA_Memory_Adapter #(
 
         end else begin
             // Defaults
-            avm_write <= 1'b0;
             seq_mem_rd_valid <= 1'b0;
 
             for (int k = 0; k < N; k++)
                 simd_mem_rd_valid[k] <= 1'b0;
 
-            // NOTA: avm_read se maneja específicamente en cada estado
-            // No lo ponemos en 0 por defecto para mantenerlo activo si es necesario
+            // NOTA: avm_read y avm_write se manejan específicamente en cada estado
+            // No los ponemos en 0 por defecto para mantenerlos activos si es necesario
 
             case (state)
 
@@ -219,11 +228,14 @@ module DSA_Memory_Adapter #(
                 // ============================================================
                 ARB_IDLE: begin
                     // Prioridad: Escrituras > Lecturas
-                    avm_read <= 1'b0;  // Asegurar que read está inactivo en IDLE
-                    read_issued <= 1'b0;
-                    
+                    avm_read  <= 1'b0;  // Asegurar que read está inactivo en IDLE
+                    avm_write <= 1'b0;  // Asegurar que write está inactivo en IDLE
+                    read_issued  <= 1'b0;
+                    write_issued <= 1'b0;
+
                     if (write_req) begin
                         state <= ARB_WRITE;
+                        write_issued <= 1'b0;  // Resetear flag al entrar
                     end else if (read_req) begin
                         state <= ARB_READ;
                         read_issued <= 1'b0;  // Resetear flag al entrar
@@ -234,40 +246,61 @@ module DSA_Memory_Adapter #(
                 // WRITE: Procesar escritura
                 // ============================================================
                 ARB_WRITE: begin
-                    if (!avm_waitrequest) begin
-                        // Calcular dirección word y byte enable
+                    // Fase 1: Emitir la escritura (solo una vez cuando entramos al estado)
+                    if (!write_issued) begin
+                        // Calcular dirección word y byte offset
                         logic [31:0] word_addr;
                         logic [1:0]  byte_offs;
 
                         word_addr = write_addr >> 2;
                         byte_offs = write_addr[1:0];
 
-                        // Emitir escritura Avalon-MM
-                        avm_write   <= 1'b1;
-                        avm_address <= output_base_addr + (word_addr << 2);
+                        // Calcular y guardar dirección
+                        write_address_hold <= output_base_addr + (word_addr << 2);
 
-                        // Byte enable según offset
+                        // Calcular y guardar writedata y byteenable según offset
                         case (byte_offs)
                             2'b00: begin
-                                avm_byteenable <= 4'b0001;
-                                avm_writedata  <= {24'd0, write_data};
+                                write_byteenable_hold <= 4'b0001;
+                                write_data_hold       <= {24'd0, write_data};
                             end
                             2'b01: begin
-                                avm_byteenable <= 4'b0010;
-                                avm_writedata  <= {16'd0, write_data, 8'd0};
+                                write_byteenable_hold <= 4'b0010;
+                                write_data_hold       <= {16'd0, write_data, 8'd0};
                             end
                             2'b10: begin
-                                avm_byteenable <= 4'b0100;
-                                avm_writedata  <= {8'd0, write_data, 16'd0};
+                                write_byteenable_hold <= 4'b0100;
+                                write_data_hold       <= {8'd0, write_data, 16'd0};
                             end
                             2'b11: begin
-                                avm_byteenable <= 4'b1000;
-                                avm_writedata  <= {write_data, 24'd0};
+                                write_byteenable_hold <= 4'b1000;
+                                write_data_hold       <= {write_data, 24'd0};
                             end
                         endcase
 
+                        // Emitir escritura Avalon-MM
+                        avm_write      <= 1'b1;
+                        avm_address    <= output_base_addr + (word_addr << 2);
+                        avm_writedata  <= write_data_hold;
+                        avm_byteenable <= write_byteenable_hold;
+                        write_issued   <= 1'b1;
                         perf_mem_writes <= perf_mem_writes + 32'd1;
-                        state <= ARB_IDLE;
+
+                    end else begin
+                        // Fase 2: Mantener señales activas según protocolo Avalon-MM
+                        // Protocolo: mantener write=1 y datos mientras waitrequest=1
+                        if (avm_waitrequest) begin
+                            // Memoria ocupada: mantener señales activas
+                            avm_write      <= 1'b1;
+                            avm_address    <= write_address_hold;
+                            avm_writedata  <= write_data_hold;
+                            avm_byteenable <= write_byteenable_hold;
+                        end else begin
+                            // waitrequest=0: transacción aceptada, bajar write y volver a IDLE
+                            avm_write      <= 1'b0;
+                            write_issued   <= 1'b0;
+                            state          <= ARB_IDLE;
+                        end
                     end
                 end
 

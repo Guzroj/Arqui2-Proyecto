@@ -18,12 +18,12 @@ preplace inst dsa_system.Jtag_master.timing_adt -pg 1
 preplace inst dsa_system.Jtag_master.clk_src -pg 1
 preplace inst dsa_system.pio_leds -pg 1 -lvl 4 -y 190
 preplace inst dsa_system -pg 1 -lvl 1 -y 40 -regy -20
-preplace netloc INTERCONNECT<net_container>dsa_system</net_container>(MASTER)Jtag_master.master,(SLAVE)dsa_downscaler_0.avalon_slave,(SLAVE)pio_leds.s1,(SLAVE)input_memory.s1,(SLAVE)output_memory.s1,(MASTER)dsa_downscaler_0.avalon_master) 1 3 2 690 300 910
-preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)input_memory.reset1,(SLAVE)pio_leds.reset,(MASTER)reset_bridge_0.out_reset,(SLAVE)Jtag_master.clk_reset,(SLAVE)output_memory.reset1,(SLAVE)dsa_downscaler_0.reset) 1 2 2 410 60 670
 preplace netloc POINT_TO_POINT<net_container>dsa_system</net_container>(SLAVE)reset_bridge_0.in_reset,(MASTER)clk_0.clk_reset) 1 1 1 N
-preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.leds,(SLAVE)pio_leds.external_connection) 1 0 4 NJ 220 NJ 220 NJ 220 NJ
+preplace netloc INTERCONNECT<net_container>dsa_system</net_container>(SLAVE)pio_leds.s1,(MASTER)dsa_downscaler_0.avalon_master,(SLAVE)output_memory.s1,(SLAVE)dsa_downscaler_0.avalon_slave,(MASTER)Jtag_master.master,(SLAVE)input_memory.s1) 1 3 2 670 300 910
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)pio_leds.external_connection,(SLAVE)dsa_system.leds) 1 0 4 NJ 220 NJ 220 NJ 220 NJ
 preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
-preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)clk_0.clk_in,(SLAVE)dsa_system.clk) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)reset_bridge_0.clk,(SLAVE)input_memory.clk1,(SLAVE)output_memory.clk1,(SLAVE)pio_leds.clk,(SLAVE)Jtag_master.clk,(MASTER)clk_0.clk,(SLAVE)dsa_downscaler_0.clock) 1 1 3 260 160 430 180 710
+preplace netloc EXPORT<net_container>dsa_system</net_container>(SLAVE)dsa_system.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)pio_leds.clk,(MASTER)clk_0.clk,(SLAVE)Jtag_master.clk,(SLAVE)input_memory.clk1,(SLAVE)reset_bridge_0.clk,(SLAVE)output_memory.clk1,(SLAVE)dsa_downscaler_0.clock) 1 1 3 260 80 430 60 690
+preplace netloc FAN_OUT<net_container>dsa_system</net_container>(SLAVE)pio_leds.reset,(SLAVE)output_memory.reset1,(MASTER)reset_bridge_0.out_reset,(SLAVE)Jtag_master.clk_reset,(SLAVE)dsa_downscaler_0.reset,(SLAVE)input_memory.reset1) 1 2 2 410 180 710
 levelinfo -pg 1 0 50 950
 levelinfo -hier dsa_system 60 90 290 510 750 930

@@ -1,5 +1,5 @@
 Assembler report for ModoSecuencial
-Wed Dec 03 17:47:47 2025
+Thu Dec 04 00:00:59 2025
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -39,7 +39,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Dec 03 17:47:47 2025 ;
+; Assembler Status      ; Successful - Thu Dec 04 00:00:59 2025 ;
 ; Revision Name         ; ModoSecuencial                        ;
 ; Top-level Entity Name ; dsa_system_wrapper                    ;
 ; Family                ; Cyclone V                             ;
@@ -78,8 +78,8 @@ https://fpgasoftware.intel.com/eula.
 +----------------+--------------------------------------------------------------------------------------------------------------+
 ; Option         ; Setting                                                                                                      ;
 +----------------+--------------------------------------------------------------------------------------------------------------+
-; JTAG usercode  ; 0x086CEAB0                                                                                                   ;
-; Checksum       ; 0x086CEAB0                                                                                                   ;
+; JTAG usercode  ; 0x086E16C4                                                                                                   ;
+; Checksum       ; 0x086E16C4                                                                                                   ;
 +----------------+--------------------------------------------------------------------------------------------------------------+
 
 
@@ -89,14 +89,14 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Wed Dec 03 17:47:31 2025
+    Info: Processing started: Thu Dec 04 00:00:45 2025
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off ModoSecuencial -c ModoSecuencial
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 5065 megabytes
-    Info: Processing ended: Wed Dec 03 17:47:47 2025
-    Info: Elapsed time: 00:00:16
-    Info: Total CPU time (on all processors): 00:00:16
+    Info: Peak virtual memory: 5067 megabytes
+    Info: Processing ended: Thu Dec 04 00:01:00 2025
+    Info: Elapsed time: 00:00:15
+    Info: Total CPU time (on all processors): 00:00:14
 
 
